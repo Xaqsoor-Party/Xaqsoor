@@ -49,7 +49,7 @@ export interface UserUpdateDTO {
 }
 
 export interface AcademicRecordRequest {
-    id: number;
+    id?: number;
     institutionName: string;
     degree?: string;
     fieldOfStudy: string;
@@ -61,7 +61,7 @@ export interface AcademicRecordRequest {
 }
 
 export interface WorkExperienceRequest {
-    id: number;
+    id?: number;
     jobTitle: string;
     companyName: string;
     location: string;
