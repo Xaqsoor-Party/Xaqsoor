@@ -7,11 +7,12 @@ import ActionButton from '@/components/common/ActionButton/ActionButton';
 import { SessionDto } from '@/types/sessions';
 import styles from '@/styles/Sessions.module.css';
 import {FiMonitor, FiClock, FiMapPin, FiXCircle, FiCheckCircle, FiInfo} from 'react-icons/fi';
+import AlertModal from "@/components/common/AlertModal/AlertModal";
 
 const Sessions: React.FC = () => {
     const { user } = useAuthentication();
     const { getActiveSessions, revokeOtherSessions } = useSessionsApi();
-
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [sessions, setSessions] = useState<SessionDto[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -43,7 +44,7 @@ const Sessions: React.FC = () => {
                 setError('No active sessions found.');
             }
         } catch (err) {
-            console.error("Failed to fetch sessions:", err);
+            console.log("Failed to fetch sessions:", err);
             setError('Failed to load sessions. ' + (err as Error).message || 'Please try again later.');
         } finally {
             setIsLoading(false);
@@ -55,22 +56,22 @@ const Sessions: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.id]);
 
-    const handleRevokeOtherSessions = async () => {
-        if (!user?.userId) {
-            setError('User ID not found. Please log in.');
-            return;
-        }
+    const handleRevokeOtherSessions = () => {
+        setShowConfirmModal(true);
+    };
 
-        if (!window.confirm("Are you sure you want to revoke all other active sessions? You will remain logged in.")) {
+    const confirmRevokeSessions  = async () => {
+        if (!user?.id) {
+            setError('User ID not found. Please log in.');
             return;
         }
 
         setIsLoading(true);
         setError(null);
         setSuccessMessage(null);
-
+        setShowConfirmModal(false);
         try {
-            const response = await revokeOtherSessions(parseInt(user.userId));
+            const response = await revokeOtherSessions(user.id);
             if (response.data?.revokedSessionsCount !== undefined) {
                 setSuccessMessage(`Successfully revoked ${response.data.revokedSessionsCount} other session(s).`);
                 // Re-fetch sessions to update the list after revocation
@@ -79,7 +80,7 @@ const Sessions: React.FC = () => {
                 setError('Failed to revoke sessions.');
             }
         } catch (err) {
-            console.error("Failed to revoke sessions:", err);
+            console.log("Failed to revoke sessions:", err);
             setError('Failed to revoke sessions. ' + (err as Error).message || 'Please try again.');
         } finally {
             setIsLoading(false);
@@ -185,6 +186,16 @@ const Sessions: React.FC = () => {
                     </>
                 )}
             </div>
+            {showConfirmModal && (
+                <AlertModal
+                    title="Confirm Session Revocation"
+                    message="Are you sure you want to revoke all other active sessions? You will remain logged in."
+                    onConfirm={confirmRevokeSessions}
+                    onClose={() => setShowConfirmModal(false)}
+                    error={false}
+                    buttonText="Yes, Revoke"
+                />
+            )}
         </div>
     );
 };

@@ -178,7 +178,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: var(--breakpoint-tablet)) {
+@media (max-width: 1024px) {
     .sessionsPage {
         padding: var(--spacing-xl) var(--spacing-md);
     }
@@ -187,7 +187,7 @@
     }
 }
 
-@media (max-width: var(--breakpoint-mobile)) {
+@media (max-width: 768px) {
     .sessionsPage {
         padding: var(--spacing-lg) var(--spacing-sm);
     }
