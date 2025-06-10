@@ -3,11 +3,10 @@ package com.xaqsoor.mapper;
 import com.xaqsoor.dto.UserDto;
 import com.xaqsoor.entity.User;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.xaqsoor.util.UserUtil.formatDate;
+import static com.xaqsoor.util.UserUtil.formatDateTime;
 
 public class UserMapper {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
     public static UserDto toDTO(User user, String profileImageUrl) {
         return UserDto.builder()
                 .id(user.getId())
@@ -19,7 +18,7 @@ public class UserMapper {
                 .lastName(user.getLastName())
                 .gender(user.getGender())
                 .placeOfBirth(user.getPlaceOfBirth())
-                .dateOfBirth(formatDateTime(user.getDateOfBirth()))
+                .dateOfBirth(formatDate(user.getDateOfBirth()))
                 .status(user.getStatus().name())
                 .bio(user.getBio())
                 .role(user.getRole().getName())
@@ -45,7 +44,4 @@ public class UserMapper {
                 .build();
     }
 
-    private static String formatDateTime(LocalDateTime dateTime) {
-        return dateTime != null ? FORMATTER.format(dateTime) : "";
-    }
 }

@@ -83,12 +83,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     private void processWorkExperiences(User user, List<WorkExperienceRequest> workExperiences) {
+        System.out.println(workExperiences.size());
         for (WorkExperienceRequest dto : workExperiences) {
             WorkExperience exp = dto.id() != null ?
                     workExperienceRepository.findById(dto.id())
                             .orElseThrow(() -> new ApiException("Work experience not found")) :
                     new WorkExperience();
-
             exp.setUser(user);
             exp.setJobTitle(dto.jobTitle());
             exp.setCompanyName(dto.companyName());

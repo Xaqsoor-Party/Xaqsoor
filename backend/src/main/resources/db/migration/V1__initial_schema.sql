@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(15) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     place_of_birth VARCHAR(50),
-    date_of_birth TIMESTAMP WITHOUT TIME ZONE,
+    date_of_birth DATE,
     status VARCHAR(10) NOT NULL,
     role_id BIGINT,
     email VARCHAR(255) NOT NULL,

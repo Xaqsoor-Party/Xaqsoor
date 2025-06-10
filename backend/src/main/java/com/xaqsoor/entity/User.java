@@ -5,6 +5,7 @@ import com.xaqsoor.enumeration.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -34,7 +35,7 @@ public class User extends Auditable {
     private String placeOfBirth;
 
     @Column(name = "date_of_birth")
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "status", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)

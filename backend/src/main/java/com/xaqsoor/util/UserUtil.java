@@ -8,11 +8,16 @@ import com.xaqsoor.entity.UserCredential;
 import com.xaqsoor.enumeration.ConfirmationType;
 import com.xaqsoor.enumeration.Status;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class UserUtil {
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
+
     public static User createNewUser(UserCreateRequest request, String normalizedEmail, Role role) {
         return User.builder()
                 .userId("XQ-" + UniqueIdGenerator.generateTimestampBased())
@@ -27,6 +32,7 @@ public class UserUtil {
                 .bio(EMPTY)
                 .failedLoginAttempts(0)
                 .lastLogin(null)
+                .dateOfBirth(null)
                 .profileImageKey(EMPTY)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
@@ -55,6 +61,14 @@ public class UserUtil {
     public static Confirmation createConfirmation(User user, ConfirmationType type, int monthsUntilExpiry) {
         LocalDateTime expiry = LocalDateTime.now().plusMonths(monthsUntilExpiry);
         return new Confirmation(user, type, expiry);
+    }
+
+    public static String formatDateTime(LocalDateTime dateTime) {
+        return dateTime != null ? FORMATTER.format(dateTime) : "";
+    }
+
+    public static String formatDate(LocalDate date) {
+        return date != null ? DATE_FORMATTER.format(date) : "";
     }
 }
 

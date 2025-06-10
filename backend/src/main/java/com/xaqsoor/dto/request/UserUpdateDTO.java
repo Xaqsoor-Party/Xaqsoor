@@ -3,7 +3,7 @@ package com.xaqsoor.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record UserUpdateDTO(
         Long id,
@@ -27,7 +27,7 @@ public record UserUpdateDTO(
         @Size(max = 50, message = "Place of birth must be at most 50 characters")
         String placeOfBirth,
 
-        LocalDateTime dateOfBirth,
+        LocalDate dateOfBirth,
 
         @Size(max = 500, message = "Bio must be at most 500 characters")
         String bio,
