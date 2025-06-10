@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Xaqsoor – New Login Notification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            margin: 30px auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #1b273d;
+        }
+        .details {
+            background-color: #f9f9f9;
+            border-left: 4px solid #1b273d;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer {
+            font-size: 14px;
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Xaqsoor Login Alert</h1>
+    </div>
+    <p><strong>Hi,</strong></p>
+    <p>We noticed a login to your Xaqsoor account from a new device or location. If this was you, no further action is required.</p>
+
+    <div class="details">
+        <strong>Device Info:</strong><br/>
+        <span th:text="${deviceInfo}">Device: Desktop, OS: Windows NT, Browser: Chrome.</span><br/><br/>
+
+        <strong>IP & Location:</strong><br/>
+        <span th:text="${ipInfo}">IP: 0:0:0:0:0:0:0:1 | Location: Localhost, N/A, N/A | Coordinates: 0.0,0.0 | ISP: Local Network | Time Zone: N/A.</span>
+    </div>
+
+    <p>If you did <em>not</em> attempt this login, please reset your password immediately or contact our support team.</p>
+
+    <p>Stay safe,<br/>The Xaqsoor Team</p>
+
+    <div class="footer">
+        &copy; 2025 Xaqsoor Political Party. All rights reserved.
+    </div>
+</div>
+</body>
+</html>

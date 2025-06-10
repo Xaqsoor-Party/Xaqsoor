@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Xaqsoor – Your Account Has Been Created</title>
+    <style>
+        /* Base styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333333;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styles */
+        .header-row {
+            background: linear-gradient(135deg, #1b273d 0%, #162031 100%);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .email-logo {
+            padding: 30px 0 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1b273d 0%, #162031 100%);
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .email-header h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            padding: 0 20px;
+            line-height: 1.4;
+        }
+
+        /* Content styles */
+        .email-greeting, .email-details, .email-action, .email-footer {
+            padding: 25px 40px;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .email-greeting p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .email-greeting strong {
+            color: #1b273d;
+        }
+
+        .email-details h3 {
+            color: #1b273d;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #eaeef3;
+            padding-bottom: 10px;
+        }
+
+        .login-details {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .login-row, .password-row {
+            border-bottom: 1px solid #eaeef3;
+        }
+
+        .login-row td, .password-row td {
+            padding: 15px 0;
+        }
+
+        .login-row td:first-child, .password-row td:first-child {
+            width: 40%;
+            font-weight: 600;
+            color: #1b273d;
+        }
+
+        .login-row td:last-child, .password-row td:last-child {
+            color: #666666;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        /* Action button */
+        .email-action {
+            text-align: center;
+            background-color: #f4f6f9;
+            border-top: 1px solid #eaeef3;
+            border-bottom: 1px solid #eaeef3;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #1b273d 0%, #162031 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 14px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(27, 39, 61, 0.2);
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #162031 0%, #1b273d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(27, 39, 61, 0.3);
+        }
+
+        /* Footer */
+        .email-footer {
+            background-color: #1b273d;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 40px;
+        }
+
+        .email-footer p {
+            margin: 10px 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .email-footer a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .security-note {
+            background-color: #e8f5e9;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .security-note strong {
+            color: #28a745;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 480px) {
+            .email-container {
+                margin: 10px;
+                border-radius: 8px;
+            }
+
+            .email-greeting, .email-details, .email-action, .email-footer {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .email-header h1 {
+                font-size: 20px;
+            }
+
+            .login-row td:first-child, .password-row td:first-child {
+                width: 35%;
+            }
+        }
+    </style>
+</head>
+<body>
+<table class="email-container" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr class="logo-row">
+        <td class="email-logo" colspan="2">
+            <h1 class="logo">Xaqsoor</h1>
+        </td>
+    </tr>
+
+    <tr class="header-row">
+        <td class="email-header" colspan="2">
+            <h1>Welcome to Xaqsoor – Your Account Has Been Created</h1>
+        </td>
+    </tr>
+
+    <tr class="greeting-row">
+        <td colspan="2" class="email-greeting">
+            <p>Dear <strong th:text="${name}">User</strong>,</p>
+            <p>Thank you for registering with Xaqsoor! We're excited to welcome you to our community of changemakers dedicated to building a brighter future for Somalia.</p>
+            <p>Your membership is now active, and you can access your account using the credentials below:</p>
+        </td>
+    </tr>
+
+    <tr class="details-row">
+        <td colspan="2" class="email-details">
+            <h3>Your login details:</h3>
+            <table class="login-details">
+                <tr class="login-row">
+                    <td><strong>Username:</strong></td>
+                    <td th:text="${username}"></td>
+                </tr>
+                <tr class="password-row">
+                    <td><strong>Temporary Password:</strong></td>
+                    <td th:text="${tempPassword}"></td>
+                </tr>
+            </table>
+
+            <div class="security-note">
+                <strong>Security Tip:</strong> For your protection, we recommend changing your password immediately after logging in for the first time.
+            </div>
+        </td>
+    </tr>
+
+    <tr class="action-row">
+        <td colspan="2" class="email-action">
+            <p>To log in to your account and complete your profile, click the button below:</p>
+            <a th:href="${url}" class="button">Access Your Account</a>
+            <p style="font-size: 14px; margin-top: 10px;">
+                Or copy this link: <span th:text="${url}">https://xaqsoor.com/login</span>
+            </p>
+
+        </td>
+    </tr>
+
+    <tr class="footer-row">
+        <td colspan="2" class="email-footer">
+            <p style="text-align: start;">If you have any questions or need help, don't hesitate to contact our support team.</p>
+            <p style="text-align: start;">We're honored to have you join our movement for positive change!</p>
+            <p style="text-align: start;">Warm regards,</p>
+            <p style="font-weight: 600; text-align: start;">The Xaqsoor Team</p>
+            <p style="text-align: start">Contact us: <a href="mailto:support@xaqsoor.com">support@xaqsoor.com</a> | +252-456-7890</p>
+            <p style="font-size: 12px; opacity: 0.8; margin-top: 20px;">© 2025 Xaqsoor Political Party. All rights reserved.</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

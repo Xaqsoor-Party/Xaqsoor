@@ -1,0 +1,70 @@
+.langSwitcher {
+    display: flex;
+    align-items: center;
+    transition: var(--transition-normal);
+    background: black;
+    border-radius: var(--radius-md);
+}
+
+.langSwitcher.mobile {
+    flex-direction: column;
+    width: fit-content;
+    background-color: transparent;
+}
+
+.langButton {
+    background-color: transparent;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-light);
+    transition: var(--transition-fast);
+    outline: none;
+    border-radius: var(--radius-sm);
+}
+
+.langButton:hover:not(.activeLang) {
+    background-color: var(--color-primary-dark);
+    color: var(--color-secondary-light);
+}
+
+.langButton.activeLang {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    font-weight: 700;
+    cursor: default;
+    box-shadow: var(--shadow-sm);
+}
+
+.langSwitcher.mobile .langButton {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: var(--font-size-base);
+    border-radius: 0;
+}
+
+.langSwitcher.mobile .langButton:last-child {
+    border-bottom: none;
+}
+
+.langSwitcher.mobile .langButton.activeLang {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    box-shadow: none;
+}
+
+.langDivider {
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+    margin: 0 var(--spacing-xxs);
+    display: flex;
+    align-items: center;
+}
+
+.langSwitcher.mobile .langDivider {
+    display: none;
+}

@@ -1,0 +1,160 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Roboto,
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+    background: var(--color-background);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+:root {
+    --color-nav-header: #000000;
+    --color-side-nav: #EA533c;
+    --color-footer: #1b273d;
+
+    --color-primary: #1b273d; /* Dark navy blue */
+    --color-primary-hover: #162031; /* Slightly darker for hover */
+    --color-primary-light: #3a4a6d; /* Lighter navy */
+    --color-primary-lighter: #6173a1; /* Even lighter */
+    --color-primary-dark: #121c29; /* Darker shade */
+    --color-primary-darker: #0b1420;
+    --color-primary-transparent: rgba(27, 39, 61, 0.1); /* Transparent variant */
+    --color-primary-gradient: linear-gradient(90deg, #1b273d 0%, #162031 100%);
+    --color-primary-accent: #4a7d2a;
+
+    /* Secondary Color Scheme */
+    --color-secondary: #EA533c; /* Matches side nav color */
+    --color-secondary-hover: #d84a34; /* Slightly darker for hover */
+    --color-secondary-light: #f6b5a8; /* Light, soft coral */
+    --color-secondary-dark: #b23f2c; /* Darker red-orange */
+    --color-secondary-border: #f4a691; /* Soft border */
+    --color-secondary-background: #fcedea; /* Very light coral background */
+    --color-secondary-text: #7a2a1f; /* Dark reddish text */
+    --color-secondary-gradient: linear-gradient(90deg, #EA533c 0%, #b23f2c 100%);
+
+    /* Status Colors */
+    --color-error: #dc3545;
+    --color-error-hover: #c82333;
+    --color-error-background: #f8d7da;
+    --color-error-dark: #b02a37;
+
+    --color-warning: #ffc107;
+    --color-warning-background: #fff3cd;
+
+    --color-success: #28a745;
+    --color-success-background: #e8f5e9;
+
+    /* General Colors */
+    --color-white: #ffffff;
+    --color-background: #ffffff;
+    --color-background-disabled: #f2f2f2;
+    --color-background-accent: #f5f8fa;
+    --color-background-secondary: #eaeef3;
+
+    /* Text Colors */
+    --color-text-primary: #333333;
+    --color-text-secondary: #666666;
+    --color-text-tertiary: #888888;
+    --color-text-label: #5e6c7a;
+    --color-error-label: #721c24;
+    --color-placeholder: #A0A0A0;
+    --color-text-light: #ffffff;
+
+    /* Borders */
+    --color-border: #CCCCCC;
+    --color-error-border: #f5c6cb;
+    --color-border-focus: #1b273d;
+
+    /* Overlay */
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-overlay-light: rgba(0, 0, 0, 0.2);
+
+    /* Spacing */
+    --spacing-xxs: 0.125rem;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 0.75rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-xxl: 3rem;
+
+    /* Border Radius */
+    --radius-sm: 3px;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.4s ease;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --shadow-focus: 0 0 5px rgba(27, 39, 61, 0.4);
+
+    /* Typography */
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.125rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 2rem;
+
+    /* Z-Index */
+    --z-index-base: 1;
+    --z-index-dropdown: 100;
+    --z-index-sticky: 200;
+    --z-index-fixed: 300;
+    --z-index-modal: 500;
+    --z-index-popover: 600;
+    --z-index-tooltip: 700;
+    --z-index-toast: 800;
+    --z-index-overlay: 900;
+    --z-index-max: 9999;
+
+    /* Breakpoints */
+    --breakpoint-mobile: 768px;
+    --breakpoint-tablet: 1024px;
+    --breakpoint-desktop: 1280px;
+}

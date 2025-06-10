@@ -1,0 +1,199 @@
+.navigationContainer {
+    position: relative;
+    display: flex;
+    height: 100%;
+}
+
+.sideNav {
+    background-color: var(--color-side-nav);
+    width: 280px;
+    overflow-y: auto;
+    /*transition: width var(--transition-normal);*/
+    transition: width var(--transition-normal), box-shadow var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+}
+
+.closed {
+    width: 0;
+    overflow: hidden;
+    border-right: none;
+}
+
+.navItems {
+    padding: var(--spacing-md) 0;
+    flex-grow: 1;
+}
+
+.navItemContainer {
+    margin-bottom: var(--spacing-xxs);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--color-white);
+    position: relative;
+}
+
+.navItem:hover {
+    background-color: var(--color-secondary-dark);
+    color: var(--color-white);
+}
+
+.active {
+    background-color: var(--color-secondary-dark);
+    color: var(--color-white);
+    font-weight: 600;
+}
+
+.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 4px;
+    background-color: var(--color-primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.iconWrapper {
+    margin-right: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    color: inherit;
+}
+
+.iconWrapper svg {
+    width: 22px;
+    height: 22px;
+}
+
+.chevron {
+    margin-left: auto;
+    transition: transform var(--transition-fast);
+    display: flex;
+    align-items: center;
+}
+
+.chevron svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-secondary-light);
+}
+
+.subItems {
+    margin-left: var(--spacing-xl);
+    border-left: 1px solid var(--color-secondary-light);
+    padding-left: var(--spacing-xs);
+    margin-top: var(--spacing-xxs);
+    margin-bottom: var(--spacing-xxs);
+}
+
+.subItems .navItem {
+    padding-top: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+}
+
+.toggleButton {
+    bottom: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    padding: var(--spacing-md);
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    color: var(--color-primary);
+    font-size: var(--font-size-md);
+    box-shadow: var(--shadow-sm);
+    z-index: var(--z-index-dropdown);
+}
+
+.toggleButton:hover {
+    background-color: var(--color-background-secondary);
+    color: var(--color-primary-hover);
+}
+
+.closed .navText {
+    display: none;
+}
+
+.closed .chevron {
+    display: none;
+}
+
+.closed .navItem {
+    justify-content: center;
+    padding: var(--spacing-sm);
+}
+
+.closed .iconWrapper {
+    margin-right: 0;
+}
+
+.closed .subItems {
+    display: none;
+}
+
+.mobileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-background-accent);
+}
+
+.mobileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-secondary-dark);
+    background: var(--color-nav-header);
+    min-height: 60px;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-white);
+    letter-spacing: var(--spacing-xxs);
+    text-transform: uppercase;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-white);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    align-items: center;
+    display: flex;
+    transition: var(--transition-fast);
+}
+
+.navText {
+    font-size: var(--font-size-base);
+    transition: color var(--transition-fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

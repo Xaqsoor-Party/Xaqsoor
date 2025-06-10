@@ -1,0 +1,128 @@
+.nav {
+    background-color: var(--color-primary);
+    /*position: fixed;*/
+    width: 100%;
+    z-index: var(--z-index-modal);
+    box-shadow: var(--shadow-md);
+    height: 4rem;
+}
+
+.container {
+    max-width: var(--breakpoint-desktop);
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.navItems {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.navLink {
+    color: white;
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm) 0;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.navLink:hover {
+    color: var(--color-text-light);
+}
+
+.navLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-text-light);
+    transition: var(--transition-fast);
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+.mobileMenuButton {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.mobileMenuButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobileMenuIcon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+}
+
+.mobileMenu {
+    display: none;
+    background-color: var(--color-primary-hover);
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-dropdown);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md) 0;
+}
+
+.mobileNavItems {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobileNavLink {
+    color: white;
+    font-size: var(--font-size-base);
+    padding: var(--spacing-md) var(--spacing-xl);
+    transition: var(--transition-fast);
+    display: block;
+}
+
+.mobileNavLink:hover {
+    color: var(--color-text-light);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+    .navItems {
+        display: none;
+    }
+
+    .mobileMenuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobileMenu.show {
+        display: block;
+    }
+}

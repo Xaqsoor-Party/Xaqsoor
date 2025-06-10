@@ -1,0 +1,216 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xl);
+    position: relative;
+}
+
+.profilePicWrapper {
+    position: relative;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--color-background-disabled);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-border);
+    transition: var(--transition-normal);
+}
+
+.profilePicWrapper:not(.isEditing):hover {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md);
+}
+
+.profilePic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-normal);
+}
+
+.deletePhotoBtn {
+    position: absolute;
+    bottom: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xs);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-fast);
+}
+
+.deletePhotoBtn:hover {
+    background: var(--color-error);
+    border-color: var(--color-error-dark);
+}
+
+.deletePhotoBtn img {
+    filter: invert(0);
+}
+
+.deletePhotoBtn:hover img {
+    filter: invert(1);
+}
+
+.initialsPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-secondary-text);
+    border-radius: 50%;
+}
+
+.firstLetter {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+}
+
+.profilePicInput {
+    display: none;
+}
+
+.profilePicLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-overlay-light);
+    backdrop-filter: blur(2px);
+    border-radius: 50%;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.profilePicWrapper:hover .profilePicLabel {
+    opacity: 1;
+}
+
+.profilePicLabel:hover {
+    background: var(--color-overlay);
+}
+
+.profilePicLabel img {
+    width: 3rem;
+    height: 3rem;
+    filter: invert(1);
+}
+
+
+.editButton {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.editButton:hover {
+    background: var(--color-background-disabled);
+    transform: translateY(-1px);
+}
+
+.actionButtons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.saveButton,
+.cancelButton {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.saveButton {
+    background: var(--color-success);
+    color: var(--color-white);
+}
+
+.saveButton:hover {
+    background: var(--color-success-background);
+    border-color: var(--color-success);
+    color: var(--color-primary-accent);
+}
+
+
+.cancelButton {
+    background: var(--color-error);
+    border-color: var(--color-error);
+    color: var(--color-white);
+}
+
+.cancelButton:hover {
+    background: var(--color-error-background);
+    border-color: var(--color-error);
+    color: var(--color-error-dark);
+}
+
+.errorMessage {
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--color-error-background);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-error-border);
+    width: fit-content;
+    margin-top: var(--spacing-sm);
+    text-align: center;
+    max-width: 100%;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+
+@media (max-width: 768px) {
+    .profilePicWrapper {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .firstLetter {
+        font-size: var(--font-size-xl);
+    }
+}
+

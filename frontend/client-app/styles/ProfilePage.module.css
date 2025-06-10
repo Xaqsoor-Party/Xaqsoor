@@ -1,0 +1,88 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.profileContainer {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.backgroundBox {
+    background: var(--color-primary-gradient);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    position: relative;
+    height: 250px;
+    width: 100%;
+}
+
+.initialsCircle {
+    overflow: hidden;
+    position: absolute;
+    left: 30px;
+    bottom: -50px;
+}
+
+.userDetails {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
+}
+
+.fullName {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    margin: 0;
+}
+
+.navigationTabs {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    border-top: 2px solid var(--color-primary-light);
+    padding: var(--spacing-xl) ;
+    align-content: center;
+    align-items: center;
+}
+
+.navTab {
+    cursor: pointer;
+    color: var(--color-primary-light);
+    font-weight: 600;
+    font-size: var(--font-size-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    transition: color var(--transition-fast);
+    border-bottom: 3px solid transparent;
+}
+
+.navTab:hover,
+.navTab:focus {
+    color: var(--color-secondary);
+    border-bottom-color: var(--color-secondary);
+    outline: none;
+}
+
+.activeTab {
+    color: var(--color-secondary);
+    border-bottom-color: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+
+    .fullName {
+        font-size: var(--font-size-lg);
+    }
+
+    .navigationTabs {
+        align-items: flex-start;
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+
+    .navTab {
+        font-size: var(--font-size-base);
+    }
+}

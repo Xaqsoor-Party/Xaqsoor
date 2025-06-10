@@ -1,0 +1,104 @@
+.card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+    max-width: 400px;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.avatar {
+    margin-right: var(--spacing-md);
+    border-radius: 50%;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary-light);
+}
+
+.avatarLetter {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: var(--color-primary-light);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.name {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    font-weight: 700;
+    margin: 0;
+}
+
+.status {
+    font-size: var(--font-size-sm);
+    margin: var(--spacing-xs) 0;
+    font-weight: bold;
+}
+
+.city {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin: 0;
+}
+
+.moreIcon {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-normal);
+    cursor: pointer;
+}
+
+.moreIcon:hover {
+    color: var(--color-primary);
+}
+
+/* Status color styles */
+.active {
+    color: var(--color-success);
+}
+
+.pending {
+    color: var(--color-warning);
+}
+
+.inactive {
+    color: var(--color-error);
+}
+
+.banned {
+    color: var(--color-error-dark);
+}

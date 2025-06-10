@@ -1,0 +1,110 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    width: 100%;
+    height: 100vh;
+    padding: 0 var(--spacing-lg);
+}
+
+.logoContainer {
+    padding: var(--spacing-md) var(--spacing-xxl);
+}
+
+.verificationSection {
+    display: flex;
+    flex-direction: column;
+    /*gap: var(--spacing-lg);*/
+    align-items: center;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+}
+
+.languageSwitcherContainer {
+    align-self: flex-end;
+    margin-bottom: var(--spacing-sm);
+}
+
+.title {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.description {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+}
+
+.instructions {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-lg);
+}
+
+.mfaLink {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.mfaLink:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+.errorMessage {
+    background-color: var(--color-error-background);
+    color: var(--color-error-label);
+    border: 1px solid var(--color-error-border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .logoContainer {
+        padding: var(--spacing-sm);
+    }
+
+    .verificationSection {
+        padding: var(--spacing-lg);
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .title {
+        font-size: var(--font-size-xl);
+    }
+
+    .description,
+    .instructions {
+        font-size: var(--font-size-sm);
+    }
+}
