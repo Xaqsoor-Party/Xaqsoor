@@ -58,3 +58,8 @@ export interface SetPasswordRequest {
     key: string;
     password: string;
 }
+
+export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+}

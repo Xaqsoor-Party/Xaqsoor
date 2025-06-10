@@ -1,7 +1,7 @@
 import useAxiosPrivate from "@/api/hooks/useAxiosPrivate";
 import {
     ApiResponse,
-    AuthResponseData,
+    AuthResponseData, ChangePasswordRequest,
     MfaSetupResponseData,
     MfaVerificationRequest,
     RefreshTokenResponseData,
@@ -19,7 +19,7 @@ const useAuthApi = () => {
     const axiosPrivate = useAxiosPrivate();
 
     const registerUser = async (userData: UserCreateRequest): Promise<string> => {
-        const response = await axios.post<ApiResponse<{}>>(
+        const response = await axios.post<ApiResponse<unknown>>(
             `${BASE_URL}/register`,
             userData
         );
@@ -67,8 +67,8 @@ const useAuthApi = () => {
         return response.data;
     };
 
-    const logout = async (): Promise<ApiResponse<{}>> => {
-        const response = await axiosPrivate.post<ApiResponse<{}>>(
+    const logout = async (): Promise<ApiResponse<unknown>> => {
+        const response = await axiosPrivate.post<ApiResponse<unknown>>(
             `${BASE_URL}/logout`,
             {withCredentials: true}
         );
@@ -84,7 +84,7 @@ const useAuthApi = () => {
     };
 
     const resetPassword = async (requestData: SetPasswordRequest): Promise<string> => {
-        const response = await axios.post<ApiResponse<{}>>(
+        const response = await axios.post<ApiResponse<unknown>>(
             `${BASE_URL}/reset-password`,
             requestData
         );
@@ -92,10 +92,18 @@ const useAuthApi = () => {
     };
 
     const requestPasswordReset = async (email: string): Promise<string> => {
-        const response = await axiosPrivate.post<ApiResponse<{}>>(
+        const response = await axiosPrivate.post<ApiResponse<unknown>>(
             `${BASE_URL}/request-password-reset`,
             {},
             {params: {email}}
+        );
+        return response.data.message;
+    };
+
+    const changePassword = async (userId: number, changePasswordRequest: ChangePasswordRequest): Promise<string> => {
+        const response = await axiosPrivate.post<ApiResponse<unknown>>(
+            `${BASE_URL}/${userId}/change-password`,
+            changePasswordRequest
         );
         return response.data.message;
     };
@@ -109,7 +117,8 @@ const useAuthApi = () => {
         verifyConfirmationKey,
         resetPassword,
         requestPasswordReset,
-        refreshToken
+        refreshToken,
+        changePassword,
     };
 };
 
