@@ -15,7 +15,7 @@ public class AcademicRecordMapper {
                 record.getInstitutionName(),
                 record.getDegree(),
                 record.getFieldOfStudy(),
-                record.getLevel().name(),
+                record.getLevel().getValue(),
                 record.getLocation(),
                 record.getCurrentlyStudying(),
                 record.getStartDate() != null ? record.getStartDate().format(FORMATTER) : null,

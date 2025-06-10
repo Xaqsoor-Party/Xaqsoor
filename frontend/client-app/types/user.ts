@@ -32,3 +32,53 @@ export interface User {
     accountNonLocked?: boolean;
     enabled?: boolean;
 }
+
+export interface UserUpdateDTO {
+    id: number;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    gender: string;
+    placeOfBirth?: string;
+    dateOfBirth?: string; // ISO string
+    bio?: string;
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+}
+
+export interface AcademicRecordRequest {
+    id: number;
+    institutionName: string;
+    degree?: string;
+    fieldOfStudy: string;
+    level: string;
+    location: string;
+    currentlyStudying: boolean;
+    startDate: string; // ISO date string
+    endDate?: string;  // ISO date string
+}
+
+export interface WorkExperienceRequest {
+    id: number;
+    jobTitle: string;
+    companyName: string;
+    location: string;
+    startDate: string; // ISO date string
+    endDate?: string;  // ISO date string
+    currentlyWorking: boolean;
+    description?: string;
+}
+
+export interface UserProfileUpdateRequest {
+    userUpdateDTO: UserUpdateDTO;
+    academicRecords: AcademicRecordRequest[];
+    workExperiences: WorkExperienceRequest[];
+}
+
+export interface UserProfileResponse {
+    userData: UserUpdateDTO;
+    academicRecords: AcademicRecordRequest[];
+    workExperiences: WorkExperienceRequest[];
+}

@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record WorkExperienceRequest(
+        Long id,
+
         @NotBlank(message = "Job title is required")
         @Size(max = 100, message = "Job title must be at most 100 characters")
         String jobTitle,
