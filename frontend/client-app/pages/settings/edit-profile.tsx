@@ -46,7 +46,7 @@ const EditProfile = () => {
     });
 
     const {getUserProfile, updateUserProfile} = useUserProfileApi();
-    const {user} = useAuthentication();
+    const {user, setUser} = useAuthentication();
 
     const showAlert = (title: string, message: string, error = false) => {
         setModal({
@@ -128,6 +128,7 @@ const EditProfile = () => {
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
             showAlert("Validation Error", "Please correct the highlighted fields.", true);
+            setLoading(prev => ({...prev, submit: false}));
             return;
         }
 
@@ -155,7 +156,21 @@ const EditProfile = () => {
         try {
             const response = await updateUserProfile(user?.id, updateRequest);
             if (response.message === "User profile updated successfully") {
-                showAlert("Success", "Profile updated successfully!",false);
+                showAlert("Success", "Profile updated successfully!", false);
+                setUser({
+                    ...user,
+                    firstName: formData.firstName,
+                    middleName: formData.middleName,
+                    lastName: formData.lastName,
+                    gender: formData.gender,
+                    placeOfBirth: formData.placeOfBirth,
+                    dateOfBirth: formData.dateOfBirth,
+                    bio: formData.bio,
+                    street: formData.street,
+                    city: formData.city,
+                    state: formData.state,
+                    country: formData.country
+                });
             } else {
                 showAlert("Error", response.message || "Failed to update profile.", true);
             }

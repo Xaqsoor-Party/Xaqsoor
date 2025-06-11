@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import useAcademicRecordApi from '@/api/hooks/useAcademicRecordApi'; // Adjust the path if needed
-import { AcademicRecordDto } from '@/types/academic'; // Adjust the path if needed
-import styles from './AcademicRecordDisplay.module.css'; // We'll create this CSS file
+import useAcademicRecordApi from '@/api/hooks/useAcademicRecordApi';
+import { AcademicRecordDto } from '@/types/academic';
+import styles from './AcademicRecordDisplay.module.css';
 import { FiBookOpen, FiCalendar, FiMapPin, FiAward } from 'react-icons/fi';
-import SpinLoading from '@/components/common/SpinLoading/SpinLoading'; // Assuming you have this component
+import SpinLoading from '@/components/common/SpinLoading/SpinLoading';
+import {useAuthentication} from "@/auth/AuthProvider";
+import {formatDuration} from "@/util/dateUtils";
 
 const AcademicRecordDisplay: React.FC = () => {
     const { getAcademicRecords } = useAcademicRecordApi();
@@ -11,14 +13,17 @@ const AcademicRecordDisplay: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Using a hardcoded user ID of 11 for demonstration
-    const userId = 11;
+    const {user} = useAuthentication();
 
     useEffect(() => {
         const fetchAcademicRecords = async () => {
+            if (!user?.id){
+                return
+            }
+
             try {
                 setIsLoading(true);
-                const response = await getAcademicRecords(userId);
+                const response = await getAcademicRecords(user?.id);
                 if (response.data && response.data.academicRecords) {
                     setAcademicRecords(response.data.academicRecords.academicRecords);
                 } else {
@@ -33,38 +38,8 @@ const AcademicRecordDisplay: React.FC = () => {
         };
 
         void fetchAcademicRecords();
-    }, [ userId]);
-
-    const formatDuration = (startDateStr: string, endDateStr?: string, currentlyStudying?: boolean) => {
-        const parseDate = (dateString: string) => {
-            const parts = dateString.split(' ');
-            if (parts.length === 3) {
-                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const monthIndex = monthNames.findIndex(name => name.toLowerCase() === parts[1].substring(0, 3).toLowerCase());
-
-                if (monthIndex > -1) {
-                    return new Date(parseInt(parts[2]), monthIndex, parseInt(parts[0]));
-                }
-            }
-            return new Date(dateString); // Fallback for other formats
-        };
-
-        const startDate = parseDate(startDateStr);
-        let durationText = "";
-
-        if (currentlyStudying) {
-            durationText = `Present`;
-        } else if (endDateStr) {
-            const endDate = parseDate(endDateStr);
-            durationText = `${endDate.getFullYear()}`;
-        } else {
-            durationText = "End Date N/A";
-        }
-
-        const startMonthYear = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(startDate);
-
-        return `${startMonthYear} - ${durationText}`;
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ user?.id]);
 
     if (isLoading) {
         return (

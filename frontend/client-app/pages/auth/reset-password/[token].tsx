@@ -52,6 +52,7 @@ export default function ResetPasswordPage() {
         if (token) {
             void validateToken(token as string);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     const [formData, setFormData] = useState({

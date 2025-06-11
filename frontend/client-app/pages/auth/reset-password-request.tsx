@@ -16,6 +16,7 @@ export default function ResetPasswordRequest() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isConfirmed, setIsConfirmed] = useState(false);
+    const {language} = useLanguage();
     const {requestPasswordReset} = useAuthApi();
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,7 +40,7 @@ export default function ResetPasswordRequest() {
         return <ResetPasswordRequestConfirmation email={email}/>;
     }
 
-    const {language} = useLanguage();
+
     const translation = getTranslations(language, 'authPages').ResetPasswordRequest;
 
     return (

@@ -5,6 +5,7 @@ import styles from './WorkExperienceDisplay.module.css';
 import {FiAlignLeft, FiCalendar, FiMapPin} from 'react-icons/fi';
 import SpinLoading from '@/components/common/SpinLoading/SpinLoading';
 import {useAuthentication} from "@/auth/AuthProvider";
+import {formatDuration} from "@/util/dateUtils";
 
 const WorkExperienceDisplay: React.FC = () => {
     const {getWorkExperiences} = useWorkExperienceApi();
@@ -39,36 +40,6 @@ const WorkExperienceDisplay: React.FC = () => {
         void fetchWorkExperiences();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.id]);
-
-    const formatDuration = (startDateStr: string, endDateStr: string, currentlyWorking: boolean) => {
-        const parseDate = (dateString: string) => {
-            const parts = dateString.split(' ');
-            if (parts.length === 3) {
-                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const monthIndex = monthNames.findIndex(name => name.toLowerCase() === parts[1].substring(0, 3).toLowerCase());
-
-                if (monthIndex > -1) {
-                    return new Date(parseInt(parts[2]), monthIndex, parseInt(parts[0]));
-                }
-            }
-            return new Date(dateString);
-        };
-
-        const startDate = parseDate(startDateStr);
-        let endDate;
-        let durationText;
-
-        if (currentlyWorking) {
-            durationText = `Present`;
-        } else {
-            endDate = parseDate(endDateStr);
-            durationText = `${endDate.getFullYear()}`;
-        }
-
-        const startMonthYear = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(startDate);
-
-        return `${startMonthYear} - ${durationText}`;
-    };
 
     if (isLoading) {
         return (
