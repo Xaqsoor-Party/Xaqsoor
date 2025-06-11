@@ -1,31 +1,63 @@
-import {  ReactNode } from 'react';
-import Footer from './Footer/Footer';
-import Nav from "@/components/Layout/Nav/Nav";
-import styles from './Layout.module.css';
-import {useRouter} from "next/router";
+import {useState, useEffect, ReactNode} from 'react';
+import styles from "./Layout.module.css";
+import {Navbar} from "./Navbar/Navbar";
+import Sidebar from "./Sidebar/Sidebar";
+import Footer from "./Footer/Footer";
 
 interface LayoutProps {
     children: ReactNode;
 }
 
-export const Layout = ({ children }: LayoutProps) => {
-    const router = useRouter();
-    const hideFooter = router.pathname === '/chat-service';
+export const Layout = ({children}: LayoutProps) => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Check mobile state on resize
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            if (mobile && isSidebarOpen) {
+                setIsSidebarOpen(false);
+            }
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleSidebarToggle = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <div className={styles.layout}>
             <div className={styles.navbarContainer}>
-                <Nav/>
+                <Navbar
+                    onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+                    isMobile={isMobile}
+                />
             </div>
 
-            <main className={styles.mainContent}>
-                {children}
-            </main>
+            <div className={styles.contentContainer}>
 
-            {!hideFooter && (
-                <div className={styles.footerContainer}>
-                    <Footer />
+                <div className={styles.sidebarContainer}>
+                    <Sidebar
+                        isOpen={isSidebarOpen}
+                        onClose={handleSidebarToggle}
+                        isMobile={isMobile}
+                    />
                 </div>
-            )}
+
+                <main className={styles.mainContent}>
+                    {children}
+                </main>
+            </div>
+            <div className={styles.footerContainer}>
+                <Footer/>
+            </div>
         </div>
     );
 };

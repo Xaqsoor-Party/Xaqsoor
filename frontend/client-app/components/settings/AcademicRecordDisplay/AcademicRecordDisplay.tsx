@@ -6,13 +6,17 @@ import { FiBookOpen, FiCalendar, FiMapPin, FiAward } from 'react-icons/fi';
 import SpinLoading from '@/components/common/SpinLoading/SpinLoading';
 import {useAuthentication} from "@/auth/AuthProvider";
 import {formatDuration} from "@/util/dateUtils";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
 
 const AcademicRecordDisplay: React.FC = () => {
     const { getAcademicRecords } = useAcademicRecordApi();
     const [academicRecords, setAcademicRecords] = useState<AcademicRecordDto[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const {language} = useLanguage();
+    const t = getTranslations(language, 'settingsPage').profile.academicRecord;
     const {user} = useAuthentication();
 
     useEffect(() => {
@@ -27,11 +31,10 @@ const AcademicRecordDisplay: React.FC = () => {
                 if (response.data && response.data.academicRecords) {
                     setAcademicRecords(response.data.academicRecords.academicRecords);
                 } else {
-                    setError('No academic record data found.');
+                    setError(t.errors.noData);
                 }
             } catch (err) {
-                console.error("Failed to fetch academic records:", err);
-                setError('Failed to load academic records. Please try again later.');
+                setError(extractErrorMessage(err,t.errors.failedToLoad));
             } finally {
                 setIsLoading(false);
             }
@@ -45,7 +48,7 @@ const AcademicRecordDisplay: React.FC = () => {
         return (
             <div className={styles.loadingContainer}>
                 <SpinLoading size={50} />
-                <p>Loading academic records...</p>
+                <p>{t.loadingMessage}</p>
             </div>
         );
     }
@@ -55,12 +58,12 @@ const AcademicRecordDisplay: React.FC = () => {
     }
 
     if (academicRecords.length === 0) {
-        return <div className={styles.noDataMessage}>No academic records added yet.</div>;
+        return <div className={styles.noDataMessage}>{t.noDataMessage}</div>;
     }
 
     return (
         <div className={styles.academicRecordContainer}>
-            <h2 className={styles.sectionTitle}>Academic Records</h2>
+            <h2 className={styles.sectionTitle}>{t.sectionTitle}</h2>
             {academicRecords.map((record) => (
                 <div key={record.id} className={styles.recordCard}>
                     <div className={styles.recordHeader}>

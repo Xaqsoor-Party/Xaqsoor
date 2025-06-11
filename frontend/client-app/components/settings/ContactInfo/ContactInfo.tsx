@@ -1,11 +1,14 @@
 import React from 'react';
-import styles from './ContactInfo.module.css'; // Make sure this path is correct
-import {FiMail, FiMapPin, FiPhone} from 'react-icons/fi'; // Added FiMapPin for address
+import styles from './ContactInfo.module.css';
+import {FiMail, FiMapPin, FiPhone} from 'react-icons/fi';
 import {useAuthentication} from "@/auth/AuthProvider";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const ContactInfo: React.FC = () => {
     const {user} = useAuthentication();
-
+    const {language} = useLanguage();
+    const t = getTranslations(language, 'settingsPage').profile.contactInfo;
     if (!user) {
         return null;
     }
@@ -23,7 +26,7 @@ const ContactInfo: React.FC = () => {
 
     return (
         <div className={styles.contactContainer}>
-            <h2 className={styles.contactTitle}>Your Contact Details</h2>
+            <h2 className={styles.contactTitle}>{t.title}</h2>
 
             {user.email && (
                 <div className={styles.contactItem}>
@@ -50,9 +53,8 @@ const ContactInfo: React.FC = () => {
                     </span>
             </div>
 
-
             {!user.email && !user.phone && !(user.street || user.city || user.state || user.country) && (
-                <p className={styles.noContactInfo}>No contact information available.</p>
+                <p className={styles.noContactInfo}>{t.noContactInfo}</p>
             )}
         </div>
     );

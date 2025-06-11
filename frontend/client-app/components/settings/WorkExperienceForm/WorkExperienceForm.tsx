@@ -6,6 +6,8 @@ import Checkbox from '@/components/common/Checkbox/Checkbox';
 import TextArea from '@/components/common/TextArea/TextArea';
 import styles from './WorkExperienceForm.module.css';
 import {WorkExperienceRequest} from "@/types/user";
+import {getTranslations} from "@/translations";
+import {useLanguage} from "@/context/LanguageContext";
 
 interface WorkExperienceFormProps {
     records: WorkExperienceRequest[];
@@ -21,10 +23,14 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
     ) => {
         const updated = [...records];
 
-        // @ts-ignore
+        // @ts-expect-error TS7053: Dynamic field assignment causes index signature error
         (updated[index])[field] = value;
         onChange(updated);
     };
+
+    const {language} = useLanguage();
+    const t = getTranslations(language, "settingsPage").workExperienceForm;
+
 
     const handleAdd = () => {
         const newRecord: WorkExperienceRequest = {
@@ -49,20 +55,20 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
             {records.map((record, idx) => (
                 <div key={record.id} className={styles.recordItem}>
                     <div className={styles.recordHeader}>
-                        <h3 className={styles.recordTitle}>Work Experience #{idx + 1}</h3>
+                        <h3 className={styles.recordTitle}>{t.entryTitle}</h3>
                         <ActionButton type="button" onClick={() => handleRemove(idx)} className={styles.removeButton}>
-                            Remove
+                            {t.removeButton}
                         </ActionButton>
                     </div>
 
                     <div className={styles.row}>
                         <Input
                             type={"text"}
-                            label="Job Title"
+                            label={t.fields.jobTitle.label}
                             name="jobTitle"
                             value={record.jobTitle}
                             onChange={(e) => handleRecordChange(idx, 'jobTitle', e.target.value)}
-                            placeholder="e.g., Software Engineer"
+                            placeholder={t.fields.jobTitle.placeholder}
                             required
                             maxLength={100}
                             errorMessage={errors?.[`workExperiences.${idx}.jobTitle`]}
@@ -70,11 +76,11 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
 
                         <Input
                             type={"text"}
-                            label="Company Name"
+                            label={t.fields.companyName.label}
                             name="companyName"
                             value={record.companyName}
                             onChange={(e) => handleRecordChange(idx, 'companyName', e.target.value)}
-                            placeholder="e.g., Tech Solutions Inc."
+                            placeholder={t.fields.companyName.placeholder}
                             required
                             maxLength={120}
                             errorMessage={errors?.[`workExperiences.${idx}.companyName`]}
@@ -83,25 +89,25 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
 
                     <Input
                         type={"text"}
-                        label="Location"
+                        label={t.fields.location.label}
                         name="location"
                         value={record.location}
                         onChange={(e) => handleRecordChange(idx, 'location', e.target.value)}
-                        placeholder="City, Country"
+                        placeholder={t.fields.location.placeholder}
                         required
                         maxLength={100}
                         errorMessage={errors?.[`workExperiences.${idx}.location`]}
                     />
 
                     <Checkbox
-                        label="Currently Working Here"
+                        label={t.fields.currentlyWorking.label}
                         checked={record.currentlyWorking}
                         onChange={(e) => handleRecordChange(idx, 'currentlyWorking', e.target.checked)}
                     />
 
                     <div className={styles.row}>
                         <DatePicker
-                            label="Start Date"
+                            label={t.fields.startDate.label}
                             name="startDate"
                             value={record.startDate}
                             onChange={(e) => handleRecordChange(idx, 'startDate', e.target.value)}
@@ -112,7 +118,7 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
                         />
                         {!record.currentlyWorking && (
                             <DatePicker
-                                label="End Date"
+                                label={t.fields.endDate.label}
                                 name="endDate"
                                 value={record.endDate || null}
                                 onChange={(e) => handleRecordChange(idx, 'endDate', e.target.value)}
@@ -125,11 +131,11 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
                     </div>
 
                     <TextArea
-                        label="Description (Optional)"
+                        label={t.fields.description.label}
                         name="description"
                         value={record.description || ''}
                         onChange={(e) => handleRecordChange(idx, 'description', e.target.value)}
-                        placeholder="Describe your responsibilities, achievements, and key projects."
+                        placeholder={t.fields.description.placeholder}
                         maxLength={1000}
                     />
                 </div>
@@ -137,7 +143,7 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
 
             {records.length < 5 && (
                 <ActionButton type="button" onClick={handleAdd} className={styles.addButton}>
-                    Add Work Experience
+                    {t.addButton}
                 </ActionButton>
             )}
 

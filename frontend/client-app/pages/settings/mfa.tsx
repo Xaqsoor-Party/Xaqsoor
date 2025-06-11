@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import useMfaApi from '@/api/hooks/useMfaApi';
-import { useAuthentication } from '@/auth/AuthProvider';
+import {useAuthentication} from '@/auth/AuthProvider';
 import SpinLoading from '@/components/common/SpinLoading/SpinLoading';
 import ActionButton from '@/components/common/ActionButton/ActionButton';
-import { FiCheckCircle, FiXCircle, FiInfo } from 'react-icons/fi';
+import {FiCheckCircle, FiInfo, FiXCircle} from 'react-icons/fi';
 import Image from 'next/image';
-import { MdQrCode } from 'react-icons/md';
+import {MdQrCode} from 'react-icons/md';
 import styles from '@/styles/MfaSetupPage.module.css';
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
 
 const MfaSetupPage: React.FC = () => {
-    const { user, setUser } = useAuthentication();
-    const { setupMfa, disableMfa } = useMfaApi();
+    const {user, setUser} = useAuthentication();
+    const {setupMfa, disableMfa} = useMfaApi();
+    const {language} = useLanguage();
+    const t = getTranslations(language, "settingsPage").mfa;
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -27,7 +32,7 @@ const MfaSetupPage: React.FC = () => {
 
     const handleSetupMfa = async () => {
         if (!user?.userId) {
-            setError('User ID not found. Please log in.');
+            setError(t.messages.userNotFound);
             return;
         }
 
@@ -39,18 +44,17 @@ const MfaSetupPage: React.FC = () => {
             const response = await setupMfa(user.userId);
             if (response.data?.mfaQRCodeImageUri) {
                 setQrCodeImageUri(response.data.mfaQRCodeImageUri);
-                setSuccessMessage('MFA setup initiated. Scan the QR code with your authenticator app.');
+                setSuccessMessage(t.messages.setupSuccess);
                 setUser({
                     ...user,
                     mfaQrCodeImageUrl: response.data.mfaQRCodeImageUri,
                     mfaEnabled: true
                 });
             } else {
-                setError('Failed to generate MFA QR code. Please try again.');
+                setError(t.messages.setupError);
             }
         } catch (err) {
-            const error = err as Error;
-            setError(`Failed to initiate MFA setup. ${error.message || 'Please try again.'}`);
+            setError(extractErrorMessage(err, t.messages.setupError));
         } finally {
             setIsLoading(false);
         }
@@ -58,7 +62,7 @@ const MfaSetupPage: React.FC = () => {
 
     const handleDisableMfa = async () => {
         if (!user?.userId) {
-            setError('User ID not found. Please log in.');
+            setError(t.messages.userNotFound);
             return;
         }
 
@@ -68,7 +72,7 @@ const MfaSetupPage: React.FC = () => {
 
         try {
             await disableMfa(user.userId);
-            setSuccessMessage('MFA disabled successfully.');
+            setSuccessMessage(t.messages.disableSuccess);
             setUser({
                 ...user,
                 mfaQrCodeImageUrl: "",
@@ -76,8 +80,7 @@ const MfaSetupPage: React.FC = () => {
             });
             setQrCodeImageUri(null);
         } catch (err) {
-            const error = err as Error;
-            setError(`Failed to disable MFA. ${error.message || 'Please try again.'}`);
+            setError(extractErrorMessage(err, t.messages.disableError));
         } finally {
             setIsLoading(false);
         }
@@ -86,43 +89,43 @@ const MfaSetupPage: React.FC = () => {
     if (!user) {
         return (
             <div className={styles.loadingContainer}>
-                <SpinLoading size={50} />
+                <SpinLoading size={50}/>
                 <p>Loading user data...</p>
             </div>
         );
     }
     const breadcrumbData = [
-        { label: 'Home', link: '/' },
-        { label: 'Settings', link: '/settings' },
-        { label: 'MFA', link: '/settings/mfa' },
+        {label: 'Home', link: '/'},
+        {label: 'Settings', link: '/settings'},
+        {label: 'MFA', link: '/settings/mfa'},
     ];
 
     return (
         <>
-            <Breadcrumb breadcrumbs={breadcrumbData} />
+            <Breadcrumb breadcrumbs={breadcrumbData}/>
 
             <div className={styles.container}>
-                <h1 className={styles.pageTitle}>Multi-Factor Authentication (MFA)</h1>
+                <h1 className={styles.pageTitle}>{t.title}</h1>
 
                 <div className={styles.statusCard}>
                     <div className={isMfaEnabled ? styles.statusEnabled : styles.statusDisabled}>
                         {isMfaEnabled ? (
                             <>
-                                <FiCheckCircle className={styles.statusIcon} />
+                                <FiCheckCircle className={styles.statusIcon}/>
                                 <div>
-                                    <p className={styles.statusText}>MFA is currently <strong>Enabled</strong></p>
+                                    <p className={styles.statusText}>{t.status.enabled.title}</p>
                                     <p className={styles.statusDescription}>
-                                        Your account is secured with an extra layer of protection
+                                        {t.status.enabled.description}
                                     </p>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <FiXCircle className={styles.statusIcon} />
+                                <FiXCircle className={styles.statusIcon}/>
                                 <div>
-                                    <p className={styles.statusText}>MFA is currently <strong>Disabled</strong></p>
+                                    <p className={styles.statusText}>{t.status.disabled.title}</p>
                                     <p className={styles.statusDescription}>
-                                        For enhanced security, we recommend enabling MFA
+                                        {t.status.disabled.description}
                                     </p>
                                 </div>
                             </>
@@ -132,7 +135,7 @@ const MfaSetupPage: React.FC = () => {
 
                 {(error || successMessage) && (
                     <div className={`${styles.messageBox} ${error ? styles.error : styles.success}`}>
-                        {error ? <FiInfo /> : <FiCheckCircle />}
+                        {error ? <FiInfo/> : <FiCheckCircle/>}
                         <p>{error || successMessage}</p>
                     </div>
                 )}
@@ -141,16 +144,16 @@ const MfaSetupPage: React.FC = () => {
                     {qrCodeImageUri ? (
                         <div className={styles.qrCodeContainer}>
                             <div className={styles.qrHeader}>
-                                <MdQrCode className={styles.qrIcon} />
+                                <MdQrCode className={styles.qrIcon}/>
                                 <p className={styles.instruction}>
-                                    Scan this QR code with your authenticator app (e.g., Google Authenticator, Authy, Microsoft Authenticator)
+                                    {t.qr.instruction}
                                 </p>
                             </div>
 
                             <div className={styles.qrImageWrapper}>
                                 <Image
                                     src={qrCodeImageUri}
-                                    alt="MFA QR Code"
+                                    alt={t.qr.alt}
                                     width={200}
                                     height={200}
                                     className={styles.qrImage}
@@ -163,7 +166,7 @@ const MfaSetupPage: React.FC = () => {
                                     disabled={isLoading}
                                     className={styles.hideQrButton}
                                 >
-                                    Hide QR Code
+                                    {t.qr.hideButton}
                                 </ActionButton>
 
                                 {isMfaEnabled && (
@@ -172,7 +175,7 @@ const MfaSetupPage: React.FC = () => {
                                         disabled={isLoading}
                                         className={styles.disableButton}
                                     >
-                                        Disable MFA
+                                        {t.actions.disable}
                                     </ActionButton>
                                 )}
                             </div>
@@ -184,7 +187,7 @@ const MfaSetupPage: React.FC = () => {
                                     onClick={() => setQrCodeImageUri(user.mfaQrCodeImageUrl || null)}
                                     className={styles.showQrButton}
                                 >
-                                    Show QR Code
+                                    {t.qr.showButton}
                                 </ActionButton>
                             ) : (
                                 <ActionButton
@@ -192,7 +195,7 @@ const MfaSetupPage: React.FC = () => {
                                     disabled={isLoading}
                                     className={styles.enableButton}
                                 >
-                                    Enable MFA
+                                    {t.actions.enable}
                                 </ActionButton>
                             )}
 
@@ -202,7 +205,7 @@ const MfaSetupPage: React.FC = () => {
                                     disabled={isLoading}
                                     className={styles.disableButton}
                                 >
-                                    Disable MFA
+                                    {t.actions.disable}
                                 </ActionButton>
                             )}
                         </div>

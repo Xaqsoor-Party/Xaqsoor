@@ -8,22 +8,33 @@ import UserDataDisplay from "@/components/settings/UserDataDisplay/UserDataDispl
 import ContactInfo from "@/components/settings/ContactInfo/ContactInfo";
 import WorkExperienceDisplay from "@/components/settings/WorkExperienceDisplay/WorkExperienceDisplay";
 import AcademicRecordDisplay from "@/components/settings/AcademicRecordDisplay/AcademicRecordDisplay";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const ProfilePage: React.FC = () => {
-    const { user} = useAuthentication();
-    const [activeTab, setActiveTab] = useState<string>('About');
+    const {user} = useAuthentication();
+    const [activeTab, setActiveTab] = useState<string>('about');
+    const {language} = useLanguage();
+    const t = getTranslations(language, 'settingsPage').profile;
 
     if (!user) {
         return <div className={styles.loading}>Loading user profile...</div>;
     }
     const breadcrumbData = [
-        { label: 'Home', link: '/' },
-        { label: 'Settings', link: '/settings' },
-        { label: 'profile', link: '/settings/profile' },
+        {label: 'Home', link: '/'},
+        {label: 'Settings', link: '/settings'},
+        {label: 'profile', link: '/settings/profile'},
     ];
 
     const handleTabClick = (tab: string) => {
         setActiveTab(tab);
+    };
+
+    const tabMap = {
+        about: <UserDataDisplay/>,
+        work: <WorkExperienceDisplay/>,
+        education: <AcademicRecordDisplay/>,
+        contact: <ContactInfo/>
     };
 
     return (
@@ -34,7 +45,7 @@ const ProfilePage: React.FC = () => {
             </Head>
             <div className={styles.container}>
                 <div className={styles.profileContainer}>
-                    <Breadcrumb breadcrumbs={breadcrumbData} />
+                    <Breadcrumb breadcrumbs={breadcrumbData}/>
                     <div className={styles.backgroundBox}>
                         <div className={styles.initialsCircle}>
                             <ProfileImage/>
@@ -48,13 +59,13 @@ const ProfilePage: React.FC = () => {
                     </div>
 
                     <nav className={styles.navigationTabs}>
-                        {['About', 'Work', 'Education', 'Contact'].map((tab) => (
+                        {['about', 'work', 'education', 'contact'].map((tab) => (
                             <span
                                 key={tab}
                                 className={`${styles.navTab} ${activeTab === tab ? styles.activeTab : ''}`}
                                 onClick={() => handleTabClick(tab)}
                             >
-                            {tab}
+                                 {t.tabs[tab as keyof typeof t.tabs]}
                         </span>
                         ))}
                     </nav>
@@ -63,10 +74,7 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 <div className={styles.tabContent}>
-                    {activeTab === 'About' && <UserDataDisplay />}
-                    {activeTab === 'Work' && <WorkExperienceDisplay />}
-                    {activeTab === 'Education' && <AcademicRecordDisplay />}
-                    {activeTab === 'Contact' && <ContactInfo />}
+                    {tabMap[activeTab as keyof typeof tabMap]}
                 </div>
             </div>
 

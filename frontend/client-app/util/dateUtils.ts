@@ -37,3 +37,37 @@ export const formatDuration = (
 
     return `${startMonthYear} - ${durationText}`;
 };
+
+
+export const formatDateTime = (dateString: string | undefined) => {
+    const notAvailableText = "N/A";
+    if (!dateString) return notAvailableText;
+    try {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        }).format(date);
+    } catch {
+        return notAvailableText;
+    }
+};
+
+export const formatDate = (dateString: string | undefined) => {
+    const notAvailableText = "N/A";
+    if (!dateString) return notAvailableText;
+    try {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
+    } catch {
+        return notAvailableText;
+    }
+};

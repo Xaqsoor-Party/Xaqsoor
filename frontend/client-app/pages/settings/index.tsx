@@ -1,36 +1,40 @@
 import styles from '@/styles/Settings.module.css';
 import Link from 'next/link';
 import { FaUser, FaEdit, FaKey, FaShieldAlt, FaLaptop } from 'react-icons/fa';
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const SettingsPage = () => {
+    const {language} = useLanguage();
+    const t = getTranslations(language, "settingsPage").settings;
     const settingOptions = [
         {
-            title: 'Profile',
-            description: 'View your profile information',
+            title: t.options.profile.title,
+            description: t.options.profile.description,
             icon: <FaUser />,
             href: '/settings/profile',
         },
         {
-            title: 'Edit Profile',
-            description: 'Update your name, email, or other details',
+            title: t.options.editProfile.title,
+            description: t.options.editProfile.description,
             icon: <FaEdit />,
             href: '/settings/edit-profile',
         },
         {
-            title: 'Change Password',
-            description: 'Update your account password',
+            title: t.options.changePassword.title,
+            description: t.options.changePassword.description,
             icon: <FaKey />,
             href: '/settings/change-password',
         },
         {
-            title: 'MFA',
-            description: 'Manage two-factor authentication',
+            title: t.options.mfa.title,
+            description: t.options.mfa.description,
             icon: <FaShieldAlt />,
             href: '/settings/mfa',
         },
         {
-            title: 'Active Sessions',
-            description: 'View all devices where you are currently logged in and manage your sessions',
+            title: t.options.activeSessions.title,
+            description: t.options.activeSessions.description,
             icon: <FaLaptop />,
             href: '/settings/sessions',
         },
@@ -38,7 +42,7 @@ const SettingsPage = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Settings</h1>
+            <h1 className={styles.title}>{t.settingsTitle}</h1>
             <div className={styles.cardGrid}>
                 {settingOptions.map((option) => (
                     <Link href={option.href} key={option.href} className={styles.card}>

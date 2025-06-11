@@ -2,11 +2,13 @@ import {joinPage as enJoinPage} from "@/translations/en/joinPage";
 import {authPages as enAuthPages} from "@/translations/en/authForms";
 import {notFoundPage as enNotFoundPage} from "@/translations/en/notFoundPage";
 import {sidebarLabels as enSidebar} from "@/translations/en/sidebar";
+import {settingsPage as enSetting} from "@/translations/en/settingsPage";
 
 import {joinPage as soJoinPage} from "@/translations/so/joinPage";
 import {authPages as soAuthPages} from "@/translations/so/authForms";
 import {notFoundPage as soNotFoundPage} from "@/translations/so/notFoundPage";
 import {sidebarLabels as soSidebar} from "@/translations/so/sidebar";
+import {settingsPage as soSetting} from "@/translations/so/settingsPage";
 
 import {LanguageTranslations} from "@/types/translationsTypes";
 
@@ -16,12 +18,14 @@ const translations: LanguageTranslations = {
         authPages:enAuthPages,
         notFoundPage:enNotFoundPage,
         sidebar:enSidebar,
+        settingsPage:enSetting,
     },
     so: {
         joinPage : soJoinPage,
         authPages:soAuthPages,
         notFoundPage:soNotFoundPage,
         sidebar:soSidebar,
+        settingsPage:soSetting,
     },
 };
 

@@ -48,12 +48,23 @@ export interface UserUpdateDTO {
     country?: string;
 }
 
+
+export enum EducationLevel {
+    HIGH_SCHOOL = "High school",
+    DIPLOMA = "Diploma",
+    BACHELORS = "Bachelor's",
+    MASTERS = "Master's",
+    PHD = "PhD",
+    OTHER = "Other"
+}
+
+
 export interface AcademicRecordRequest {
     id?: number;
     institutionName: string;
     degree?: string;
     fieldOfStudy: string;
-    level: string;
+    level: EducationLevel;
     location: string;
     currentlyStudying: boolean;
     startDate: string; // ISO date string

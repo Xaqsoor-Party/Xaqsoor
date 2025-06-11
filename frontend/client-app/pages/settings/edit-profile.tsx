@@ -15,6 +15,8 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import styles from "@/styles/EditProfile.module.css";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const EditProfile = () => {
     const [formData, setFormData] = useState({
@@ -44,7 +46,8 @@ const EditProfile = () => {
         message: '',
         error: false,
     });
-
+    const {language} = useLanguage();
+    const t = getTranslations(language, "settingsPage").editProfile;
     const {getUserProfile, updateUserProfile} = useUserProfileApi();
     const {user, setUser} = useAuthentication();
 
@@ -84,10 +87,10 @@ const EditProfile = () => {
                     setAcademicRecords(profileData.academicRecords || []);
                     setWorkExperiences(profileData.workExperiences || []);
                 } else {
-                    showAlert("Error", response.message || "Failed to update profile.", true);
+                    showAlert(t.alerts.updateErrorMessage, response.message || t.alerts.fetchErrorMessage, true);
                 }
             } catch (error) {
-                showAlert("Error", extractErrorMessage(error, "Error fetching user profile"), true);
+                showAlert(t.alerts.updateErrorMessage, extractErrorMessage(error, t.alerts.updateErrorMessage), true);
             } finally {
                 setLoading(prev => ({...prev, profile: false}));
             }
@@ -127,7 +130,7 @@ const EditProfile = () => {
         const errors = validateFormData(formData, academicRecords, workExperiences);
         if (Object.keys(errors).length > 0) {
             setErrors(errors);
-            showAlert("Validation Error", "Please correct the highlighted fields.", true);
+            showAlert(t.alerts.validationTitle, t.alerts.validationMessage, true);
             setLoading(prev => ({...prev, submit: false}));
             return;
         }
@@ -156,7 +159,7 @@ const EditProfile = () => {
         try {
             const response = await updateUserProfile(user?.id, updateRequest);
             if (response.message === "User profile updated successfully") {
-                showAlert("Success", "Profile updated successfully!", false);
+                showAlert(t.alerts.updateSuccessTitle, t.alerts.updateSuccessMessage, false);
                 setUser({
                     ...user,
                     firstName: formData.firstName,
@@ -172,10 +175,10 @@ const EditProfile = () => {
                     country: formData.country
                 });
             } else {
-                showAlert("Error", response.message || "Failed to update profile.", true);
+                showAlert(t.alerts.updateErrorMessage, response.message || t.alerts.updateErrorMessage, true);
             }
         } catch (error) {
-            showAlert("Error", extractErrorMessage(error, "An unexpected error occurred while updating your profile."), true);
+            showAlert("Error", extractErrorMessage(error, t.alerts.genericErrorMessage), true);
         } finally {
             setLoading(prev => ({...prev, submit: false}));
         }
@@ -190,78 +193,75 @@ const EditProfile = () => {
     return (
         <div className={styles.container}>
             <Breadcrumb breadcrumbs={breadcrumbData}/>
-            <h1 className={styles.pageTitle}>Edit Profile</h1>
-            <p className={styles.pageSubtitle}>Update your name, contact details, and background information.</p>
+            <h1 className={styles.pageTitle}>{t.title}</h1>
+            <p className={styles.pageSubtitle}>{t.subtitle}</p>
             {loading.profile ? (
                     <div className={styles.loadingContainer}>
                         <SpinLoading size={50}/>
-                        <p>Loading profile...</p>
+                        <p>{t.loading}</p>
                     </div>
                 ) :
                 <form>
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Personal Information</h2>
+                        <h2 className={styles.sectionTitle}>{t.sections.personal}</h2>
                         <div className={styles.row}>
                             <Input
-                                label="First Name"
+                                label={t.fields.firstName.label}
                                 type="text"
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleChange}
-                                placeholder="Enter your first name"
+                                placeholder={t.fields.firstName.placeholder}
                                 required
                                 maxLength={15}
                                 errorMessage={errors.firstName}
                             />
                             <Input
-                                label="Middle Name"
+                                label={t.fields.middleName.label}
                                 type="text"
                                 name="middleName"
                                 value={formData.middleName}
                                 onChange={handleChange}
-                                placeholder="Enter your middle name"
+                                placeholder={t.fields.middleName.placeholder}
                                 maxLength={15}
                                 required
                                 errorMessage={errors.middleName}
                             />
                         </div>
                         <Input
-                            label="Last Name"
+                            label={t.fields.lastName.label}
                             type="text"
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleChange}
-                            placeholder="Enter your last name"
+                            placeholder={t.fields.lastName.placeholder}
                             required
                             maxLength={15}
                             errorMessage={errors.lastName}
                         />
                         <SelectInput
-                            label="Gender"
+                            label={t.fields.gender.label}
                             name="gender"
                             value={formData.gender}
                             onChange={handleSelectChange}
-                            placeholder="Select your gender"
+                            placeholder={t.fields.gender.placeholder}
                             required
-                            options={[
-                                {value: 'male', label: 'Male'},
-                                {value: 'female', label: 'Female'},
-                            ]}
+                            options={Object.entries(t.fields.gender.options).map(([value, label]) => ({ value, label }))}
                             errorMessage={errors.gender}
                         />
                         <Input
-                            label="Place of Birth"
+                            label={t.fields.placeOfBirth.label}
                             type="text"
                             name="placeOfBirth"
                             value={formData.placeOfBirth}
                             onChange={handleChange}
-                            placeholder="Enter your place of birth"
+                            placeholder={t.fields.placeOfBirth.placeholder}
                             maxLength={50}
                             required
                             errorMessage={errors.placeOfBirth}
                         />
                         <DatePicker
-                            label="Date of Birth"
+                            label={t.fields.dateOfBirth.label}
                             name="dateOfBirth"
                             value={formData.dateOfBirth}
                             onChange={handleChange}
@@ -273,48 +273,48 @@ const EditProfile = () => {
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Address Information</h2>
+                        <h2 className={styles.sectionTitle}>{t.sections.address}</h2>
 
                         <Input
-                            label="Street"
+                            label={t.fields.street.label}
                             type="text"
                             name="street"
                             value={formData.street}
                             onChange={handleChange}
-                            placeholder="Enter your street"
+                            placeholder={t.fields.street.placeholder}
                             maxLength={200}
                             required
                             errorMessage={errors.street}
                         />
                         <Input
-                            label="City"
+                            label={t.fields.city.label}
                             type="text"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
-                            placeholder="Enter your city"
+                            placeholder={t.fields.city.placeholder}
                             maxLength={50}
                             required
                             errorMessage={errors.city}
                         />
                         <Input
-                            label="State"
+                            label={t.fields.state.label}
                             type="text"
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
-                            placeholder="Enter your state"
+                            placeholder={t.fields.state.placeholder}
                             maxLength={100}
                             required
                             errorMessage={errors.state}
                         />
                         <Input
-                            label="Country"
+                            label={t.fields.country.label}
                             type="text"
                             name="country"
                             value={formData.country}
                             onChange={handleChange}
-                            placeholder="Enter your country"
+                            placeholder={t.fields.country.placeholder}
                             maxLength={50}
                             required
                             errorMessage={errors.country}
@@ -322,21 +322,21 @@ const EditProfile = () => {
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Academic Records</h2>
+                        <h2 className={styles.sectionTitle}>{t.sections.academic}</h2>
                         <AcademicRecordsForm records={academicRecords} onChange={setAcademicRecords} errors={errors}/>
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Work Experience</h2>
+                        <h2 className={styles.sectionTitle}>{t.sections.work}</h2>
                         <WorkExperienceForm records={workExperiences} onChange={setWorkExperiences} errors={errors}/>
                     </div>
 
                     <TextArea
-                        label="Bio"
+                        label={t.fields.bio.label}
                         name="bio"
                         value={formData.bio}
                         onChange={handleTextAreaChange}
-                        placeholder="Tell us about yourself"
+                        placeholder={t.fields.bio.placeholder}
                         maxLength={500}
                     />
 
@@ -346,7 +346,7 @@ const EditProfile = () => {
                         onClick={handleSubmit}
                         disabled={loading.submit}
                     >
-                        {loading.submit ? "Submitting..." : "Submit"}
+                        {loading.submit ? t.buttons.submitting : t.buttons.submit}
                     </ActionButton>
                 </form>
             }

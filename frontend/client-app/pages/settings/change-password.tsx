@@ -9,11 +9,14 @@ import {useAuthentication} from "@/auth/AuthProvider";
 import useAuthApi from "@/api/hooks/useAuthApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const ChangePasswordPage: React.FC = () => {
     const {user} = useAuthentication();
     const {changePassword} = useAuthApi();
-
+    const {language} = useLanguage();
+    const t = getTranslations(language, "settingsPage").changePasswordPage;
     const [passwords, setPasswords] = useState({
         currentPassword: "",
         newPassword: "",
@@ -40,8 +43,8 @@ const ChangePasswordPage: React.FC = () => {
         if (passwords.newPassword !== passwords.confirmPassword) {
             setModal({
                 open: true,
-                title: "Error",
-                message: "New password and confirmation do not match.",
+                title: t.alerts.validationTitle,
+                message: t.alerts.validationMessage,
                 error: true,
             });
             return;
@@ -51,21 +54,21 @@ const ChangePasswordPage: React.FC = () => {
             if (!user) {
                 setModal({
                     open: true,
-                    title: "Error",
-                    message: "New password and confirmation do not match.",
+                    title: t.alerts.validationTitle,
+                    message: t.alerts.genericErrorMessage,
                     error: true,
                 });
                 return;
             }
-            const message = await changePassword(user.id, {
+             await changePassword(user.id, {
                 currentPassword: passwords.currentPassword,
                 newPassword: passwords.newPassword,
             });
 
             setModal({
                 open: true,
-                title: "Success",
-                message,
+                title: t.alerts.updateSuccessTitle,
+                message: t.alerts.updateSuccessMessage,
                 error: false,
             });
 
@@ -73,8 +76,8 @@ const ChangePasswordPage: React.FC = () => {
         } catch (e) {
             setModal({
                 open: true,
-                title: "Error",
-                message: extractErrorMessage(e, "Failed to change password."),
+                title: t.alerts.updateErrorTitle,
+                message: extractErrorMessage(e, t.alerts.genericErrorMessage),
                 error: true,
             });
         } finally {
@@ -94,45 +97,45 @@ const ChangePasswordPage: React.FC = () => {
 
             <div className={styles.container}>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <h2 className={styles.title}>Change Password</h2>
+                    <h2 className={styles.title}>{t.title}</h2>
                     <div className={styles.inputGroup}>
                         <Input
-                            label="Current Password"
+                            label={t.fields.currentPassword.label}
                             value={passwords.currentPassword}
                             onChange={(e) => setPasswords(prev => ({...prev, currentPassword: e.target.value}))}
                             type={showPasswords.current ? "text" : "password"}
                             required
                             name="currentPassword"
-                            placeholder="Enter current password"
+                            placeholder={t.fields.currentPassword.placeholder}
                         />
                         <Checkbox
-                            label="Show Passwords"
+                            label={t.fields.showCurrentPassword}
                             checked={showPasswords.current}
                             onChange={(e) => setShowPasswords(prev => ({...prev, current: e.target.checked}))}/>
                     </div>
 
                     <Input
-                        label="New Password"
+                        label={t.fields.newPassword.label}
                         value={passwords.newPassword}
                         onChange={(e) => setPasswords(prev => ({...prev, newPassword: e.target.value}))}
                         type={showPasswords.new ? "text" : "password"}
                         required
                         name="newPassword"
-                        placeholder="Enter new password"
+                        placeholder={t.fields.newPassword.placeholder}
                     />
 
                     <Input
-                        label="Confirm New Password"
+                        label={t.fields.confirmNewPassword.label}
                         value={passwords.confirmPassword}
                         onChange={(e) => setPasswords(prev => ({...prev, confirmPassword: e.target.value}))}
                         type={showPasswords.new ? "text" : "password"}
                         required
                         name="confirmPassword"
-                        placeholder="Re-enter new password"
+                        placeholder={t.fields.confirmNewPassword.placeholder}
                     />
 
                     <Checkbox
-                        label="Show Passwords"
+                        label={t.fields.showNewPasswords}
                         checked={showPasswords.new}
                         onChange={(e) => setShowPasswords(prev => ({...prev, new: e.target.checked}))}
                     />
@@ -142,7 +145,7 @@ const ChangePasswordPage: React.FC = () => {
                         type="submit"
                         disabled={loading}
                     >
-                        {loading ? "Changing..." : "Change Password"}
+                        {loading ? t.buttons.submitting : t.buttons.submit}
                     </ActionButton>
                 </form>
             </div>

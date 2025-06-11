@@ -6,20 +6,24 @@ import {FiAlignLeft, FiCalendar, FiMapPin} from 'react-icons/fi';
 import SpinLoading from '@/components/common/SpinLoading/SpinLoading';
 import {useAuthentication} from "@/auth/AuthProvider";
 import {formatDuration} from "@/util/dateUtils";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
+import {useLanguage} from "@/context/LanguageContext";
+import {getTranslations} from "@/translations";
 
 const WorkExperienceDisplay: React.FC = () => {
     const {getWorkExperiences} = useWorkExperienceApi();
     const [workExperiences, setWorkExperiences] = useState<WorkExperienceDto[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const {language} = useLanguage();
+    const t = getTranslations(language, 'settingsPage').profile.workExperience;
     const {user} = useAuthentication();
 
     useEffect(() => {
         const fetchWorkExperiences = async () => {
             try {
                 if (!user) {
-                    setError("No user found.");
+                    setError(t.errors.noUser);
                     return;
                 }
                 setIsLoading(true);
@@ -27,11 +31,10 @@ const WorkExperienceDisplay: React.FC = () => {
                 if (response.data && response.data.workExperiences) {
                     setWorkExperiences(response.data.workExperiences.workExperiences);
                 } else {
-                    setError('No work experience data found.');
+                    setError(t.errors.noData);
                 }
             } catch (err) {
-                console.log("Failed to fetch work experiences:", err);
-                setError('Failed to load work experience. Please try again later.');
+                setError(extractErrorMessage(err,t.errors.failedToLoad));
             } finally {
                 setIsLoading(false);
             }
@@ -45,7 +48,7 @@ const WorkExperienceDisplay: React.FC = () => {
         return (
             <div className={styles.loadingContainer}>
                 <SpinLoading size={50}/>
-                <p>Loading work experience...</p>
+                <p>{t.loadingMessage}</p>
             </div>
         );
     }
@@ -55,12 +58,12 @@ const WorkExperienceDisplay: React.FC = () => {
     }
 
     if (workExperiences.length === 0) {
-        return <div className={styles.noDataMessage}>No work experience added yet.</div>;
+        return <div className={styles.noDataMessage}>{t.noDataMessage}</div>;
     }
 
     return (
         <div className={styles.workExperienceContainer}>
-            <h2 className={styles.sectionTitle}>Work Experience</h2>
+            <h2 className={styles.sectionTitle}>{t.sectionTitle}</h2>
             {workExperiences.map((job) => (
                 <div key={job.id} className={styles.jobCard}>
                     <div className={styles.jobHeader}>
