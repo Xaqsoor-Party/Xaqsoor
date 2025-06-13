@@ -10,7 +10,7 @@ interface SpinLoadingProps {
 
 const SpinLoading: React.FC<SpinLoadingProps> = ({
                                                      size = 40,
-                                                     color = '#568e43',
+                                                     color = '#1b273d',
                                                      speed = 1,
                                                      thickness = 4,
                                                  }) => {

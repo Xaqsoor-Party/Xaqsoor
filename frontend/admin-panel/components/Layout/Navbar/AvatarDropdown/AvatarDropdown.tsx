@@ -37,7 +37,7 @@ export const AvatarDropdown = () => {
     }, []);
 
     const goToProfile = () => {
-        void router.push('/profile');
+        void router.push('/settings/profile');
     };
 
     const getDisplayName = (name: string) => name.length > 10 ? `${name.substring(0, 8)}...` : name;

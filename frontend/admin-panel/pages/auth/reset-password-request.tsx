@@ -35,12 +35,14 @@ export default function ResetPasswordRequest() {
         }
     };
 
+    const {language} = useLanguage();
+    const translation = getTranslations(language, 'authPages').ResetPasswordRequest;
+
     if (isConfirmed) {
         return <ResetPasswordRequestConfirmation email={email}/>;
     }
 
-    const {language} = useLanguage();
-    const translation = getTranslations(language, 'authPages').ResetPasswordRequest;
+
 
     return (
         <>

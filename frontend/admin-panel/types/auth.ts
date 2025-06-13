@@ -20,11 +20,10 @@ export interface ApiResponse<T> {
     exception?: string;
 }
 
-export type LoginStatus = 'SUCCESS' | 'UPDATE_PASSWORD' | 'MFA_REQUIRED';
-
 export interface UserLoginRequest {
     email: string;
     password: string;
+    adminLogin:boolean;
 }
 
 export interface AuthResponseData {
@@ -57,4 +56,9 @@ export interface UserVerificationResponse {
 export interface SetPasswordRequest {
     key: string;
     password: string;
+}
+
+export interface ChangePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
 }

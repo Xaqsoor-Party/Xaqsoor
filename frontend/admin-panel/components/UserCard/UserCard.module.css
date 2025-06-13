@@ -1,0 +1,117 @@
+.card {
+    display: flex;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+    border: 1px solid var(--color-border);
+    max-width: 500px;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.avatarContainer {
+    flex-shrink: 0;
+}
+
+.image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--color-primary-gradient);
+    color: var(--color-text-light);
+    font-size: var(--font-size-xxl);
+    font-weight: bold;
+    border: 3px solid var(--color-primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.name {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+.infoRow {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: baseline;
+}
+
+.infoLabel {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-label);
+    flex-shrink: 0;
+}
+
+.infoValue {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.statusBadge {
+    padding: var(--spacing-xxs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    display: inline-block;
+}
+
+.statusActive {
+    background-color: var(--color-success-background);
+    color: var(--color-success);
+}
+
+.statusInactive {
+    background-color: var(--color-error-background);
+    color: var(--color-error);
+}
+
+.statusSuspended {
+    background-color: var(--color-warning-background);
+    color: var(--color-warning);
+}
+
+.statusLapsed {
+    background-color: var(--color-background-disabled);
+    color: var(--color-text-tertiary);
+}
+
+.statusPending {
+    background-color: var(--color-secondary-background);
+    color: var(--color-secondary-dark);
+}

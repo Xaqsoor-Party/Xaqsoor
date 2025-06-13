@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {FiChevronDown, FiChevronRight, FiHome, FiX,} from 'react-icons/fi';
 
 import styles from './Sidebar.module.css'
-import {FaBullhorn, FaCogs, FaIdCard, FaMapMarkedAlt, FaPhotoVideo, FaUserTie} from "react-icons/fa";
+import {FaBullhorn, FaCogs, FaDonate, FaIdCard, FaMapMarkedAlt, FaPhotoVideo} from "react-icons/fa";
 
 import {AiOutlineDoubleLeft, AiOutlineDoubleRight} from "react-icons/ai";
 import {useLanguage} from "@/context/LanguageContext";
@@ -39,24 +39,6 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             roles: ['admin', 'coordinator', 'viewer']
         },
         {
-            title: t.candidates,
-            path: '/candidates',
-            icon: <FaUserTie className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
-            items: [
-                {
-                    title: t.allCandidates,
-                    path: '/candidates/list',
-                    icon: <FiChevronRight className={styles.icon}/>,
-                },
-                {
-                    title: t.addCandidate,
-                    path: '/candidates/add',
-                    icon: <FiChevronRight className={styles.icon}/>,
-                }
-            ]
-        },
-        {
             title: t.constituencies,
             path: '/constituencies',
             icon: <FaMapMarkedAlt className={styles.icon}/>,
@@ -87,13 +69,18 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
                 },
                 {
                     title: t.uploadMembers,
-                    path: '/membership/import',
+                    path: '/membership/export',
                     icon: <FiChevronRight className={styles.icon}/>,
                 },
                 {
                     title: t.addMember,
                     path: '/membership/add',
                     icon: <FiChevronRight className={styles.icon}/>,
+                },
+                {
+                    title: t.idCards,
+                    path: '/membership/id-cards',
+                    icon: <FiChevronRight className={styles.icon} />,
                 }
             ]
         },
@@ -113,6 +100,16 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
                     path: '/campaign/events',
                     icon: <FiChevronRight className={styles.icon}/>,
                 },
+                {
+                    title: t.messages,
+                    path: '/campaign/messages',
+                    icon: <FiChevronRight className={styles.icon} />,
+                },
+                {
+                    title: t.emails,
+                    path: '/campaign/emails',
+                    icon: <FiChevronRight className={styles.icon} />,
+                }
             ]
         },
         {
@@ -127,12 +124,19 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
                     icon: <FiChevronRight className={styles.icon}/>,
                 },
                 {
-                    title: t.documents,
-                    path: '/media/documents',
+                    title: t.news,
+                    path: '/media/news',
                     icon: <FiChevronRight className={styles.icon}/>,
                 }
             ]
         },
+        {
+            title: t.donations,
+            path: '/donations',
+            icon: <FaDonate className={styles.icon} />,
+            roles: ['admin']
+        },
+
         {
             title: t.settings,
             path: '/settings',
@@ -150,7 +154,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
     };
 
     const handleItemClick = (path: string) => {
-        router.replace(path);
+        void router.replace(path);
         if (isMobile) onClose();
     };
 
@@ -161,6 +165,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
         // if (item.roles && !item.roles.some(role => roles.includes(role))) {
         //     return null;
         // }
+
         return (
             <div key={item.path} className={styles.navItemContainer}>
                 <div

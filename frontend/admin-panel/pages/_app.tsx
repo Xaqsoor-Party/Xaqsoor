@@ -15,7 +15,7 @@ export default function App({Component, pageProps}: AppProps) {
     return (
         <>
             <Head>
-                <title>Title</title>
+                <title>Xaqsoor</title>
                 <link rel="icon" href="/images/Replace_Me.svg" />
             </Head>
             <AuthProvider>

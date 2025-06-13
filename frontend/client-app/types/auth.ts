@@ -20,8 +20,6 @@ export interface ApiResponse<T> {
     exception?: string;
 }
 
-export type LoginStatus = 'SUCCESS' | 'UPDATE_PASSWORD' | 'MFA_REQUIRED';
-
 export interface UserLoginRequest {
     email: string;
     password: string;

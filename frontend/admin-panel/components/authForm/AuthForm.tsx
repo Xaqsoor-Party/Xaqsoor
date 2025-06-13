@@ -41,8 +41,8 @@ const AuthForm: React.FC<AuthFormProps> = ({isRegistering}) => {
     const subtitle = isRegistering ? translations.subtitleRegister : translations.subtitleLogin;
     const register = translations.register;
     const login = translations.login;
-    const signupLink = isRegistering ? translations.signupLinkRegister : translations.signupLinkLogin;
-    const signupText = isRegistering ? translations.signupTextRegister : translations.signupTextLogin;
+    // const signupLink = isRegistering ? translations.signupLinkRegister : translations.signupLinkLogin;
+    // const signupText = isRegistering ? translations.signupTextRegister : translations.signupTextLogin;
 
     return (
         <>
@@ -136,14 +136,14 @@ const AuthForm: React.FC<AuthFormProps> = ({isRegistering}) => {
 
                         <ActionButton type="submit">{isRegistering ? register : login}</ActionButton>
 
-                        <div className={styles.signupContainer}>
-                            <p>{signupText}{" "}
-                                <Link href={isRegistering ? "/auth/login" : "/auth/register"}
-                                      className={styles.signupLink}>
-                                    {signupLink}
-                                </Link>
-                            </p>
-                        </div>
+                        {/*<div className={styles.signupContainer}>*/}
+                        {/*    <p>{signupText}{" "}*/}
+                        {/*        <Link href={isRegistering ? "/auth/login" : "/auth/register"}*/}
+                        {/*              className={styles.signupLink}>*/}
+                        {/*            {signupLink}*/}
+                        {/*        </Link>*/}
+                        {/*    </p>*/}
+                        {/*</div>*/}
                     </form>
                 </div>
 

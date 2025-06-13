@@ -1,0 +1,90 @@
+/* UserExportSection.module.css */
+.exportSection {
+    background-color: var(--color-background-accent);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    transition: var(--transition-normal);
+}
+
+.exportSection:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+.loadingText {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.matchingText {
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    padding: var(--spacing-sm) 0;
+}
+
+.matchingText strong {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+}
+
+.noUsersText {
+    font-size: var(--font-size-md);
+    color: var(--color-text-tertiary);
+    text-align: center;
+    padding: var(--spacing-sm) 0;
+    font-style: italic;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.excelButton {
+    background-color: var(--color-success);
+    color: var(--color-text-light);
+    min-width: 180px;
+}
+
+.excelButton:hover {
+    background-color: var(--color-primary-accent);
+}
+
+.pdfButton {
+    background-color: var(--color-error);
+    color: var(--color-text-light);
+    min-width: 180px;
+}
+
+.pdfButton:hover {
+    background-color: var(--color-error-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .exportSection {
+        padding: var(--spacing-md);
+    }
+}

@@ -1,117 +1,267 @@
-import React, { useState } from 'react';
-import Card from "@/components/Card/Card";
-import SearchInput from "@/components/common/SearchInput/SearchInput";
+import React, {useEffect, useState} from "react";
+import useUserSearchApi from "@/api/hooks/useUserSearchApi";
+
+import {MembershipLevel, OrderBy, Status, UserCardListDto} from "@/types/user";
+import SelectInput from "@/components/common/SelectInput/SelectInput";
+import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import ActionButton from "@/components/common/ActionButton/ActionButton";
+import AlertModal from "@/components/common/AlertModal/AlertModal";
+import SearchInput from "@/components/common/SearchInput/SearchInput";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
+import UserCard from "@/components/UserCard/UserCard";
+import styles from "@/styles/UserListPage.module.css";
 
-import styles from "@/styles/Home.module.css";
-
-const data = [
-    { avatar: "https://tuitioncenter.s3.amazonaws.com/profileImages/5926f99b-efcb-4e11-ab72-3086720ab672/istockphoto-1318854270-612x612.webp", firstName: "Ahmed", lastName: "Mohamed", status: "Active", city: "Mogadishu" },
-    { avatar: "", firstName: "Fatima", lastName: "Ali", status: "Pending", city: "Kismayo" },
-    { avatar: "https://tuitioncenter.s3.amazonaws.com/profileImages/5926f99b-efcb-4e11-ab72-3086720ab672/istockphoto-1406474099-612x612.webp", firstName: "Ismail", lastName: "Farah", status: "Inactive", city: "Bosaso" },
-    { avatar: "", firstName: "Abdi", lastName: "Mohamed", status: "Active", city: "Jowhar" },
-    { avatar: "https://tuitioncenter.s3.amazonaws.com/profileImages/5926f99b-efcb-4e11-ab72-3086720ab672/istockphoto-1401461283-612x612.webp", firstName: "Amina", lastName: "Abdi", status: "Banned", city: "Garowe" },
-    { avatar: "", firstName: "Ali", lastName: "Hassan", status: "Active", city: "Baidoa" },
-    { avatar: "https://tuitioncenter.s3.amazonaws.com/profileImages/5926f99b-efcb-4e11-ab72-3086720ab672/istockphoto-1961461283-612x612.webp", firstName: "Mariam", lastName: "Jama", status: "Pending", city: "Mogadishu" },
-    { avatar: "", firstName: "Faisal", lastName: "Farah", status: "Inactive", city: "Burao" },
-    { avatar: "", firstName: "Yusuf", lastName: "Ali", status: "Active", city: "Galkayo" },
-    { avatar: "https://tuitioncenter.s3.amazonaws.com/profileImages/5926f99b-efcb-4e11-ab72-3086720ab672/istockphoto-1494354639-612x612.webp", firstName: "Samiya", lastName: "Omar", status: "Active", city: "Hargeisa" },
-    { avatar: "", firstName: "Mohamed", lastName: "Hassan", status: "Banned", city: "Mogadishu" },
-    { avatar: "", firstName: "Muna", lastName: "Mohamed", status: "Pending", city: "Kismayo" },
-    { avatar: "", firstName: "Omar", lastName: "Mohamed", status: "Inactive", city: "Bosaso" },
-    { avatar: "", firstName: "Ruqiya", lastName: "Abdullahi", status: "Active", city: "Belet Weyne" },
-    { avatar: "", firstName: "Ahmed", lastName: "Omar", status: "Pending", city: "Galkayo" },
-    { avatar: "", firstName: "Khadra", lastName: "Mohamed", status: "Banned", city: "Jowhar" },
-    { avatar: "", firstName: "Hussein", lastName: "Ahmed", status: "Active", city: "Mogadishu" },
-    { avatar: "", firstName: "Salah", lastName: "Ali", status: "Inactive", city: "Hargeisa" },
-    { avatar: "", firstName: "Khadija", lastName: "Ali", status: "Pending", city: "Galkayo" },
-    { avatar: "", firstName: "Mohamed", lastName: "Mohamud", status: "Active", city: "Baidoa" },
-    { avatar: "", firstName: "Saeed", lastName: "Omar", status: "Active", city: "Mogadishu" }
+const orderByOptions = [
+    {value: "createdDateDesc", label: "Created Date ↓"},
+    {value: "createdDateAsc", label: "Created Date ↑"},
+    {value: "firstNameAsc", label: "First Name A-Z"},
+    {value: "firstNameDesc", label: "First Name Z-A"},
+    {value: "emailAsc", label: "Email A-Z"},
+    {value: "emailDesc", label: "Email Z-A"},
+    {value: "lastLoginDesc", label: "Last Login ↓"},
+    {value: "lastLoginAsc", label: "Last Login ↑"},
 ];
 
-const App: React.FC = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 15; // Number of items to display per page
+export const statusOptions = [
+    {value: "", label: "All Statuses"},
+    {value: "ACTIVE", label: "Active"},
+    {value: "INACTIVE", label: "Inactive"},
+    {value: "SUSPENDED", label: "Suspended"},
+    {value: "LAPSED", label: "Lapsed"},
+    {value: "PENDING", label: "pending"},
+];
 
-    // Filtered data based on search query
-    const filteredData = data.filter(person =>
-        person.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        person.lastName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+export const roleOptions = [
+    {value: "", label: "All Roles"},
+    {value: "ADMIN", label: "Admin"},
+    {value: "MEMBER", label: "Member"},
+];
 
-    // Calculate total pages
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+export const genderOptions = [
+    {value: "", label: "All Genders"},
+    {value: "Male", label: "Male"},
+    {value: "Female", label: "Female"},
+];
 
-    // Get the current page's data
-    const currentData = filteredData.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
+export const membershipLevelOptions = [
+    {value: "", label: "All Memberships"},
+    {value: "NEW_MEMBER", label: "New Member"},
+    {value: "STUDENT", label: "Student"},
+    {value: "REGULAR", label: "Regular"},
+    {value: "LIFETIME", label: "Lifetime"},
+];
 
-    // Handle input change for search
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
-    };
 
-    // Go to next page
-    const goToNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(prevPage => prevPage + 1);
+
+const UserListPage: React.FC = () => {
+    const {searchUserCards} = useUserSearchApi();
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
+    const [roleFilter, setRoleFilter] = useState("");
+    const [genderFilter, setGenderFilter] = useState("");
+    const [membershipLevelFilter, setMembershipLevelFilter] = useState("");
+    const [orderBy, setOrderBy] = useState<OrderBy>("createdDateDesc");
+
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [userList, setUserList] = useState<UserCardListDto | null>(null);
+
+    // Fetch users
+    const fetchUsers = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await searchUserCards({
+                searchTerm,
+                statusFilter: statusFilter ? (statusFilter as Status) : undefined,
+                roleFilter,
+                genderFilter,
+                membershipLevelFilter: membershipLevelFilter ? (membershipLevelFilter as MembershipLevel) : undefined,
+                orderBy,
+                pageNumber,
+                pageSize,
+            });
+            if (response.data?.users) {
+                setUserList(response.data.users);
+            }
+        } catch (err) {
+            setError(extractErrorMessage(err, "Failed to fetch users. Please try again."));
+            setUserList(null);
+        } finally {
+            setLoading(false);
         }
     };
 
-    // Go to previous page
-    const goToPrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(prevPage => prevPage - 1);
+    useEffect(() => {
+        void fetchUsers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm, statusFilter, roleFilter, genderFilter, membershipLevelFilter, orderBy, pageNumber, pageSize]);
+
+    const onNextPage = () => {
+        if (userList && (pageNumber + 1) * pageSize < userList.totalItems) {
+            setPageNumber(pageNumber + 1);
         }
     };
+
+    const onPrevPage = () => {
+        if (pageNumber > 0) {
+            setPageNumber(pageNumber - 1);
+        }
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+        setPageNumber(0);
+    };
+    const handleResetFilters = () => {
+        setSearchTerm("");
+        setStatusFilter("");
+        setRoleFilter("");
+        setGenderFilter("");
+        setMembershipLevelFilter("");
+        setOrderBy("createdDateDesc");
+        setPageNumber(0);
+    };
+
+    const pageSizeOptions = [
+        { value: "20", label: "20" },
+        { value: "40", label: "40" },
+        { value: "80", label: "80" },
+        { value: "120", label: "120" },
+        { value: `${userList?.totalItems || "0"}`, label: `All (${userList?.totalItems || "0"})` },
+    ];
+
+    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setPageSize(parseInt(value));
+        setPageNumber(0);
+    };
+
 
     return (
         <div className={styles.container}>
-            <SearchInput
-                value={searchQuery}
-                onChange={handleInputChange}
-                placeholder="Type to search..."
-            />
-
-            <div className={styles.cardList}>
-                {currentData.map((person, index) => (
-                    <Card
-                        key={index}
-                        avatar={person.avatar}
-                        firstName={person.firstName}
-                        lastName={person.lastName}
-                        status={person.status}
-                        city={person.city}
+            <h1 className={styles.title}>Manage Members & Accounts</h1>
+            <p className={styles.subtitle}>Search and filter users by name, email, phone, role, status, and more.</p>
+            <div className={styles.filters}>
+                <div className={styles.searchBar}>
+                    <SearchInput
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        placeholder="Search by name, email, or phone..."
                     />
-                ))}
+                </div>
+
+                <div className={styles.filterRow}>
+                    <SelectInput
+                        label="Status"
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        options={statusOptions}
+                    />
+
+                    <SelectInput
+                        label="Role"
+                        value={roleFilter}
+                        onChange={(e) => setRoleFilter(e.target.value)}
+                        options={roleOptions}
+                    />
+
+                    <SelectInput
+                        label="Gender"
+                        value={genderFilter}
+                        onChange={(e) => setGenderFilter(e.target.value)}
+                        options={genderOptions}
+                    />
+
+                </div>
+
+                <div className={styles.filterRow}>
+                    <SelectInput
+                        label="Membership"
+                        value={membershipLevelFilter}
+                        onChange={(e) => setMembershipLevelFilter(e.target.value)}
+                        options={membershipLevelOptions}
+                    />
+
+                    <SelectInput
+                        label="Order By"
+                        value={orderBy}
+                        onChange={(e) => setOrderBy(e.target.value as OrderBy)}
+                        options={orderByOptions}
+                    />
+
+                    <ActionButton onClick={handleResetFilters} className={styles.resetButton}>
+                        Reset Filters
+                    </ActionButton>
+                </div>
+                <div className={styles.pageSizeRow}>
+                    <SelectInput
+                        label="Users per page"
+                        value={pageSize.toString()}
+                        onChange={handlePageSizeChange}
+                        options={pageSizeOptions}
+                    />
+                </div>
             </div>
 
-            <div className={styles.pagination}>
-                <ActionButton
-                    className={styles.paginationButton}
-                    onClick={goToPrevPage}
-                    disabled={currentPage === 1}
-                >
-                    Prev
-                </ActionButton>
+            {loading ? (
+                <div className={styles.loading}>
+                    <SpinLoading size={50}/>
+                    <p className={styles.loadingText}>Loading users, please wait...</p>
+                </div>
+            ) : userList ? (
+                <>
+                    <div className={styles.resultsInfo}>
+                        Showing {(pageNumber * pageSize) + 1} -{" "}
+                        {Math.min((pageNumber + 1) * pageSize, userList.totalItems)} of {userList.totalItems} users
+                    </div>
 
-                <span className={styles.paginationInfo}>
-            Page {currentPage} of {totalPages}
-        </span>
+                    <ul className={styles.userList}>
+                        {userList.users.map((user) => (
+                            <UserCard user={user} key={user.id}/>
+                        ))}
+                    </ul>
 
-                <ActionButton
-                    className={styles.paginationButton}
-                    onClick={goToNextPage}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </ActionButton>
-            </div>
+                    <div className={styles.pagination}>
+                        <ActionButton onClick={onPrevPage} disabled={pageNumber === 0}
+                                      className={styles.paginationButton}>
+                            Previous
+                        </ActionButton>
+
+                        <span className={styles.pageInfo}>
+                           Page {pageNumber + 1} of {Math.ceil(userList.totalItems / pageSize)}
+                        </span>
+
+                        <ActionButton
+                            onClick={onNextPage}
+                            disabled={userList.totalItems <= (pageNumber + 1) * pageSize}
+                            className={styles.paginationButton}
+                        >
+                            Next
+                        </ActionButton>
+                    </div>
+                </>
+            ) : (
+                <div className={styles.noUsersMessage}>No users found.</div>
+            )}
+
+
+            {error && (
+                <AlertModal
+                    title="Error"
+                    message={error}
+                    onConfirm={() => setError(null)}
+                    buttonText="Close"
+                    error
+                />
+            )}
         </div>
     );
 };
 
-export default App;
+export default UserListPage;

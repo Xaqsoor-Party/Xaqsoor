@@ -50,12 +50,6 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // const hasErrors = validateForm(formData, isRegistering, setErrors);
-        // if (hasErrors) {
-        //     setIsLoading(false);
-        //     return;
-        // }
-
         if (isRegistering) {
             await registerUserHandler();
         } else {
@@ -69,6 +63,7 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
             const credentials: UserLoginRequest = {
                 email: formData.email,
                 password: formData.password,
+                adminLogin: true
             };
 
             const response = await loginUser(credentials);

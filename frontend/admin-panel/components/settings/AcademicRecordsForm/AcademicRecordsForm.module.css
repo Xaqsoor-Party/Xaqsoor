@@ -1,0 +1,106 @@
+.academicRecordsForm {
+    padding: var(--spacing-xl);
+    color: var(--color-text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.recordItem {
+    padding: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.recordHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-background-disabled);
+}
+
+.recordTitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    margin: 0;
+    font-weight: 600;
+}
+
+.removeButton {
+    background-color: var(--color-error);
+    color: var(--color-text-light);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.removeButton:hover {
+    background-color: var(--color-error-hover);
+}
+
+.row {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.addButton {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    width: 100%;
+    transition: background-color var(--transition-normal);
+}
+
+.addButton:hover {
+    background-color: var(--color-primary-hover);
+}
+
+@media (max-width: 768px) {
+    .academicRecordsForm {
+        padding: var(--spacing-sm);
+    }
+
+    .row {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .recordItem {
+        padding: var(--spacing-lg);
+    }
+
+    .recordHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+
+    .recordTitle {
+        font-size: var(--font-size-base);
+    }
+
+    .removeButton {
+        align-self: flex-end;
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+
+    .addButton {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-sm) var(--spacing-lg);
+    }
+}
