@@ -2,6 +2,7 @@ package com.xaqsoor.controller;
 
 import com.xaqsoor.domain.Response;
 import com.xaqsoor.dto.request.UserProfileUpdateRequest;
+import com.xaqsoor.dto.response.UserCardListDto;
 import com.xaqsoor.dto.response.UserProfileResponse;
 import com.xaqsoor.service.UserProfileService;
 import com.xaqsoor.util.RequestUtils;
@@ -50,6 +51,39 @@ public class UserProfileController {
                         servletRequest,
                         Collections.singletonMap("profile", userProfile),
                         "User profile retrieved successfully",
+                        HttpStatus.OK
+                )
+        );
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Response> searchUserCards(
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(required = false) String statusFilter,
+            @RequestParam(required = false) String roleFilter,
+            @RequestParam(required = false) String genderFilter,
+            @RequestParam(required = false) String membershipLevelFilter,
+            @RequestParam(required = false, defaultValue = "createdDateAsc") String orderBy,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            HttpServletRequest servletRequest
+    ) {
+        UserCardListDto result = userProfileService.searchUserCards(
+                searchTerm,
+                statusFilter,
+                roleFilter,
+                genderFilter,
+                membershipLevelFilter,
+                orderBy,
+                pageNumber,
+                pageSize
+        );
+
+        return ResponseEntity.ok(
+                RequestUtils.getResponse(
+                        servletRequest,
+                        Collections.singletonMap("users", result),
+                        "User cards search results",
                         HttpStatus.OK
                 )
         );

@@ -25,6 +25,7 @@ import com.xaqsoor.security.service.impl.internal.RefreshTokenService;
 import com.xaqsoor.service.S3Service;
 import com.xaqsoor.util.DeviceInfoService;
 import com.xaqsoor.util.IpInfo;
+import com.xaqsoor.util.UserUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -67,6 +68,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse login(UserLoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
         User user = loginService.authenticateUser(loginRequest);
+
+        if (loginRequest.adminLogin() && user.getRole().getName().equals("MEMBER")) {
+            throw new ApiException("Unauthorized access to admin dashboard");
+        }
 
         UserCredential credential = credentialRepository.getCredentialByUserId(user.getId())
                 .orElseThrow(() -> new ApiException("Credentials not found for user: " + user.getEmail()));
@@ -183,7 +188,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserAuthResponse authResponse = UserAuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userDTO(UserMapper.toDTO(user, resolveProfileImageUrl(user)))
+                .userDTO(UserMapper.toDTO(user, UserUtil.resolveProfileImageUrl(user.getProfileImageKey(), s3Service)))
                 .build();
 
         return new AuthenticationResponse(LoginStatus.SUCCESS, message,  "", authResponse);
@@ -214,11 +219,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 subject,
                 Duration.ofMinutes(validity)
         );
-    }
-
-    private String resolveProfileImageUrl(User user) {
-        String imageKey = user.getProfileImageKey();
-        return (imageKey != null && !imageKey.isBlank()) ? s3Service.constructFileUrl(imageKey) : "";
     }
 
     public IpInfo getUserIpAddress(HttpServletRequest request) {

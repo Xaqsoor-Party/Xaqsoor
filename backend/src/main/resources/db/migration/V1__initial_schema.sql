@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     place_of_birth VARCHAR(50),
     date_of_birth DATE,
     status VARCHAR(10) NOT NULL,
+    membership_level VARCHAR(10) NOT NULL,
     role_id BIGINT,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(15),

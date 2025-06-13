@@ -6,7 +6,9 @@ import com.xaqsoor.entity.Role;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.entity.UserCredential;
 import com.xaqsoor.enumeration.ConfirmationType;
+import com.xaqsoor.enumeration.MembershipLevel;
 import com.xaqsoor.enumeration.Status;
+import com.xaqsoor.service.S3Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +28,7 @@ public class UserUtil {
                 .lastName(request.lastName())
                 .gender(request.gender())
                 .status(Status.PENDING)
+                .membershipLevel(MembershipLevel.NEW_MEMBER)
                 .role(role)
                 .email(normalizedEmail)
                 .phone(request.phone())
@@ -69,6 +72,12 @@ public class UserUtil {
 
     public static String formatDate(LocalDate date) {
         return date != null ? DATE_FORMATTER.format(date) : "";
+    }
+
+    public static String resolveProfileImageUrl(String imageKey, S3Service s3Service) {
+        return (imageKey != null && !imageKey.isBlank())
+                ? s3Service.constructFileUrl(imageKey)
+                : "";
     }
 }
 

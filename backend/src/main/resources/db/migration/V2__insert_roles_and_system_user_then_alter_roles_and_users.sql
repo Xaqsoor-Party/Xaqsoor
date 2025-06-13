@@ -27,6 +27,7 @@ INSERT INTO users (
     place_of_birth,
     date_of_birth,
     status,
+    membership_level,
     role_id,
     email,
     phone,
@@ -49,21 +50,22 @@ VALUES (
            FALSE,
            0,
            NOW(),
-           'System_User',
-           'System',    -- First Name
-           'User',      -- Middle Name
-           'Admin',     -- Last Name
+           'AsalGuardian',
+           'Asal',    -- First Name
+           '',      -- Middle Name
+           'Solutions',     -- Last Name
            'UNKNOWN',   -- Gender (default value)
            NULL,        -- Place of Birth
            NULL,        -- Date of Birth
            'ACTIVE',    -- Status (default value)
+    'LIFETIME',
            (SELECT id FROM roles WHERE name = 'ADMIN' LIMIT 1),
-    'system@authshield.local',
-    NULL,        -- Phone
-    'System-level account used for initial application bootstrapping, role management, and audit logging. Not intended for interactive login.',
+    'system@asalsolutions.com',
+    '+252771700700',        -- Phone
+    'Core system guardian account responsible for security, auditing, and system integrity. Not for interactive use. Visit us at https://asalsolutions.com/',
     0,           -- Failed login attempts
     NULL,        -- Last login
-    NULL,        -- Profile image key
+    'https://asalsolutions.com/wp-content/themes/asalsolutions/assets/images/logo.svg', -- Profile image key
     TRUE,        -- Account non expired
     TRUE,        -- Account non locked
     FALSE,       -- Is login restricted

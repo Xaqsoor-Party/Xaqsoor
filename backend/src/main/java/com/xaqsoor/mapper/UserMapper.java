@@ -20,6 +20,7 @@ public class UserMapper {
                 .placeOfBirth(user.getPlaceOfBirth())
                 .dateOfBirth(formatDate(user.getDateOfBirth()))
                 .status(user.getStatus().name())
+                .membershipLevel(user.getMembershipLevel().getValue())
                 .bio(user.getBio())
                 .role(user.getRole().getName())
                 .authorities(user.getRole().getAuthorities().getValue())
@@ -43,5 +44,4 @@ public class UserMapper {
                 .enabled(user.isEnabled())
                 .build();
     }
-
 }

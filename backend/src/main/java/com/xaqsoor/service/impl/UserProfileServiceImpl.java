@@ -3,21 +3,35 @@ package com.xaqsoor.service.impl;
 import com.xaqsoor.dto.request.AcademicRecordRequest;
 import com.xaqsoor.dto.request.UserUpdateDTO;
 import com.xaqsoor.dto.request.WorkExperienceRequest;
+import com.xaqsoor.dto.response.UserCardDTO;
+import com.xaqsoor.dto.response.UserCardListDto;
 import com.xaqsoor.dto.response.UserProfileResponse;
 import com.xaqsoor.entity.AcademicRecord;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.entity.WorkExperience;
 import com.xaqsoor.enumeration.EducationLevel;
+import com.xaqsoor.enumeration.MembershipLevel;
+import com.xaqsoor.enumeration.Status;
 import com.xaqsoor.exception.ApiException;
 import com.xaqsoor.repository.AcademicRecordRepository;
 import com.xaqsoor.repository.UserRepository;
 import com.xaqsoor.repository.WorkExperienceRepository;
+import com.xaqsoor.service.S3Service;
 import com.xaqsoor.service.UserProfileService;
+import com.xaqsoor.util.UserSortUtil;
+import com.xaqsoor.util.UserUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +40,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final UserRepository userRepository;
     private final AcademicRecordRepository academicRecordRepository;
     private final WorkExperienceRepository workExperienceRepository;
+    private final S3Service s3Service;
 
     @Override
     public void updateUserProfile(Long userId, UserUpdateDTO userDTO, List<AcademicRecordRequest> academicRecords, List<WorkExperienceRequest> workExperiences) {
@@ -38,6 +53,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserProfileResponse getUserProfile(Long userId) {
         User user = findUserById(userId);
         UserUpdateDTO userDto = mapToUserUpdateDTO(user);
@@ -45,6 +61,35 @@ public class UserProfileServiceImpl implements UserProfileService {
         List<WorkExperienceRequest> workExperience = mapToWorkExperiences(workExperienceRepository.findByUserIdOrderByStartDateDesc(userId));
 
         return new UserProfileResponse(userDto, academicRecords, workExperience);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserCardListDto searchUserCards(String searchTerm,
+                                           String statusFilter,
+                                           String roleFilter,
+                                           String genderFilter,
+                                           String membershipLevelFilter,
+                                           String orderBy,
+                                           int pageNumber,
+                                           int pageSize) {
+        String status = UserSortUtil.parseStatusFilter(statusFilter);
+        String membershipLevel = UserSortUtil.parseMembershipLevelFilter(membershipLevelFilter);
+        if (!UserSortUtil.isValidOrderBy(orderBy)) {
+            orderBy = "createdDateDesc";
+        }
+
+        Pageable pageable = UserSortUtil.createPageable(pageNumber, pageSize, orderBy);
+
+        Page<User> userPage = userRepository.searchUserCardsNative(
+                searchTerm,
+                status,
+                roleFilter,
+                genderFilter,
+                membershipLevel,
+                pageable);
+
+        return mapToUserCardListDto(userPage, s3Service);
     }
 
     private void updateUserFromDTO(User user, UserUpdateDTO userDTO) {
@@ -62,11 +107,29 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     private void processAcademicRecords(User user, List<AcademicRecordRequest> academicRecords) {
+        List<AcademicRecord> existingRecords = academicRecordRepository.findByUserIdOrderByStartDateDesc(user.getId());
+
+        // Track IDs from the request for comparison
+        List<Long> incomingIds = academicRecords.stream()
+                .map(AcademicRecordRequest::id)
+                .filter(Objects::nonNull)
+                .toList();
+
+        // Delete records that are not in the incoming request
+        for (AcademicRecord record : existingRecords) {
+            if (record.getId() != null && !incomingIds.contains(record.getId())) {
+                academicRecordRepository.delete(record);
+            }
+        }
+
         for (AcademicRecordRequest dto : academicRecords) {
-            AcademicRecord record = dto.id() != null ?
-                    academicRecordRepository.findById(dto.id())
-                            .orElseThrow(() -> new ApiException("Academic record not found")) :
-                    new AcademicRecord();
+            AcademicRecord record;
+            if (dto.id() != null) {
+                record = academicRecordRepository.findById(dto.id())
+                        .orElseThrow(() -> new ApiException("Academic record not found"));
+            } else {
+                record = new AcademicRecord();
+            }
 
             record.setUser(user);
             record.setInstitutionName(dto.institutionName());
@@ -83,12 +146,28 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     private void processWorkExperiences(User user, List<WorkExperienceRequest> workExperiences) {
-        System.out.println(workExperiences.size());
+        List<WorkExperience> existingExperiences = workExperienceRepository.findByUserIdOrderByStartDateDesc(user.getId());
+
+        List<Long> incomingIds = workExperiences.stream()
+                .map(WorkExperienceRequest::id)
+                .filter(Objects::nonNull)
+                .toList();
+
+        for (WorkExperience experience : existingExperiences) {
+            if (experience.getId() != null && !incomingIds.contains(experience.getId())) {
+                workExperienceRepository.delete(experience);
+            }
+        }
+
         for (WorkExperienceRequest dto : workExperiences) {
-            WorkExperience exp = dto.id() != null ?
-                    workExperienceRepository.findById(dto.id())
-                            .orElseThrow(() -> new ApiException("Work experience not found")) :
-                    new WorkExperience();
+            WorkExperience exp;
+            if (dto.id() != null) {
+                exp = workExperienceRepository.findById(dto.id())
+                        .orElseThrow(() -> new ApiException("Work experience not found"));
+            } else {
+                exp = new WorkExperience();
+            }
+
             exp.setUser(user);
             exp.setJobTitle(dto.jobTitle());
             exp.setCompanyName(dto.companyName());
@@ -154,4 +233,43 @@ public class UserProfileServiceImpl implements UserProfileService {
                 ))
                 .toList();
     }
+
+    public static UserCardListDto mapToUserCardListDto(Page<User> userPage, S3Service s3Service) {
+        List<UserCardDTO> userCards = userPage.getContent().stream()
+                .map(user -> {
+                    String profileImageUrl;
+                    if ("AsalGuardian".equals(user.getUserId())) {
+                        profileImageUrl = user.getProfileImageKey();
+                    } else {
+                        profileImageUrl = UserUtil.resolveProfileImageUrl(user.getProfileImageKey(), s3Service);
+                    }
+
+                    return new UserCardDTO(
+                            user.getId(),
+                            buildFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
+                            user.getEmail(),
+                            user.getPhone(),
+                            profileImageUrl,
+                            user.getRole() != null ? user.getRole().getName() : null,
+                            user.getStatus().name()
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return new UserCardListDto(
+                (int) userPage.getTotalElements(),
+                userPage.getNumber(),
+                userPage.getSize(),
+                userCards
+        );
+    }
+
+    private static String buildFullName(String firstName, String middleName, String lastName) {
+        StringBuilder fullName = new StringBuilder();
+        if (firstName != null && !firstName.isBlank()) fullName.append(firstName.trim());
+        if (middleName != null && !middleName.isBlank()) fullName.append(" ").append(middleName.trim());
+        if (lastName != null && !lastName.isBlank()) fullName.append(" ").append(lastName.trim());
+        return fullName.toString().trim();
+    }
+
 }

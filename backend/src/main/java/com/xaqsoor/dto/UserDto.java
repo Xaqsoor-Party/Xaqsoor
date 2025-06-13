@@ -19,6 +19,7 @@ public class UserDto {
     private String placeOfBirth;
     private String dateOfBirth;
     private String status;
+    private String membershipLevel;
     private String role;
     private String authorities;
     private String email;

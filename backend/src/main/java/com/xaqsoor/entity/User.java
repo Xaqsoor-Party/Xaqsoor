@@ -1,6 +1,7 @@
 package com.xaqsoor.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xaqsoor.enumeration.MembershipLevel;
 import com.xaqsoor.enumeration.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +41,10 @@ public class User extends Auditable {
     @Column(name = "status", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column(name = "membership_level", length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MembershipLevel membershipLevel;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
