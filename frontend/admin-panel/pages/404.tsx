@@ -11,8 +11,7 @@ export default function NotFoundPage() {
     return (
         <>
             <Head>
-                <title>404 - Page Not Found</title>
-                <link rel="icon" href="/images/Replace_Me.svg"/>
+                <title>404 - Page Not Found  • Xaqsoor</title>
                 <meta name="description" content="The page you're looking for doesn't exist. Return to the homepage." />
             </Head>
             <div className={styles.container}>

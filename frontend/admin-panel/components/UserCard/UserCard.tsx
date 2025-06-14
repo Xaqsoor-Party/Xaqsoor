@@ -2,6 +2,7 @@ import React from 'react';
 import { UserCardDTO } from '@/types/user';
 import styles from './UserCard.module.css';
 import Image from "next/image";
+import Link from "next/link";
 
 interface UserCardProps {
     user: UserCardDTO;
@@ -28,7 +29,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     };
 
     return (
-        <div className={styles.card}>
+        <Link href={`/membership/${user.userId}`}  className={styles.card}>
             <div className={styles.avatarContainer}>
                 {user.profileImageUrl ? (
                     <Image
@@ -70,7 +71,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                     </span>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

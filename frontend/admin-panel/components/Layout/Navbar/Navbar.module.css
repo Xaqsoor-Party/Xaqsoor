@@ -25,31 +25,6 @@
     display: none;
 }
 
-.logoContainer {
-    height: 40px;
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-}
-
-.logoText {
-    font-size: var(--font-size-xxl);
-    font-weight: 700;
-    color: var(--color-text-light);
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.logoText:hover {
-    color: var(--color-secondary);
-}
-
-
 .rightSection {
     display: flex;
     align-items: center;

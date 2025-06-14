@@ -53,7 +53,7 @@ const AuthForm: React.FC<AuthFormProps> = ({isRegistering}) => {
             <div className={styles.container}>
                 <div className={styles.logoContainer}>
                     <Link href="/" className={styles.logo}>
-                        <Image src="/images/Replace_Me.svg" alt="logo" width={120} height={40}/>
+                        <Image src="/images/Xaqsoor_Logo_English_1.png" alt="logo" width={200} height={20}/>
                     </Link>
                 </div>
 

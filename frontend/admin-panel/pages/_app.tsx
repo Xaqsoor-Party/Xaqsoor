@@ -8,6 +8,7 @@ import {AuthProvider} from "@/auth/AuthProvider";
 import RedirectAuthenticated from "@/components/common/RedirectAuthenticated";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import { Layout } from "@/components/Layout";
+import React from "react";
 
 export default function App({Component, pageProps}: AppProps) {
     const router = useRouter();
@@ -16,7 +17,7 @@ export default function App({Component, pageProps}: AppProps) {
         <>
             <Head>
                 <title>Xaqsoor</title>
-                <link rel="icon" href="/images/Replace_Me.svg" />
+                <link rel="icon" href="/icons/Icon_Xaqsoor_Logo.png"/>
             </Head>
             <AuthProvider>
             <LanguageProvider>

@@ -1,8 +1,8 @@
 import UnderConstructionPage from "@/components/UnderConstructionPage/UnderConstructionPage";
 
-const app = () => {
-  return (
-      <UnderConstructionPage/>
-  )
+const Add = () => {
+    return (
+        <UnderConstructionPage/>
+    )
 }
-export default app;
+export default Add;

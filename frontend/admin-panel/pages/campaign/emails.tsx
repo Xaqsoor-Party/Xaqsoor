@@ -1,8 +1,8 @@
 import UnderConstructionPage from "@/components/UnderConstructionPage/UnderConstructionPage";
 
-const app = () => {
-  return (
-      <UnderConstructionPage/>
-  )
+const Emails = () => {
+    return (
+        <UnderConstructionPage/>
+    )
 }
-export default app;
+export default Emails;

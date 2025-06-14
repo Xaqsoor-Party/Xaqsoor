@@ -89,13 +89,13 @@ export interface UserProfileUpdateRequest {
 }
 
 export interface UserProfileResponse {
-    userData: UserUpdateDTO;
+    userData: User;
     academicRecords: AcademicRecordRequest[];
     workExperiences: WorkExperienceRequest[];
 }
 
 export interface UserCardDTO {
-    id: number;
+    userId: number;
     fullName: string;
     email: string;
     phone: string;
