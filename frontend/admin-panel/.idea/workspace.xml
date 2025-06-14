@@ -5,52 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../client-app/components/UnderConstructionPage/UnderConstructionPage.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/components/UnderConstructionPage/UnderConstructionPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/campaign/announcements.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/campaign/events.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/constituencies.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/donate.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/media/gallery.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/pages/media/news.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/public/icons/Icon_Xaqsoor_Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/public/images/Xaqsoor_Logo_English.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client-app/public/images/Xaqsoor_Logo_English_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/UserProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/UserProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/UserProfileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/application-prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/frontend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Layout/Navbar/Navbar.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/Navbar/Navbar.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Layout/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/Navbar/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/PasswordResetConfirmation/ResetPasswordRequestConfirmation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/PasswordResetConfirmation/ResetPasswordRequestConfirmation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserCard/UserCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserCard/UserCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/authForm/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/authForm/AuthForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/404.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/404.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/mfa/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/mfa/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/reset-password-request.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/reset-password-request.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/membership/list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/membership/list.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/Replace_Me.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/Layout/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/Layout/Navbar/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/Layout/Sidebar/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/Layout/Sidebar/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/PasswordResetConfirmation/ResetPasswordRequestConfirmation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/PasswordResetConfirmation/ResetPasswordRequestConfirmation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/404.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/404.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/auth/mfa/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/auth/mfa/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/auth/reset-password-request.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/auth/reset-password-request.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/public/images/Replace_Me.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/translations/en/sidebar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/en/sidebar.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/translations/so/sidebar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/so/sidebar.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/.idea/client-app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/.idea/vcs.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +162,9 @@
       <workItem from="1749833835998" duration="1806000" />
       <workItem from="1749846942775" duration="1209000" />
       <workItem from="1749883039897" duration="8901000" />
-      <workItem from="1749897643098" duration="4877000" />
+      <workItem from="1749897643098" duration="4955000" />
+      <workItem from="1749904191678" duration="85000" />
+      <workItem from="1749906879278" duration="262000" />
     </task>
     <servers />
   </component>
