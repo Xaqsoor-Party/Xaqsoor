@@ -52,4 +52,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @Param("gender") String gender,
             @Param("membershipLevel") String membershipLevel
     );
+
+    Optional<User> findByIdAndIsDeletedFalse(Long id);
 }

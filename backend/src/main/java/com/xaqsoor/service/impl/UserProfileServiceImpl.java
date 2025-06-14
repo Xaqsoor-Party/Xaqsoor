@@ -1,5 +1,6 @@
 package com.xaqsoor.service.impl;
 
+import com.xaqsoor.dto.UserDto;
 import com.xaqsoor.dto.request.AcademicRecordRequest;
 import com.xaqsoor.dto.request.UserUpdateDTO;
 import com.xaqsoor.dto.request.WorkExperienceRequest;
@@ -10,9 +11,8 @@ import com.xaqsoor.entity.AcademicRecord;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.entity.WorkExperience;
 import com.xaqsoor.enumeration.EducationLevel;
-import com.xaqsoor.enumeration.MembershipLevel;
-import com.xaqsoor.enumeration.Status;
 import com.xaqsoor.exception.ApiException;
+import com.xaqsoor.mapper.UserMapper;
 import com.xaqsoor.repository.AcademicRecordRepository;
 import com.xaqsoor.repository.UserRepository;
 import com.xaqsoor.repository.WorkExperienceRepository;
@@ -22,15 +22,12 @@ import com.xaqsoor.util.UserSortUtil;
 import com.xaqsoor.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +53,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Transactional(readOnly = true)
     public UserProfileResponse getUserProfile(Long userId) {
         User user = findUserById(userId);
-        UserUpdateDTO userDto = mapToUserUpdateDTO(user);
+        String profileImageUrl = UserUtil.resolveProfileImageUrl(user.getProfileImageKey(), s3Service);
+        UserDto userDto = UserMapper.toDTO(user,profileImageUrl);
         List<AcademicRecordRequest> academicRecords = mapToAcademicRecordRequests(academicRecordRepository.findByUserIdOrderByStartDateDesc(userId));
         List<WorkExperienceRequest> workExperience = mapToWorkExperiences(workExperienceRepository.findByUserIdOrderByStartDateDesc(userId));
 
@@ -184,23 +182,6 @@ public class UserProfileServiceImpl implements UserProfileService {
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException("User not found"));
-    }
-
-    private UserUpdateDTO mapToUserUpdateDTO(User user) {
-        return new UserUpdateDTO(
-                user.getId(),
-                user.getFirstName(),
-                user.getMiddleName(),
-                user.getLastName(),
-                user.getGender(),
-                user.getPlaceOfBirth(),
-                user.getDateOfBirth(),
-                user.getBio(),
-                user.getStreet(),
-                user.getCity(),
-                user.getState(),
-                user.getCountry()
-        );
     }
 
     private List<AcademicRecordRequest> mapToAcademicRecordRequests(List<AcademicRecord> records) {
