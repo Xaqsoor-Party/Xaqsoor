@@ -6,24 +6,27 @@ import {ApiResponse} from '@/types/auth';
 import ProfileAvatar from "@/components/ProfileAvatar/ProfileAvatar";
 import styles from "@/styles/UserDetailPage.module.css";
 import {
+    FiAlertCircle,
     FiBookOpen,
     FiBriefcase,
     FiCalendar,
     FiCheckCircle,
-    FiGlobe,
+    FiGlobe, FiInfo,
     FiKey,
     FiLock,
     FiMail,
     FiMapPin,
     FiMoreVertical,
     FiPhone,
-    FiUser
+    FiUser, FiUserX
 } from "react-icons/fi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
+import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 
 const UserDetailPage = () => {
     const router = useRouter();
-    const {id} = router.query;
+    const idParam = router.query.id;
+    const id = typeof idParam === 'string' && /^\d+$/.test(idParam) ? parseInt(idParam, 10) : null;
     const [showDropdown, setShowDropdown] = useState(false);
     const {getUserProfile} = useUserProfileApi();
 
@@ -53,7 +56,11 @@ const UserDetailPage = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (!id) return;
+            if (id === undefined) return; // wait until router is ready
+            if (!id || isNaN(Number(id))) {
+                setLoading(false);
+                setError("Invalid or missing user ID.");
+            }
 
             try {
                 const response: ApiResponse<{ profile: UserProfileResponse }> = await getUserProfile(Number(id));
@@ -74,9 +81,33 @@ const UserDetailPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-    if (loading) return <p>Loading user profile...</p>;
-    if (error) return <p className={styles.errorText}>{error}</p>;
-    if (!user) return <p>User not found</p>;
+    if (loading) return (
+        <div className={styles.statusContainer}>
+            <SpinLoading />
+            <p className={styles.loadingText}>
+                <FiInfo className={styles.statusIcon} />
+                Loading user profile...
+            </p>
+        </div>
+    );
+
+    if (error) return (
+        <div className={styles.statusContainer}>
+            <p className={styles.errorText}>
+                <FiAlertCircle className={styles.statusIcon} />
+                {error}
+            </p>
+        </div>
+    );
+
+    if (!user) return (
+        <div className={styles.statusContainer}>
+            <p className={styles.notFoundText}>
+                <FiUserX className={styles.statusIcon} />
+                User not found
+            </p>
+        </div>
+    );
 
     const {userData, academicRecords, workExperiences} = user;
 

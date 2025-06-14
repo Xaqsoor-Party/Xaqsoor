@@ -60,10 +60,11 @@ const RegistrationForm: React.FC = () => {
         e.preventDefault();
         try {
             setIsLoading(true);
-            const message = await registerUser(formData);
+           await registerUser(formData);
+            const memberName = `${formData.firstName} ${formData.middleName} ${formData.lastName}`.trim();
             setModalContent({
                 title: "Registration Successful",
-                message,
+                message: `Member ${memberName} has been successfully added to the political party.`,
                 buttonText: "OK"
             });
             setShowModal(true);
