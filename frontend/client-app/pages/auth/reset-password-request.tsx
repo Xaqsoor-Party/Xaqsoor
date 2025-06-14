@@ -47,12 +47,11 @@ export default function ResetPasswordRequest() {
         <>
             <Head>
                 <title>Password Reset Request • Your Company</title>
-                <link rel="icon" href="/images/Replace_Me.svg"/>
             </Head>
             <div className={styles.container}>
                 <div className={styles.logoContainer}>
                     <Link href="/" className={styles.logo}>
-                        <Image src={"/images/Replace_Me.svg"} alt={"logo"} width={120} height={40}/>
+                        <Image src={"/images/Xaqsoor_Logo_English_1.png"} alt={"logo"} width={200} height={40}/>
                     </Link>
                 </div>
 

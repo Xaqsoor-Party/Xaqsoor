@@ -3,9 +3,7 @@ import {SidebarLabels} from "@/translations/en/sidebar";
 export const sidebarLabels: SidebarLabels = {
     sideBar: {
         dashboard: "Dashboard-ka",
-        candidates: "Musharaxiinta",
-        allCandidates: "Dhammaan Musharaxiinta",
-        addCandidate: "Ku dar Musharax",
+        donate: "Ku deeq",
         constituencies: "Degmooyinka Doorashada",
         viewConstituencies: "Eeg Degmooyinka",
         addConstituency: "Ku dar Degmo",

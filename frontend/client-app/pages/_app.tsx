@@ -18,7 +18,7 @@ export default function App({Component, pageProps}: AppProps) {
         <>
             <Head>
                 <title>Title</title>
-                <link rel="icon" href="/images/Replace_Me.svg"/>
+                <link rel="icon" href="/icons/Icon_Xaqsoor_Logo.png"/>
             </Head>
             <AuthProvider>
                 <LanguageProvider>

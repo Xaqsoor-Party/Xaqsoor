@@ -1,8 +1,6 @@
 type Sidebar = {
     dashboard: string,
-    candidates: string,
-    allCandidates: string,
-    addCandidate: string,
+    donate: string,
     constituencies: string,
     viewConstituencies: string,
     addConstituency: string,
@@ -26,9 +24,7 @@ export type SidebarLabels = {
 export const sidebarLabels: SidebarLabels = {
     sideBar: {
         dashboard: "Dashboard",
-        candidates: "Candidates",
-        allCandidates: "All Candidates",
-        addCandidate: "Add Candidate",
+        donate: "Donate",
         constituencies: "Constituencies",
         viewConstituencies: "View Constituencies",
         addConstituency: "Add Constituency",

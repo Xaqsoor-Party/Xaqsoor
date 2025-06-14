@@ -1,9 +1,8 @@
 import UnderConstructionPage from "@/components/UnderConstructionPage/UnderConstructionPage";
 
-const app = () => {
-
+const Gallery = () => {
   return (
-    <UnderConstructionPage/>
+      <UnderConstructionPage/>
   )
 }
-export default app;
+export default Gallery;

@@ -7,10 +7,9 @@ import styles from './Sidebar.module.css'
 import {
     FaBullhorn,
     FaCalendarAlt,
-    FaCogs,
+    FaCogs, FaHandHoldingHeart,
     FaImages,
     FaMapMarkedAlt,
-    FaUserTie
 } from "react-icons/fa";
 
 import {AiOutlineDoubleLeft, AiOutlineDoubleRight} from "react-icons/ai";
@@ -44,49 +43,41 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.dashboard,
             path: '/',
             icon: <FiHome className={styles.icon}/>,
-            roles: ['admin', 'coordinator', 'viewer']
-        },
-        {
-            title: t.candidates,
-            path: '/candidates',
-            icon: <FaUserTie className={styles.icon}/>,
-            roles: ['admin', 'coordinator']
         },
         {
             title: t.constituencies,
             path: '/constituencies',
             icon: <FaMapMarkedAlt className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
         },
         {
             title: t.announcements,
             path: '/campaign/announcements',
             icon: <FaBullhorn  className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
         },
         {
             title: t.events,
             path: '/campaign/events',
             icon: <FaCalendarAlt  className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
         },
         {
             title: t.gallery,
             path: '/media/gallery',
             icon: <FaImages  className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
         },
         {
             title: t.news,
-            path: '/media/documents',
+            path: '/media/news',
             icon: <ImNewspaper   className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
+        },
+        {
+            title: t.donate,
+            path: '/donate',
+            icon: <FaHandHoldingHeart className={styles.icon}/>,
         },
         {
             title: t.settings,
             path: '/settings',
             icon: <FaCogs className={styles.icon}/>,
-            roles: ['admin'],
         }
     ];
 
@@ -99,7 +90,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
     };
 
     const handleItemClick = (path: string) => {
-        router.replace(path);
+        void router.replace(path);
         if (isMobile) onClose();
     };
 
@@ -107,9 +98,6 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
         const hasChildren = item.items && item.items.length > 0;
         const isExpanded = expandedItems[item.title];
 
-        // if (item.roles && !item.roles.some(role => roles.includes(role))) {
-        //     return null;
-        // }
         return (
             <div key={item.path} className={styles.navItemContainer}>
                 <div

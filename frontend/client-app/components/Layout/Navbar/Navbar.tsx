@@ -4,6 +4,7 @@ import { AvatarDropdown } from "./AvatarDropdown/AvatarDropdown";
 import Link from "next/link";
 import { FiMenu } from 'react-icons/fi';
 import LanguageSwitcher from "@/components/common/LanguageSwitcher/LanguageSwitcher";
+import Image from "next/image";
 
 interface NavbarProps {
     onMenuToggle: () => void;
@@ -27,9 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({onMenuToggle, isMobile }) => {
                 )}
 
                 <Link href="/" passHref>
-                    <div className={styles.logoContainer}>
-                        <span className={styles.logoText}>Xaqsoor</span>
-                    </div>
+                    <Image src={"/images/Xaqsoor_Logo_English_1.png"} alt={"logo"} width={200} height={40}/>
                 </Link>
             </div>
 
