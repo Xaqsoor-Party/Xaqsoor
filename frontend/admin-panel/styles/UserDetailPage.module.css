@@ -54,7 +54,7 @@
     flex-direction: column;
     gap: var(--spacing-lg);
     padding: var(--spacing-lg);
-    background-color: var(--color-background-accent);
+    /*background-color: var(--color-background-accent);*/
     background: var(--color-background);
 }
 .backgroundBox{
@@ -77,6 +77,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    width: 100%;
 }
 
 .nameRow {
@@ -93,18 +94,28 @@
 }
 
 .menuButton {
-    background: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: transparent;
     border: none;
-    color: var(--color-text-secondary);
     cursor: pointer;
-    padding: var(--spacing-xs);
+    padding:  var(--spacing-sm);
     border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-fast);
+    background: var(--color-secondary);
 }
 
 .menuButton:hover {
-    background-color: var(--color-background-secondary);
-    color: var(--color-primary);
+    background-color: var(--color-secondary-hover);
+    border-radius: var(--radius-sm);
+}
+
+.menuButtonText {
+    font-weight: 500;
+    color: var(--color-text-primary);
 }
 
 .dropdownMenu {
@@ -189,7 +200,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
-    /*margin-top: var(--spacing-sm);*/
 }
 
 .authorityTag {
@@ -205,6 +215,10 @@
     margin-top: var(--spacing-xs);
     font-style: italic;
     color: var(--color-text-tertiary);
+}
+
+.customModalStyle{
+    width: 400px;
 }
 
 @media (max-width: 768px) {
@@ -228,12 +242,12 @@
     .userInfo {
         margin-top: var(--spacing-xl);
         padding-top: var(--spacing-sm);
+
+
     }
 
     .nameRow {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        width: 100%;
     }
 
     .nameRow h2 {
@@ -242,6 +256,7 @@
 
     .menuButton {
         padding: var(--spacing-xs);
+
     }
 
     .dropdownMenu {
@@ -279,5 +294,8 @@
 
     .detailList li strong {
         min-width: 100px;
+    }
+    .customModalStyle{
+        width: 340px;
     }
 }
