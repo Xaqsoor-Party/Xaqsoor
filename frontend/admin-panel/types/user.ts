@@ -127,6 +127,12 @@ export enum Status {
     PENDING = "PENDING",
 }
 
+export enum Roles {
+    ADMIN = "ADMIN",
+    SUPER_ADMIN = "SUPER_ADMIN",
+    MEMBER = "MEMBER",
+}
+
 export type OrderBy =
     | "createdDateAsc"
     | "createdDateDesc"
