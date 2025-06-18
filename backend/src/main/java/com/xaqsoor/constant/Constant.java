@@ -1,6 +1,9 @@
 package com.xaqsoor.constant;
 
+import java.time.ZoneId;
+
 public class Constant {
+    public static final ZoneId APP_ZONE = ZoneId.of("Europe/Istanbul");
     public static final String ROLE_PREFIX = "ROLE_";
     public static final String AUTHORITY_DELIMITER = ",";
 

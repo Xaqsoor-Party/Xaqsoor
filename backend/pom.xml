@@ -128,6 +128,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.github.oshi</groupId>
+			<artifactId>oshi-core</artifactId>
+			<version>6.8.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>nl.basjes.parse.useragent</groupId>
 			<artifactId>yauaa</artifactId>
 			<version>7.31.0</version>

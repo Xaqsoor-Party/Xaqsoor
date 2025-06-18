@@ -4,6 +4,7 @@ import ConfirmationModal from "@/components/common/ConfirmationModal/Confirmatio
 import ActionButton from "@/components/common/ActionButton/ActionButton";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import styles from "./UserExportSection.module.css";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
 
 interface UserExportSectionProps {
     filters: {
@@ -29,12 +30,14 @@ const UserExportSection: React.FC<UserExportSectionProps> = ({filters}) => {
                 const count = await getFilteredUserCount(filters);
                 setTotalUsers(count);
             } catch (err) {
+                extractErrorMessage(err,'Failed to fetch user count')
                 console.error("Failed to fetch user count", err);
             } finally {
                 setLoading(false);
             }
         };
         void fetchCount();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters]);
 
     const handleExcelClick = () => {
@@ -47,7 +50,11 @@ const UserExportSection: React.FC<UserExportSectionProps> = ({filters}) => {
     };
 
     const handlePdfClick = () => {
-        void downloadPdf(filters);
+       try {
+           void downloadPdf(filters);
+       }catch (e) {
+           console.error(extractErrorMessage(e,"Failed to download PDF"));
+       }
     };
 
     return (

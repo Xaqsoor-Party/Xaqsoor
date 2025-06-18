@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/hooks/useDashboardApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/cache/CacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/cache/CacheConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/constant/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/constant/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/sql/SqlQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/sql/SqlQueries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/static/images/Logo.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserExportSection/UserExportSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserExportSection/UserExportSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +50,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2yBN1ZX5MHEaNValwPxXOB891hC" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="openDirectoriesWithSingleClick" value="true" />
@@ -73,13 +88,14 @@
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\util" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components\Dashboard\UserGrowthChart" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\pages\media" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components\ProfileAvatar" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\types" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -152,6 +168,14 @@
       <workItem from="1749897643098" duration="4955000" />
       <workItem from="1749904191678" duration="85000" />
       <workItem from="1749906879278" duration="262000" />
+      <workItem from="1750011884930" duration="4049000" />
+      <workItem from="1750072890309" duration="3994000" />
+      <workItem from="1750091211076" duration="8614000" />
+      <workItem from="1750145604279" duration="5339000" />
+      <workItem from="1750154793075" duration="8588000" />
+      <workItem from="1750186312228" duration="5654000" />
+      <workItem from="1750236915395" duration="4660000" />
+      <workItem from="1750253241246" duration="5568000" />
     </task>
     <servers />
   </component>

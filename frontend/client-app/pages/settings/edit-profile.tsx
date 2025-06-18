@@ -60,6 +60,12 @@ const EditProfile = () => {
         });
     };
 
+    const formatDate = (dateStr: string) => {
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return '';
+        return date.toISOString().split('T')[0];
+    };
+
     useEffect(() => {
         const fetchProfile = async () => {
             if (!user) {
@@ -77,7 +83,9 @@ const EditProfile = () => {
                         lastName: profileData.userData.lastName || '',
                         gender: profileData.userData.gender || '',
                         placeOfBirth: profileData.userData.placeOfBirth || '',
-                        dateOfBirth: profileData.userData.dateOfBirth || '',
+                        dateOfBirth: profileData.userData.dateOfBirth
+                            ? formatDate(profileData.userData.dateOfBirth)
+                            : '',
                         bio: profileData.userData.bio || '',
                         street: profileData.userData.street || '',
                         city: profileData.userData.city || '',
@@ -246,7 +254,7 @@ const EditProfile = () => {
                             onChange={handleSelectChange}
                             placeholder={t.fields.gender.placeholder}
                             required
-                            options={Object.entries(t.fields.gender.options).map(([value, label]) => ({ value, label }))}
+                            options={Object.entries(t.fields.gender.options).map(([value, label]) => ({value, label}))}
                             errorMessage={errors.gender}
                         />
                         <Input

@@ -1,0 +1,119 @@
+.container {
+    padding: var(--spacing-xl, 1.5rem);
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid var(--color-border, #e0e0e0);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg, 1rem);
+    padding-bottom: var(--spacing-sm, 0.5rem);
+    border-bottom: 1px solid var(--color-border, #f0f0f0);
+}
+
+.title {
+    font-size: var(--font-size-lg, 1.25rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #333333);
+    margin: 0;
+}
+
+.viewAllButton {
+    background: none;
+    border: none;
+    color: var(--color-primary, #1b273d);
+    font-size: var(--font-size-md, 1rem);
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+    border-radius: var(--radius-sm, 4px);
+    transition: background-color 0.2s ease;
+}
+
+.viewAllButton:hover {
+    background-color: var(--color-background-accent, #f5f8fa);
+}
+
+.activityList {
+    display: flex;
+    flex-direction: column;
+}
+
+.activityItem {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md, 0.75rem) 0;
+    border-bottom: 1px solid var(--color-border, #f0f0f0);
+}
+
+.activityItem:last-child {
+    border-bottom: none;
+}
+
+.avatar {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-primary-light, #3a4a6d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: var(--spacing-md, 0.75rem);
+    overflow: hidden;
+}
+
+.avatarLetter {
+    font-size: var(--font-size-md, 1rem);
+    font-weight: 600;
+    color: var(--color-white, #ffffff);
+    text-transform: uppercase;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.nameAndDescription {
+    font-size: var(--font-size-md, 1rem);
+    color: var(--color-text-primary, #333333);
+    line-height: 1.4;
+}
+
+.fullName {
+    color: var(--color-text-primary, #333333);
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: var(--spacing-xs, 0.25rem);
+}
+
+.description {
+    font-weight: 400;
+}
+
+.timestamp {
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #666666);
+    margin-top: var(--spacing-xxs, 0.125rem);
+}
+
+.noActivity {
+    font-size: var(--font-size-md, 1rem);
+    color: var(--color-text-secondary, #666666);
+    text-align: center;
+    padding: var(--spacing-lg, 1rem) 0;
+}

@@ -1,13 +1,22 @@
 package com.xaqsoor.enumeration;
 
 import com.xaqsoor.exception.ApiException;
+import lombok.Getter;
 
+@Getter
 public enum Status {
-    ACTIVE,
-    INACTIVE,
-    SUSPENDED,
-    LAPSED,
-    PENDING;
+    ACTIVE("Active"),
+    INACTIVE("Inactive"),
+    SUSPENDED("Suspended"),
+    LAPSED("Lapsed"),
+    PENDING("Pending");
+
+    private final String value;
+
+    Status(String value) {
+        this.value = value;
+    }
+
 
     public static Status fromString(String value) {
         if (value == null) {

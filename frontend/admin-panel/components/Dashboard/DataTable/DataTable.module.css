@@ -1,0 +1,131 @@
+.tableContainer {
+    padding: var(--spacing-xl);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-background-accent);
+}
+
+.tableTitle {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xl);
+    margin: 0;
+    font-weight: 600;
+}
+
+.tableInfo {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    background: var(--color-background-accent);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.dataTable thead {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.tableHeader {
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dataTable tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.dataTable tbody tr:hover {
+    background-color: var(--color-background-secondary);
+}
+
+.evenRow {
+    background-color: var(--color-white);
+}
+
+.oddRow {
+    background-color: var(--color-background-accent);
+}
+
+.tableCell {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-background-accent);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-base);
+}
+
+.noData {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    background-color: var(--color-background-accent);
+}
+
+.noDataContent {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.noDataIcon {
+    font-size: 3rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.noData h3 {
+    color: var(--color-text-primary);
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+
+.noData p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .tableInfo {
+        align-self: flex-start;
+    }
+
+    .dataTable {
+        min-width: 100%;
+    }
+
+    .tableHeader,
+    .tableCell {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}

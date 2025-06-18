@@ -34,13 +34,7 @@ public class UserExportServiceImpl implements UserExportService {
     @Override
     public ByteArrayInputStream exportUsersToPdf(String searchTerm, String statusFilter, String roleFilter, String genderFilter, String membershipLevelFilter) throws IOException {
         List<User> users = fetchFilteredUsers(searchTerm, statusFilter, roleFilter, genderFilter, membershipLevelFilter);
-
-        String[] columns = {
-                "User ID", "First Name", "Middle Name", "Last Name", "Gender",
-                 "Email", "Phone",
-                "Status", "Membership Level", "Role"
-        };
-        return PdfExportUtil.usersToPdf(users, columns);
+        return PdfExportUtil.usersToPdf(users);
     }
 
     @Override
