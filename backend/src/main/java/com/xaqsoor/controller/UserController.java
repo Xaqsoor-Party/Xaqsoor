@@ -3,6 +3,7 @@ package com.xaqsoor.controller;
 import com.xaqsoor.domain.Response;
 import com.xaqsoor.dto.request.*;
 import com.xaqsoor.dto.response.AuthenticationResponse;
+import com.xaqsoor.dto.response.MfaSetupDetails;
 import com.xaqsoor.dto.response.UserVerificationResponse;
 import com.xaqsoor.security.service.AuthenticationService;
 import com.xaqsoor.service.UserService;
@@ -88,14 +89,32 @@ public class UserController {
         );
     }
 
-    @PostMapping("/mfa/setup")
-    public ResponseEntity<Response> setupMfa(@RequestParam String userId,
-                                             HttpServletRequest request) {
-        String mfaQrCodeUri = authenticationService.setupMfa(userId);
+    @PostMapping("/mfa/verify-initial")
+    public ResponseEntity<Response> verifyInitialMfa(
+            @RequestParam String userId,
+            @RequestBody @Valid InitialMfaVerificationRequest mfaVerificationRequest,
+            HttpServletRequest request) {
+
+        authenticationService.verifyInitialMfa(userId, mfaVerificationRequest);
+
         return ResponseEntity.ok(
                 RequestUtils.getResponse(
                         request,
-                        Collections.singletonMap("mfaQRCodeImageUri", mfaQrCodeUri),
+                        Collections.emptyMap(),
+                        "Initial MFA verification successful.",
+                        HttpStatus.OK
+                )
+        );
+    }
+
+    @PostMapping("/mfa/setup")
+    public ResponseEntity<Response> setupMfa(@RequestParam String userId,
+                                             HttpServletRequest request) {
+        MfaSetupDetails mfaSetupDetails = authenticationService.setupMfa(userId);
+        return ResponseEntity.ok(
+                RequestUtils.getResponse(
+                        request,
+                        Collections.singletonMap("mfaSetupDetails", mfaSetupDetails),
                         "MFA setup initiated.",
                         HttpStatus.OK
                 )

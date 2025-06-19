@@ -1,5 +1,6 @@
 package com.xaqsoor.security.service.impl.internal;
 
+import com.xaqsoor.dto.response.MfaSetupDetails;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.enumeration.LoginType;
 import com.xaqsoor.exception.ApiException;
@@ -40,7 +41,7 @@ public class MfaService {
         return user;
     }
 
-    public String setupMfa(String userId) {
+    public MfaSetupDetails setupMfa(String userId) {
         User user = getUserEntityByUserId(userId);
 
         if (user.isMfaEnabled()) {
@@ -48,12 +49,27 @@ public class MfaService {
         }
 
         String secret = mfaUtil.generateSecret();
-        String qrCodeImageUri = mfaUtil.generateQrCodeImageUri(user.getMfaQrCodeImageUri(), secret);
+        String qrCodeImageUri = mfaUtil.generateQrCodeImageUri(user.getEmail(), secret);
+
+        return new MfaSetupDetails(secret, qrCodeImageUri);
+    }
+
+    public void confirmMfaSetup(String userId, String mfaSecret, String verificationCode) {
+        User user = getUserEntityByUserId(userId);
+
+        if (user.isMfaEnabled()) {
+            throw new ApiException("MFA is already enabled for this user.");
+        }
+
+        if (!mfaUtil.verifyCode(mfaSecret, verificationCode)) {
+            throw new BadCredentialsException("Invalid verification code. MFA setup failed.");
+        }
+
         user.setMfaEnabled(true);
-        user.setMfaSecret(secret);
-        user.setMfaQrCodeImageUri(qrCodeImageUri);
+        user.setMfaSecret(mfaSecret);
+
+        user.setMfaQrCodeImageUri(mfaUtil.generateQrCodeImageUri(user.getEmail(), mfaSecret));
         userRepository.save(user);
-        return qrCodeImageUri;
     }
 
     public void disableMfa(String userId) {
@@ -77,6 +93,7 @@ public class MfaService {
         }
         return userOpt.get();
     }
+
     private User getUserEntityByUserId(String userId) {
         return userRepository.findByUserIdIgnoreCase(userId)
                 .orElseThrow(() -> new ApiException("User not found."));

@@ -1,8 +1,10 @@
 package com.xaqsoor.security.service.impl;
 
+import com.xaqsoor.dto.request.InitialMfaVerificationRequest;
 import com.xaqsoor.dto.request.MfaVerificationRequest;
 import com.xaqsoor.dto.request.UserLoginRequest;
 import com.xaqsoor.dto.response.AuthenticationResponse;
+import com.xaqsoor.dto.response.MfaSetupDetails;
 import com.xaqsoor.dto.response.UserAuthResponse;
 import com.xaqsoor.entity.RefreshToken;
 import com.xaqsoor.entity.User;
@@ -94,7 +96,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String setupMfa(String userId) {
+    public void verifyInitialMfa(String userId, InitialMfaVerificationRequest request) {
+        mfaService.confirmMfaSetup(userId, request.mfaSecret(), request.verificationCode());
+    }
+
+    @Override
+    public MfaSetupDetails setupMfa(String userId) {
         return mfaService.setupMfa(userId);
     }
 
