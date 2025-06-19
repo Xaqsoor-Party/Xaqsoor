@@ -44,13 +44,13 @@ const GenderDonutChart: React.FC<GenderDonutChartProps> = ({ maleCount, femaleCo
                 labels: {
                     color: '#666666',
                     font: {
-                        size: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-size-base')) * 16 // Use base font size
+                        size: 16
                     }
                 },
             },
             tooltip: {
                 callbacks: {
-                    label: function (context: any) {
+                    label: function (context: import('chart.js').TooltipItem<'doughnut'>) {
                         const label = context.label || '';
                         const value = context.parsed;
                         const total = context.dataset.data.reduce((sum: number, current: number) => sum + current, 0);

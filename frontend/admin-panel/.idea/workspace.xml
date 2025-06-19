@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/hooks/useDashboardApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/cache/CacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/cache/CacheConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/constant/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/constant/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/sql/SqlQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/sql/SqlQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/static/images/Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserExportSection/UserExportSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserExportSection/UserExportSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Dashboard/GenderDonutChart/GenderDonutChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Dashboard/GenderDonutChart/GenderDonutChart.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +85,7 @@
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Next.js: server-side">
+  <component name="RunManager" selected="npm.build">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -131,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -176,6 +166,7 @@
       <workItem from="1750186312228" duration="5654000" />
       <workItem from="1750236915395" duration="4660000" />
       <workItem from="1750253241246" duration="5568000" />
+      <workItem from="1750317287679" duration="956000" />
     </task>
     <servers />
   </component>

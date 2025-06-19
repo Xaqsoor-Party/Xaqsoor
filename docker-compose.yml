@@ -1,17 +1,48 @@
 services:
-  postgres:
+  backend-service:
+    build:
+      context: ./backend
+    container_name: backend-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database_service:5432/xaqsoor_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - database_service
+
+  database_service:
     image: postgres:17-alpine
-    container_name: authshield
+    container_name: xaqsoor_db
     restart: on-failure
     environment:
-      POSTGRES_DB: authshield_db
+      POSTGRES_DB: xaqsoor_db
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
     ports:
       - "5462:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - xaqsoor_pgdata:/var/lib/postgresql/data
 
+  client-app:
+    build:
+      context: ./frontend/client-app
+    container_name: client_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend-service
+
+  admin-panel:
+    build:
+      context: ./frontend/admin-panel
+    container_name: admin_panel
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend-service
 
 volumes:
-  postgres_data:
+  xaqsoor_pgdata:
