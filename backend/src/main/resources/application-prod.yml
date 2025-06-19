@@ -7,12 +7,12 @@ MAX_REQUEST_SIZE: 20MB
 
 # Database
 DB_HOST: localhost
-DB_PORT: 5462
+DB_PORT: 5432
 DB_NAME: xaqsoor_db
 DB_USER: admin
 DB_PASSWORD: admin
 DB_DDL_STRATEGY: validate
-SHOW_SQL: true
+SHOW_SQL: false
 
 # Email
 SMTP_HOST: smtp.gmail.com

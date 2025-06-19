@@ -8,6 +8,7 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
 # Download dependencies first (cache them in Docker layer)
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
 
 # Copy source code
