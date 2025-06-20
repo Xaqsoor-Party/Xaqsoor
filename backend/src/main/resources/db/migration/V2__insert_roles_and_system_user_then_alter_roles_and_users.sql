@@ -31,6 +31,7 @@ INSERT INTO users (
     role_id,
     email,
     phone,
+    network_operator,
     bio,
     failed_login_attempts,
     last_login,
@@ -62,6 +63,7 @@ VALUES (
            (SELECT id FROM roles WHERE name = 'ADMIN' LIMIT 1),
     'system@asalsolutions.com',
     '+252771700700',        -- Phone
+    'Hormuud',
     'Core system guardian account responsible for security, auditing, and system integrity. Not for interactive use. Visit us at https://asalsolutions.com/',
     0,           -- Failed login attempts
     NULL,        -- Last login

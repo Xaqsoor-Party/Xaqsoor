@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
     role_id BIGINT,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(15),
+    network_operator VARCHAR(50) NOT NULL,
     bio VARCHAR(500),
     failed_login_attempts INTEGER NOT NULL DEFAULT 0,
     last_login TIMESTAMP WITHOUT TIME ZONE,

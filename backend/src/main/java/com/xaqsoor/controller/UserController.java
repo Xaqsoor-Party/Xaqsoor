@@ -30,6 +30,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Response> register(@RequestBody @Valid UserCreateRequest user, HttpServletRequest request) {
+        System.out.println(user);
         userService.createUser(user);
         return ResponseEntity.created(getUri()).body(
                 RequestUtils.getResponse(

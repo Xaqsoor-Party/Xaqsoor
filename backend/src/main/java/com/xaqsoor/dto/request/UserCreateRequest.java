@@ -26,6 +26,9 @@ public record UserCreateRequest(
         @Size(max = 15, message = "Phone number must be at most 15 characters")
         String phone,
 
+        @NotBlank(message = "Network provider is required")
+        String networkProvider,
+
         @NotBlank(message = "Gender is required")
         @Pattern(regexp = "^(Male|Female)$", message = "Gender should be one of: Male or Female")
         String gender,

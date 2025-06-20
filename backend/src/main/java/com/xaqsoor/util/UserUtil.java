@@ -32,6 +32,7 @@ public class UserUtil {
                 .role(role)
                 .email(normalizedEmail)
                 .phone(request.phone())
+                .networkOperator(request.networkProvider())
                 .bio(EMPTY)
                 .failedLoginAttempts(0)
                 .lastLogin(null)

@@ -26,13 +26,13 @@ public class User extends Auditable {
     @Column(name = "middle_name", nullable = false, length = 15)
     private String middleName;
 
-    @Column(name = "last_name", nullable = false , length = 15)
+    @Column(name = "last_name", nullable = false, length = 15)
     private String lastName;
 
     @Column(name = "gender", length = 10, nullable = false)
     private String gender;
 
-    @Column(name = "place_of_birth" , length = 50)
+    @Column(name = "place_of_birth", length = 50)
     private String placeOfBirth;
 
     @Column(name = "date_of_birth")
@@ -55,6 +55,9 @@ public class User extends Auditable {
 
     @Column(name = "phone", length = 15, nullable = false, unique = true)
     private String phone;
+
+    @Column(name = "network_operator", length = 50, nullable = false)
+    private String networkOperator;
 
     @Column(name = "bio", length = 500)
     private String bio;
