@@ -18,6 +18,7 @@ public class SqlQueries {
                 r.name AS role_name,
                 u.email,
                 u.phone,
+                u.network_operator,
                 u.bio,
                 u.failed_login_attempts,
                 u.last_login,
@@ -158,5 +159,14 @@ public class SqlQueries {
                     UNION ALL
                     SELECT 1 FROM academic_record ar JOIN users u ON ar.user_id = u.id
                 ) AS count_table)
+            """;
+
+    public static final String DAILY_SIGNUPS_QUERY = """
+                SELECT CAST(created_date AS date) as signup_date,
+                   COUNT(id) as user_count
+                FROM users
+                WHERE created_date BETWEEN :start AND :end
+                GROUP BY CAST(created_date AS date)
+                ORDER BY signup_date
             """;
 }

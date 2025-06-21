@@ -9,6 +9,7 @@ import com.xaqsoor.projections.RecentActivityProjection;
 import com.xaqsoor.repository.RoleRepository;
 import com.xaqsoor.repository.UserRepository;
 import com.xaqsoor.service.AdminDashboardService;
+import com.xaqsoor.service.S3Service;
 import com.xaqsoor.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,14 +40,16 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     private final CacheStore<String, Object> dashboardCache;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final S3Service s3Service;
 
     private long[] lastCpuTicks = null;
 
     @Autowired
-    public AdminDashboardServiceImpl(UserRepository userRepository, CacheStore<String, Object> dashboardCache, RoleRepository roleRepository) {
+    public AdminDashboardServiceImpl(UserRepository userRepository, CacheStore<String, Object> dashboardCache, RoleRepository roleRepository, S3Service s3Service) {
         this.userRepository = userRepository;
         this.dashboardCache = dashboardCache;
         this.roleRepository = roleRepository;
+        this.s3Service = s3Service;
     }
 
     @Override
@@ -124,7 +127,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 .map(activity -> new RecentActivityDto(
                         activity.getUserId(),
                         activity.getFirstName(),
-                        activity.getProfileImageKey(),
+                        UserUtil.resolveProfileImageUrl(activity.getProfileImageKey(), s3Service),
                         activity.getDescription(),
                         activity.getTimestamp().toString() // Converting LocalDateTime to String
                 ))
@@ -139,44 +142,6 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         );
     }
 
-    //    @Override
-//    public SystemHealthDto getSystemHealthMetrics(boolean forceRefresh) {
-//        String cacheKey = "systemHealthMetrics";
-//
-//        if (!forceRefresh) {
-//            SystemHealthDto cached = (SystemHealthDto) dashboardCache.get(cacheKey);
-//            if (cached != null) {
-//                return cached;  // Return cached value if available
-//            }
-//        }
-//
-//        SystemInfo systemInfo = new SystemInfo();
-//        CentralProcessor processor = systemInfo.getHardware().getProcessor();
-//        double cpuLoad = getCpuLoad(processor);
-//
-//        GlobalMemory memory = systemInfo.getHardware().getMemory();
-//        long totalMemory = memory.getTotal();    // Total memory in bytes
-//        long availableMemory = memory.getAvailable(); // Available memory in bytes
-//        long usedMemory = totalMemory - availableMemory; // Used memory in bytes
-//
-//        long uptimeInMinutes = getSystemUptime();
-//        int activeThreads = getActiveThreadCount();
-//
-//        SystemHealthDto systemHealthDto = new SystemHealthDto(
-//                cpuLoad,
-//                totalMemory,
-//                availableMemory,
-//                usedMemory,
-//                uptimeInMinutes,
-//                activeThreads,
-//                UserUtil.formatDateTime(LocalDateTime.now(APP_ZONE))
-//        );
-//
-//        // Cache the result for subsequent requests
-//        dashboardCache.put(cacheKey, systemHealthDto);
-//
-//        return systemHealthDto;
-//    }
     @Override
     public SystemHealthDto getSystemHealthMetrics(boolean forceRefresh) {
         String cacheKey = "systemHealthMetrics";
@@ -341,22 +306,6 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 currentCount > 0 ? 100.0 : 0.0;
     }
 
-    private long getSystemUptime() {
-        // Attempt to get uptime from OSHI (in milliseconds)
-        long uptimeMillis = new SystemInfo().getOperatingSystem().getSystemUptime();
-
-        // Fallback method if uptime is not available
-        if (uptimeMillis == -1) {
-            // Use current time minus boot time (based on System.nanoTime or currentTimeMillis)
-            long systemStartTime = System.currentTimeMillis() - (System.nanoTime() / 1000000);
-            uptimeMillis = System.currentTimeMillis() - systemStartTime;  // Uptime in milliseconds
-        }
-
-        long uptimeSeconds = uptimeMillis / 1000;
-
-        return uptimeSeconds / 60;
-    }
-
     private synchronized double getCpuLoad(CentralProcessor processor) {
         long[] currentCpuTicks = processor.getSystemCpuLoadTicks();
 
@@ -370,31 +319,12 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
 
         return cpuLoad;
     }
-//    private double getCpuLoad(CentralProcessor processor) {
-//        // Take a snapshot of the current CPU ticks
-//        long[] currentCpuTicks = processor.getSystemCpuLoadTicks();
-//
-//        // If it's the first call, we can't calculate the load, so store the ticks and return a default value (e.g., 0)
-//        if (lastCpuTicks == null) {
-//            lastCpuTicks = currentCpuTicks;
-//            return 0.0;
-//        }
-//
-//        // Calculate the CPU load between the previous and current ticks
-//        double cpuLoad = processor.getSystemCpuLoadBetweenTicks(lastCpuTicks) * 100;  // CPU load as a percentage
-//
-//        // Update the last CPU ticks for the next calculation
-//        lastCpuTicks = currentCpuTicks;
-//
-//        return cpuLoad;
-//    }
 
     private int getActiveThreadCount() {
         return Thread.activeCount();
     }
 
     private String generateCacheKey(TimeRangeRequest request) {
-        // Generate a unique key for the cache based on the request parameters
         return "userGrowth-" + request.range() + "-" + request.startDate() + "-" + request.endDate();
     }
 }
