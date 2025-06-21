@@ -1,5 +1,5 @@
 import useAxiosPrivate from "@/api/hooks/useAxiosPrivate";
-import { ApiResponse } from "@/types/auth";
+import {ApiResponse, InitialMfaVerificationRequest, MfaSetupDetails} from "@/types/auth";
 
 const BASE_URL = '/api/v1/auth';
 
@@ -8,8 +8,8 @@ const useMfaApi = () => {
 
     const setupMfa = async (
         userId: string
-    ): Promise<ApiResponse<{ mfaQRCodeImageUri: string }>> => {
-        const response = await axiosPrivate.post<ApiResponse<{ mfaQRCodeImageUri: string }>>(
+    ): Promise<ApiResponse<{mfaSetupDetails: MfaSetupDetails}>> => {
+        const response = await axiosPrivate.post<ApiResponse<{mfaSetupDetails: MfaSetupDetails}>>(
             `${BASE_URL}/mfa/setup`,
             null,
             { params: { userId } }
@@ -27,8 +27,18 @@ const useMfaApi = () => {
         return response.data;
     };
 
+    const verifyInitialMfa = async (userId: string, mfaData: InitialMfaVerificationRequest): Promise<void> => {
+        await axiosPrivate.post(
+            `${BASE_URL}/mfa/verify-initial`,
+            mfaData,
+            { params: { userId } }
+        );
+    };
+
+
     return {
         setupMfa,
+        verifyInitialMfa,
         disableMfa,
     };
 };

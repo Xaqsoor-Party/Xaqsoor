@@ -5,6 +5,7 @@ import {AxiosError} from "axios";
 import {useAuthentication} from "@/auth/AuthProvider";
 import {UserCreateRequest, UserLoginRequest} from "@/types/auth";
 import useAuthApi from "@/api/hooks/useAuthApi";
+import {getOperator} from "@/util/phoneValidator";
 
 interface UseAuthProps {
     isRegistering: boolean;
@@ -50,12 +51,6 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // const hasErrors = validateForm(formData, isRegistering, setErrors);
-        // if (hasErrors) {
-        //     setIsLoading(false);
-        //     return;
-        // }
-
         if (isRegistering) {
             await registerUserHandler();
         } else {
@@ -95,13 +90,24 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
 
     const registerUserHandler = async () => {
         try {
+            const phoneInfo = getOperator(formData.phone);
+
+            if (!phoneInfo.isValid) {
+                setErrors((prev) => ({
+                    ...prev,
+                    phone: "Phone number must be a valid Somali number",
+                }));
+                return;
+            }
             const userData: UserCreateRequest = {
                 firstName: formData.firstName,
                 middleName: formData.middleName,
                 lastName: formData.lastName,
                 email: formData.email,
-                phone: formData.phone,
+                phone: phoneInfo.normalizedNumber || formData.phone,
+                networkProvider: phoneInfo.operator,
                 gender: formData.gender,
+                roleName: "MEMBER",
             };
 
             const message = await registerUser(userData);

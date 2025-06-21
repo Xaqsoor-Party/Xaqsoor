@@ -16,6 +16,7 @@ import useAuthApi from "@/api/hooks/useAuthApi";
 import {SetPasswordRequest} from "@/types/auth";
 import {getTranslations} from "@/translations";
 import styles from "@/styles/ResetPassword.module.css";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
 
 export default function ResetPasswordPage() {
     const router = useRouter();
@@ -134,7 +135,7 @@ export default function ResetPasswordPage() {
             setIsLoading(false);
 
             if (error instanceof AxiosError) {
-                const errorMessage = error.response?.data.message || "There was an issue resetting your password. Please try again.";
+                const errorMessage = extractErrorMessage(error,'There was an issue resetting your password. Please try again.');
                 handleModalUpdate("Error", errorMessage, true);
             } else {
                 // In case the error is not an AxiosError
@@ -226,7 +227,9 @@ export default function ResetPasswordPage() {
                         message={modalMessage}
                         onConfirm={() => {
                             setIsModalVisible(false);
-                            void router.push('/auth/login');
+                            if (!isError) {
+                                void router.push('/auth/login');
+                            }
                         }}
                         error={isError}
                     />

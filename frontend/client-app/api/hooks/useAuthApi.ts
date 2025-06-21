@@ -2,7 +2,6 @@ import useAxiosPrivate from "@/api/hooks/useAxiosPrivate";
 import {
     ApiResponse,
     AuthResponseData, ChangePasswordRequest,
-    MfaSetupResponseData,
     MfaVerificationRequest,
     RefreshTokenResponseData,
     SetPasswordRequest,
@@ -43,15 +42,6 @@ const useAuthApi = () => {
                     Authorization: `Bearer ${mfaData.mfaToken}`,
                 },
             },
-        );
-        return response.data;
-    };
-
-    const setupMfa = async (userId: string): Promise<ApiResponse<MfaSetupResponseData>> => {
-        const response = await axiosPrivate.post<ApiResponse<MfaSetupResponseData>>(
-            `${BASE_URL}/mfa/setup`,
-            {},
-            {params: {userId}}
         );
         return response.data;
     };
@@ -112,7 +102,6 @@ const useAuthApi = () => {
         registerUser,
         loginUser,
         verifyMfa,
-        setupMfa,
         logout,
         verifyConfirmationKey,
         resetPassword,

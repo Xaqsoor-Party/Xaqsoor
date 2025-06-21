@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./AuthForm.module.css";
 
 import Checkbox from "../common/Checkbox/Checkbox";
 import Link from "next/link";
@@ -14,6 +13,7 @@ import Input from "@/components/common/Input/Input";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher/LanguageSwitcher";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import styles from "./AuthForm.module.css";
 
 interface AuthFormProps {
     isRegistering: boolean;
