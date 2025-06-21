@@ -16,9 +16,12 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ imageUrl, firstName = '' 
                 <Image
                     src={imageUrl}
                     alt="Profile"
+                    fill
+                    priority
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className={styles.avatarImage}
                 />
+
             ) : (
                 <div className={styles.initialsPlaceholder}>
                     <p className={styles.firstLetter}>{firstLetter}</p>

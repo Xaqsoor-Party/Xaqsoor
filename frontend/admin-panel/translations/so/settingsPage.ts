@@ -253,34 +253,44 @@ export const settingsPage: SettingsPage = {
         }
     },
     mfa: {
-        title: "Xaqiijinta Laba-Tallaabo (MFA)",
+        title: "Xaqiijinta Laba-Tallaabo",
         status: {
-            enabled: {
-                title: "MFA waa la Daaray",
-                description: "Akaawnkaaga waxaa ilaaliya lakab dheeraad ah oo amni"
-            },
-            disabled: {
-                title: "MFA hadda waa la Damiay",
-                description: "Si aad u hesho amni dheeraad ah, waxaan kugula talineynaa in aad daarato MFA"
-            }
+            enabled: "La Daaray",
+            disabled: "La Damiay",
+            label: "Xaaladda MFA: "
         },
-        messages: {
-            setupSuccess: "Dejinta MFA waa la bilaabay. Iskaan QR code-ka adigoo adeegsanaya app-kaaga xaqiijinta.",
-            setupError: "Lama awoodo in la abuuro QR code-ka MFA. Fadlan isku day mar kale.",
-            disableSuccess: "MFA si guul leh ayaa loo damiyay.",
-            disableError: "Lama awoodo in la damiyo MFA. Fadlan isku day mar kale.",
-            userNotFound: "Lambarka isticmaale lama helin. Fadlan gal akoonkaaga."
+        description: {
+            enabled: "Xaqiijinta laba-tallaabo waxay ku darsataa lakab dheeraad ah oo amni akoonkaaga. Marka la daarayo, waxaa lagaa doonayaa inaad geliso koodhka xaqiijinta laga helo app-kaaga xaqiijinta marka aad galeyso.",
+            disabled: "Ilaali akoonkaaga adigoo adeegsanaya lakab dheeraad ah oo amni. Marka la daarayo, waxaad u baahan doontaa inaad geliso koodhka xaqiijinta ee app-kaaga marka lagu daro eraygaaga sirta ah marka aad galeyso."
         },
-        qr: {
-            instruction: "Iskaan QR code-kan adigoo adeegsanaya app-kaaga xaqiijinta (tusaale: Google Authenticator, Authy, Microsoft Authenticator)",
-            alt: "QR Code-ka MFA",
-            hideButton: "Qari QR Code-ka",
-            showButton: "Muuji QR Code-ka"
+        buttons: {
+            enableMfa: "Daar MFA",
+            disableMfa: "Dami MFA",
+            cancel: "Jooji",
+            processing: "Waa la socodsiiyaa...",
+            verifying: "Waa la xaqiijinayaa...",
+            preparing: "Dejinta ayaa la diyaarinayaa..."
         },
-        actions: {
-            enable: "Daar MFA",
-            disable: "Dami MFA"
-        }
+        setup: {
+            title: "Deji App-ka Xaqiijinta",
+            qrCodeHeading: "QR Code-kaaga MFA",
+            qrNote: "Iskaan QR code-kan adigoo adeegsanaya app-kaaga xaqiijinta",
+            reconfigureNote: "Iskaan code-kan app-kaaga xaqiijinta haddii aad u baahan tahay dib u dejin",
+            secretLabel: "Koodhka Dejinta Gacanta",
+            placeholder: "Geli koodhka 6-god ah",
+            label: "Koodhka Xaqiijinta"
+        },
+        successMessages: {
+            enabled: "MFA si guul leh ayaa loo daaray!",
+            disabled: "MFA si guul leh ayaa loo damiyay!"
+        },
+        errorMessages: {
+            setup: "Ku guuldareystay in la bilaabo dejinta MFA. Fadlan isku day mar kale.",
+            verify: "Koodhka xaqiijinta waa khalad. Fadlan isku day mar kale.",
+            disable: "Ku guuldareystay in la damiyo MFA. Fadlan isku day mar kale.",
+            unexpectedResponse: "Jawaab lama filaan ah ayaa ka timid server-ka."
+        },
+        mfaInitiated: "Dejinta MFA waa la bilaabay. Iskaan QR code-ka kore."
     },
     sessions: {
         title: "Fadhiyada Firfircoon",

@@ -226,7 +226,9 @@ export default function ResetPasswordPage() {
                         message={modalMessage}
                         onConfirm={() => {
                             setIsModalVisible(false);
-                            void router.push('/auth/login');
+                            if (!isError) {
+                                void router.push('/auth/login');
+                            }
                         }}
                         error={isError}
                     />

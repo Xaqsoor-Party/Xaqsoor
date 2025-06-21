@@ -9,6 +9,8 @@ import {getTranslations} from "@/translations";
 import useAuthApi from "@/api/hooks/useAuthApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import styles from "@/styles/AddNewMemberPage.module.css";
+import {getOperator} from "@/util/phoneValidator";
+import {UserCreateRequest} from "@/types/auth";
 
 const RegistrationForm: React.FC = () => {
 
@@ -22,6 +24,7 @@ const RegistrationForm: React.FC = () => {
         middleName: "",
         lastName: "",
         phone: "",
+        networkProvider: "",
         email: "",
         role: "",
         gender: ""
@@ -58,9 +61,27 @@ const RegistrationForm: React.FC = () => {
     ];
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const phoneInfo = getOperator(formData.phone);
+        if (!phoneInfo.isValid) {
+            setErrors((prev) => ({
+                ...prev,
+                phone: "Phone number must be a valid Somali number",
+            }));
+            return;
+        }
         try {
             setIsLoading(true);
-           await registerUser(formData);
+            const userData: UserCreateRequest = {
+                firstName: formData.firstName,
+                middleName: formData.middleName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: phoneInfo.normalizedNumber || formData.phone,
+                networkProvider: phoneInfo.operator,
+                gender: formData.gender,
+                roleName: formData.role,
+            }
+            await registerUser(userData);
             const memberName = `${formData.firstName} ${formData.middleName} ${formData.lastName}`.trim();
             setModalContent({
                 title: "Registration Successful",
@@ -73,6 +94,7 @@ const RegistrationForm: React.FC = () => {
                 middleName: "",
                 lastName: "",
                 phone: "",
+                networkProvider: "",
                 email: "",
                 role: "",
                 gender: "",

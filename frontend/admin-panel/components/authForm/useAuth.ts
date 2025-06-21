@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 
 import {AxiosError} from "axios";
 import {useAuthentication} from "@/auth/AuthProvider";
-import {UserCreateRequest, UserLoginRequest} from "@/types/auth";
+import {UserLoginRequest} from "@/types/auth";
 import useAuthApi from "@/api/hooks/useAuthApi";
 
 interface UseAuthProps {
@@ -35,7 +35,7 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState({title: "", message: "", buttonText: ""});
     const {setAuthToken} = useAuthentication();
-    const {registerUser, loginUser} = useAuthApi();
+    const {loginUser} = useAuthApi();
     const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
@@ -50,9 +50,7 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
         e.preventDefault();
         setIsLoading(true);
 
-        if (isRegistering) {
-            await registerUserHandler();
-        } else {
+        if (!isRegistering) {
             await loginUserHandler();
         }
         setIsLoading(false);
@@ -88,30 +86,6 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
         }
     };
 
-    const registerUserHandler = async () => {
-        try {
-            const userData: UserCreateRequest = {
-                firstName: formData.firstName,
-                middleName: formData.middleName,
-                lastName: formData.lastName,
-                email: formData.email,
-                phone: formData.phone,
-                gender: formData.gender,
-            };
-
-            const message = await registerUser(userData);
-
-            setModalContent({
-                title: "Account Created",
-                message: message || "Please check your email for verification.",
-                buttonText: "OK",
-            });
-            setShowModal(true);
-
-        } catch (error) {
-            handleError(error, "Registration failed");
-        }
-    };
 
     const handleError = (error: unknown, defaultMessage: string) => {
         if (error instanceof AxiosError) {

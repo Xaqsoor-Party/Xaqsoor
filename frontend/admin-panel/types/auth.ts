@@ -6,6 +6,7 @@ export interface UserCreateRequest {
     lastName: string;
     email: string;
     phone: string;
+    networkProvider: string;
     gender: string;
     roleName?: string;
 }
@@ -39,10 +40,6 @@ export interface MfaVerificationRequest {
     verificationCode: string; // 6-digit string
 }
 
-export interface MfaSetupResponseData {
-    mfaQRCodeImageUri: string;
-}
-
 export interface RefreshTokenResponseData {
     accessToken: string;
     userDTO: User;
@@ -61,4 +58,14 @@ export interface SetPasswordRequest {
 export interface ChangePasswordRequest {
     currentPassword: string;
     newPassword: string;
+}
+
+export interface InitialMfaVerificationRequest {
+    mfaSecret: string;
+    verificationCode: string;
+}
+
+export interface MfaSetupDetails {
+    mfaSecret: string;
+    qrCodeImageUri: string;
 }

@@ -1,234 +1,134 @@
-/* MfaSetupPage.module.css */
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: var(--spacing-xl);
+    /*padding: var(--spacing-xl);*/
+}
+
+.header {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-xxl);
+}
+
+.card {
     background-color: var(--color-background);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--color-border);
 }
 
-.pageTitle {
-    color: var(--color-primary);
-    font-size: var(--font-size-xxl);
-    margin-bottom: var(--spacing-xl);
-    text-align: center;
-}
-
-.loadingContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    gap: var(--spacing-md);
-}
-
-.statusCard {
-    background-color: var(--color-background-accent);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-}
-
-.statusEnabled,
-.statusDisabled {
+.statusIndicator {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
 }
 
-.statusEnabled {
-    color: var(--color-success);
+.statusDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-error);
+    margin-right: var(--spacing-sm);
 }
 
-.statusDisabled {
-    color: var(--color-warning);
+.statusDot.active {
+    background-color: var(--color-success);
 }
 
-.statusIcon {
-    font-size: var(--font-size-xxl);
-    flex-shrink: 0;
-}
-
-.statusText {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-}
-
-.statusDescription {
+.description {
     color: var(--color-text-secondary);
-    font-size: var(--font-size-base);
-}
-
-.messageBox {
-    padding: var(--spacing-md);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
     margin-bottom: var(--spacing-xl);
-    font-size: var(--font-size-base);
-}
-
-.messageBox.error {
-    background-color: var(--color-error-background);
-    color: var(--color-error-label);
-    border-left: 4px solid var(--color-error);
-}
-
-.messageBox.success {
-    background-color: var(--color-success-background);
-    color: var(--color-success);
-    border-left: 4px solid var(--color-success);
+    line-height: 1.6;
 }
 
 .qrSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-lg);
-}
-
-.qrCodeContainer {
-    width: 100%;
-    max-width: 400px;
-    background-color: var(--color-background-accent);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-lg);
-}
-
-.qrHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-sm);
     text-align: center;
-}
-
-.qrIcon {
-    font-size: var(--font-size-xxl);
-    color: var(--color-primary);
-}
-
-.instruction {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-}
-
-.qrImageWrapper {
-    background-color: var(--color-white);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-background-accent);
+    border-radius: var(--radius-md);
 }
 
 .qrImage {
-    display: block;
+    width: 180px;
+    height: 180px;
     margin: 0 auto;
+    padding: var(--spacing-md);
+    background: white;
+    border-radius: var(--radius-sm);
 }
 
-.actionRow {
+.note {
+    color: var(--color-text-tertiary);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-md);
+}
+
+.secretSection {
+    margin-bottom: var(--spacing-xl);
+}
+
+.secretLabel {
+    color: var(--color-text-label);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+}
+
+.secretCode {
+    padding: var(--spacing-md);
+    background-color: var(--color-background-secondary);
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+    word-break: break-all;
+    font-size: var(--font-size-sm);
+}
+
+.verificationForm {
+    margin-top: var(--spacing-lg);
+}
+
+.actions {
     display: flex;
     gap: var(--spacing-md);
-    width: 100%;
-    justify-content: center;
-}
-
-.actionContainer {
-    display: flex;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.enableButton {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-}
-
-.enableButton:hover {
-    background-color: var(--color-primary-hover);
+    margin-top: var(--spacing-lg);
 }
 
 .disableButton {
     background-color: var(--color-error);
-    color: var(--color-white);
 }
 
 .disableButton:hover {
     background-color: var(--color-error-hover);
 }
 
-.showQrButton {
-    background-color: var(--color-warning-background);
-    color: var(--color-primary);
+.cancelButton {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
 }
 
-.showQrButton:hover {
-    background-color: var(--color-warning);
+.cancelButton:hover {
+    background-color: var(--color-background-secondary);
 }
 
-.hideQrButton {
-    background-color: var(--color-primary); /* transparent navy */
-    color: var(--color-white);
+.message {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-lg);
+    font-size: var(--font-size-sm);
 }
 
-.hideQrButton:hover {
-    background-color: var(--color-primary-dark); /* darker navy */
+.message.error {
+    background-color: var(--color-error-background);
+    color: var(--color-error);
+    border: 1px solid var(--color-error-border);
 }
 
-/*.hideQrButton {*/
-/*    background-color: var(--color-secondary-light);*/
-/*    color: var(--color-secondary-text);*/
-/*}*/
-
-/*.hideQrButton:hover {*/
-/*    background-color: var(--color-secondary-border);*/
-/*}*/
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container {
-        padding: var(--spacing-lg);
-    }
-
-    .pageTitle {
-        font-size: var(--font-size-xl);
-    }
-
-    .qrCodeContainer {
-        padding: var(--spacing-md);
-    }
-
-    .actionRow,
-    .actionContainer {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: var(--spacing-md);
-    }
-
-    .statusCard {
-        padding: var(--spacing-md);
-    }
-
-    .statusText {
-        font-size: var(--font-size-md);
-    }
-
-    .statusDescription {
-        font-size: var(--font-size-sm);
-    }
+.message.success {
+    background-color: var(--color-success-background);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
 }

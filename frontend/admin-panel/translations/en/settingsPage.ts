@@ -245,33 +245,43 @@ type ChangePasswordPage = {
 type MfaTranslation = {
     title: string;
     status: {
-        enabled: {
-            title: string;
-            description: string;
-        };
-        disabled: {
-            title: string;
-            description: string;
-        };
+        enabled: string;
+        disabled: string;
+        label: string;
     };
-    messages: {
-        setupSuccess: string;
-        setupError: string;
-        disableSuccess: string;
-        disableError: string;
-        userNotFound: string;
+    description: {
+        enabled: string;
+        disabled: string;
     };
-    qr: {
-        instruction: string;
-        alt: string;
-        hideButton: string;
-        showButton: string;
+    buttons: {
+        enableMfa: string;
+        disableMfa: string;
+        cancel: string;
+        processing: string;
+        verifying: string;
+        preparing: string;
     };
-    actions: {
-        enable: string;
+    setup: {
+        title: string;
+        qrCodeHeading: string;
+        qrNote: string;
+        reconfigureNote: string;
+        secretLabel: string;
+        placeholder: string;
+        label: string;
+    };
+    successMessages: {
+        enabled: string;
+        disabled: string;
+    };
+    errorMessages: {
+        setup: string;
+        verify: string;
         disable: string;
+        unexpectedResponse: string;
     };
-}
+    mfaInitiated: string;
+};
 
 type SessionsTranslation = {
     title: string;
@@ -567,34 +577,44 @@ export const settingsPage: SettingsPage = {
         }
     },
     mfa: {
-        title: "Multi-Factor Authentication (MFA)",
-        status: {
-            enabled: {
-                title: "MFA is currently Enabled",
-                description: "Your account is secured with an extra layer of protection"
-            },
-            disabled: {
-                title: "MFA is currently Disabled",
-                description: "For enhanced security, we recommend enabling MFA"
-            }
+        "title": "Multi-Factor Authentication",
+        "status": {
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "label": "MFA Status: "
         },
-        messages: {
-            setupSuccess: "MFA setup initiated. Scan the QR code with your authenticator app.",
-            setupError: "Failed to generate MFA QR code. Please try again.",
-            disableSuccess: "MFA disabled successfully.",
-            disableError: "Failed to disable MFA. Please try again.",
-            userNotFound: "User ID not found. Please log in."
+        "description": {
+            "enabled": "Multi-factor authentication adds an extra layer of security to your account. When enabled, you'll be required to enter a verification code from your authenticator app during login.",
+            "disabled": "Protect your account with an extra layer of security. When enabled, you'll need to enter a verification code from your authenticator app in addition to your password when signing in."
         },
-        qr: {
-            instruction: "Scan this QR code with your authenticator app (e.g., Google Authenticator, Authy, Microsoft Authenticator)",
-            alt: "MFA QR Code",
-            hideButton: "Hide QR Code",
-            showButton: "Show QR Code"
+        "buttons": {
+            "enableMfa": "Enable MFA",
+            "disableMfa": "Disable MFA",
+            "cancel": "Cancel",
+            "processing": "Processing...",
+            "verifying": "Verifying...",
+            "preparing": "Preparing Setup..."
         },
-        actions: {
-            enable: "Enable MFA",
-            disable: "Disable MFA"
-        }
+        "setup": {
+            "title": "Set Up Authenticator App",
+            "qrCodeHeading": "Your MFA QR Code",
+            "qrNote": "Scan this QR code with your authenticator app",
+            "reconfigureNote": "Scan this code with your authenticator app if you need to reconfigure",
+            "secretLabel": "Manual Setup Code",
+            "placeholder": "Enter 6-digit code",
+            "label": "Verification Code",
+        },
+        "successMessages": {
+            "enabled": "MFA successfully enabled!",
+            "disabled": "MFA successfully disabled!"
+        },
+        "errorMessages": {
+            "setup": "Failed to start MFA setup. Please try again.",
+            "verify": "Invalid verification code. Please try again.",
+            "disable": "Failed to disable MFA. Please try again.",
+            "unexpectedResponse": "Unexpected response from server."
+        },
+        "mfaInitiated": "MFA setup initiated. Scan the QR code above."
     },
     sessions: {
         title: "Active Sessions",

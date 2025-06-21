@@ -8,12 +8,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if (!authToken || !user) {
+        if (!authToken || !user || user.role?.toLowerCase() === "member") {
             void router.replace("/auth/login");
         }
     }, [authToken, user, router]);
 
-    if (!authToken || !user) {
+    if (!authToken || !user || user.role?.toLowerCase() === "member") {
         return <BubbleLoading />;
     }
 

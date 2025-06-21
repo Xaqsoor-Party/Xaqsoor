@@ -5,9 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Dashboard/GenderDonutChart/GenderDonutChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Dashboard/GenderDonutChart/GenderDonutChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/hooks/useAuthApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/hooks/useAuthApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/hooks/useMfaApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/hooks/useMfaApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ProfileAvatar/ProfileAvatar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ProfileAvatar/ProfileAvatar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/authForm/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/authForm/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/common/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/common/ProtectedRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/membership/add.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/membership/add.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/settings/mfa.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/settings/mfa.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/MfaSetupPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/MfaSetupPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/en/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/translations/en/settingsPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/so/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/translations/so/settingsPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/api/hooks/useAuthApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/api/hooks/useAuthApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/api/hooks/useMfaApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/api/hooks/useMfaApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/components/authForm/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/authForm/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/pages/settings/mfa.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/settings/mfa.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/styles/MfaSetupPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/styles/MfaSetupPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/translations/en/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/en/settingsPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/translations/so/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/so/settingsPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/types/auth.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,34 +69,39 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/public/icons&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
-    &quot;npm.build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.Next.js: debug client-side.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/util",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Next.js: server-side.executor": "Run",
+    "npm.build.executor": "Run",
+    "npm.start.executor": "Run",
+    "ts.external.directory.path": "C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\util" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\public\icons" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\public\images" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\types" />
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\api\hooks" />
-      <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\util" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components\Dashboard\UserGrowthChart" />
@@ -85,7 +111,7 @@
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\components" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build">
+  <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -121,8 +147,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -167,6 +193,11 @@
       <workItem from="1750236915395" duration="4660000" />
       <workItem from="1750253241246" duration="5568000" />
       <workItem from="1750317287679" duration="956000" />
+      <workItem from="1750318399476" duration="8637000" />
+      <workItem from="1750349656145" duration="597000" />
+      <workItem from="1750355326545" duration="1070000" />
+      <workItem from="1750417743201" duration="1941000" />
+      <workItem from="1750503110691" duration="5086000" />
     </task>
     <servers />
   </component>

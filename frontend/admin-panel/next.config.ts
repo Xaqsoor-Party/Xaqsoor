@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "xaqsoor.s3.eu-north-1.amazonaws.com",
-        pathname: "/**",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_HOSTNAME!,
+        pathname: process.env.NEXT_PUBLIC_IMAGE_PATHNAME!,
       },
     ],
   },
