@@ -15,11 +15,12 @@ import BarChart from "@/components/Dashboard/BarChart/BarChart";
 import DataTable, {TableColumn} from "@/components/Dashboard/DataTable/DataTable";
 import RecentActivityFeed from "@/components/Dashboard/RecentActivityFeed/RecentActivityFeed";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
+import {useRouter} from "next/router";
 
 const Dashboard = () => {
     const {getDashboardSummary, getRecentActivities, getSystemHealthMetrics} = useDashboardApi();
     const {user} = useAuthentication();
-
+    const router = useRouter();
     const [summary, setSummary] = useState<DashboardSummaryDto | null>(null);
     const [recentActivities, setRecentActivities] = useState<RecentActivityListDto | null>(null);
     const [systemHealth, setSystemHealth] = useState<SystemHealthDto | null>(null);
@@ -116,6 +117,10 @@ const Dashboard = () => {
         const days = Math.floor(hours / 24);
         const remainingHours = hours % 24;
         return `${days}d ${remainingHours}h ${remainingMinutes}m`;
+    };
+
+    const handleViewAllClick = () => {
+        void router.push("/recent-activities");
     };
 
     return (
@@ -241,8 +246,12 @@ const Dashboard = () => {
                         />
                     </div>
                     <div className={styles.recentActivityWrapper}>
-                        {recentActivities && <RecentActivityFeed activities={recentActivities.activities}
-                                                                 onViewAllClick={() => console.log("")}/>}
+                        {recentActivities && (
+                            <RecentActivityFeed
+                                activities={recentActivities.activities}
+                                onViewAllClick={handleViewAllClick}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
