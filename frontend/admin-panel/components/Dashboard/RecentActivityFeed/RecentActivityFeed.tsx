@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './RecentActivityFeed.module.css';
 import {RecentActivityDto} from "@/types/dashboard";
 import Link from "next/link";
+import Image from "next/image";
 
 interface RecentActivityFeedProps {
     activities: RecentActivityDto[];
@@ -48,8 +49,13 @@ const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({activities, onVi
                             <Link href={`/membership/${activity.userId}`} className={styles.avatarAndNameLink}>
                                 <div className={styles.avatar}>
                                     {activity.profileImageKey ? (
-                                        <img src={activity.profileImageKey} alt={`${activity.firstName}'s profile`}
-                                             className={styles.profileImage}/>
+                                        <Image
+                                            src={activity.profileImageKey}
+                                            alt={`${activity.firstName}'s profile`}
+                                            className={styles.profileImage}
+                                            width={40}
+                                            height={40}
+                                        />
                                     ) : (
                                         <span className={styles.avatarLetter}>
                                         {activity.firstName.charAt(0).toUpperCase()}
