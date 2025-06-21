@@ -95,7 +95,8 @@ public class PdfExportUtil {
             PdfContentByte cb = writer.getDirectContent();
 
             // Left side text
-            Phrase footerLeft = new Phrase("Provided by Asal Solutions", FOOTER_FONT);
+            Anchor footerLeft = new Anchor("Provided by Asal Solutions", FOOTER_FONT);
+            footerLeft.setReference("https://asalsolutions.com/");
             float leftX = document.leftMargin();  // Left margin position
             float footerY = 30;                   // Y position of footer text
             ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, footerLeft, leftX, footerY, 0);
