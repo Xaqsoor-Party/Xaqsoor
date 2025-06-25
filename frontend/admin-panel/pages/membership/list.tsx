@@ -48,10 +48,9 @@ export const membershipLevelOptions = [
     {value: "NEW_MEMBER", label: "New Member"},
     {value: "STUDENT", label: "Student"},
     {value: "REGULAR", label: "Regular"},
+    {value: "FOUNDER", label: "Founder"},
     {value: "LIFETIME", label: "Lifetime"},
 ];
-
-
 
 const UserListPage: React.FC = () => {
     const {searchUserCards} = useUserSearchApi();

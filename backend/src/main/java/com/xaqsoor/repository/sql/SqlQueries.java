@@ -40,7 +40,8 @@ public class SqlQueries {
                 u.created_date,
                 u.modified_date,
                 u.is_deleted,
-                u.reference_id
+                u.reference_id,
+                u.signature_image
             FROM
                 users u
             JOIN
