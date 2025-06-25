@@ -1,0 +1,96 @@
+.documentsForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl, 1.5rem);
+    padding: var(--spacing-lg, 1rem);
+    border-radius: var(--radius-lg, 8px);
+    font-family: 'Inter', sans-serif;
+}
+
+.documentItem {
+    background-color: var(--color-background-secondary, #eaeef3);
+    padding: var(--spacing-xl, 1.5rem);
+    border-radius: var(--radius-lg, 8px);
+    border: 1px solid var(--color-border, #cccccc);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg, 1rem);
+}
+
+.documentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--spacing-md, 0.75rem);
+    border-bottom: 1px solid var(--color-border, #cccccc);
+    margin-bottom: var(--spacing-md, 0.75rem);
+}
+
+.documentTitle {
+    font-size: var(--font-size-xl, 1.5rem);
+    font-weight: 700;
+    color: var(--color-primary, #1b273d);
+    margin: 0;
+}
+
+.removeButton {
+    background-color: var(--color-secondary, #EA533c);
+    color: var(--color-white, #ffffff);
+    padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 0.75rem);
+    border-radius: var(--radius-md, 5px);
+    font-size: var(--font-size-sm, 0.875rem);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast, 0.2s ease);
+}
+
+.removeButton:hover {
+    background-color: var(--color-secondary-hover, #d84a34);
+}
+
+.formRow {
+    display: flex;
+    gap: var(--spacing-lg, 1rem);
+}
+
+
+.formRow > * {
+    flex: 1;
+}
+
+
+@media (max-width: 1024px) {
+    .documentItem {
+        padding: var(--spacing-lg, 1rem);
+        gap: var(--spacing-md, 0.75rem);
+    }
+
+    .documentTitle {
+        font-size: var(--font-size-lg, 1.25rem);
+    }
+
+    .formRow {
+        flex-direction: column;
+        gap: var(--spacing-md, 0.75rem);
+    }
+
+    .removeButton, .addButton {
+        font-size: var(--font-size-base, 1rem);
+        padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .documentsForm {
+        padding: 0;
+    }
+
+    .documentItem {
+        padding: var(--spacing-md, 0.75rem);
+    }
+
+    .documentTitle {
+        font-size: var(--font-size-base, 1rem);
+    }
+}

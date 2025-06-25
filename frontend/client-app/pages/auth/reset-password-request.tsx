@@ -46,7 +46,7 @@ export default function ResetPasswordRequest() {
     return (
         <>
             <Head>
-                <title>Password Reset Request • Your Company</title>
+                <title>Password Reset Request • Xaqsoor</title>
             </Head>
             <div className={styles.container}>
                 <div className={styles.logoContainer}>

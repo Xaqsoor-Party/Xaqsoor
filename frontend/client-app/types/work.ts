@@ -13,8 +13,8 @@ export interface WorkExperienceRequest {
     jobTitle: string;
     companyName: string;
     location: string;
-    startDate: string;
-    endDate?: string;
+    startDate: string; // Format: YYYY-MM-DD
+    endDate?: string; // Format: YYYY-MM-DD
     currentlyWorking: boolean;
     description?: string;
 }

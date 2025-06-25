@@ -3,12 +3,14 @@ import {authPages as enAuthPages} from "@/translations/en/authForms";
 import {notFoundPage as enNotFoundPage} from "@/translations/en/notFoundPage";
 import {sidebarLabels as enSidebar} from "@/translations/en/sidebar";
 import {settingsPage as enSetting} from "@/translations/en/settingsPage";
+import {founderPageTranslation as enFounderOnboardingForm} from "@/translations/en/founderOnboardingForm";
 
 import {joinPage as soJoinPage} from "@/translations/so/joinPage";
 import {authPages as soAuthPages} from "@/translations/so/authForms";
 import {notFoundPage as soNotFoundPage} from "@/translations/so/notFoundPage";
 import {sidebarLabels as soSidebar} from "@/translations/so/sidebar";
 import {settingsPage as soSetting} from "@/translations/so/settingsPage";
+import {founderPageTranslation as soFounderOnboardingForm} from "@/translations/so/founderOnboardingForm";
 
 import {LanguageTranslations} from "@/types/translationsTypes";
 
@@ -19,6 +21,7 @@ const translations: LanguageTranslations = {
         notFoundPage:enNotFoundPage,
         sidebar:enSidebar,
         settingsPage:enSetting,
+        founderPages: enFounderOnboardingForm,
     },
     so: {
         joinPage : soJoinPage,
@@ -26,6 +29,7 @@ const translations: LanguageTranslations = {
         notFoundPage:soNotFoundPage,
         sidebar:soSidebar,
         settingsPage:soSetting,
+        founderPages:soFounderOnboardingForm,
     },
 };
 

@@ -2,10 +2,18 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Build-time variable from Docker
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
+# Copy package files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
+# Copy the rest of the application files
 COPY . .
+
+# Run build (will use the injected NEXT_PUBLIC_ values)
 RUN npm run build
 
 # Stage 2: Run

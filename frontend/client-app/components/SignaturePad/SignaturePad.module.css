@@ -1,0 +1,129 @@
+.signaturePadWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md, 0.75rem);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: var(--spacing-lg, 1rem);
+    border: 1px solid var(--color-border, #cccccc);
+    border-radius: var(--radius-md, 5px);
+    background-color: var(--color-background-secondary, #eaeef3);
+}
+
+.label {
+    font-size: var(--font-size-md, 1.125rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #333333);
+    margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.signatureContainer {
+    position: relative;
+    width: 100%;
+    padding-bottom: 50%;
+    background-color: var(--color-white, #ffffff);
+    border: 1px solid var(--color-border, #cccccc);
+    border-radius: var(--radius-sm, 3px);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.signatureContainer.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+    background-color: var(--color-background-disabled, #f2f2f2);
+}
+
+.signatureCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-md, 0.75rem);
+    justify-content: flex-end;
+    margin-top: var(--spacing-sm, 0.5rem);
+}
+
+.actions button {
+    padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1rem);
+    border-radius: var(--radius-md, 5px);
+    font-size: var(--font-size-base, 1rem);
+    cursor: pointer;
+    transition: background-color var(--transition-fast, 0.2s ease), transform var(--transition-fast, 0.2s ease);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.clearButton {
+    background-color: var(--color-secondary-light, #f6b5a8);
+    color: var(--color-secondary-text, #7a2a1f);
+    border: 1px solid var(--color-secondary-border, #f4a691);
+}
+
+.clearButton:hover:not(:disabled) {
+    background-color: var(--color-secondary, #EA533c);
+    color: var(--color-white, #ffffff);
+    transform: translateY(-2px);
+}
+
+.actions button:disabled {
+    background-color: var(--color-background-disabled, #f2f2f2);
+    color: var(--color-text-tertiary, #888888);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.preview {
+    margin-top: var(--spacing-xl, 1.5rem);
+    padding-top: var(--spacing-md, 0.75rem);
+    border-top: 1px dashed var(--color-border, #cccccc);
+    text-align: center;
+}
+
+.previewLabel {
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #666666);
+    margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.previewImage {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border, #cccccc);
+    border-radius: var(--radius-sm, 3px);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+@media (max-width: 450px) {
+    .signaturePadWrapper {
+        max-width: 100%;
+        padding: var(--spacing-md, 0.75rem);
+    }
+
+    .label {
+        font-size: var(--font-size-base, 1rem);
+    }
+
+
+    .signatureContainer {
+        padding-bottom: 60%;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: var(--spacing-sm, 0.5rem);
+    }
+
+    .actions button {
+        width: 100%;
+        font-size: var(--font-size-sm, 0.875rem);
+    }
+}

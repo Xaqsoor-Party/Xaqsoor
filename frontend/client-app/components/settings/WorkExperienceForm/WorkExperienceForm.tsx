@@ -13,9 +13,10 @@ interface WorkExperienceFormProps {
     records: WorkExperienceRequest[];
     onChange: (newRecords: WorkExperienceRequest[]) => void;
     errors?: { [key: string]: string };
+    hideRemoveIfSingle?: boolean;
 }
 
-const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChange,errors}) => {
+const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChange,errors,hideRemoveIfSingle}) => {
     const handleRecordChange = (
         index: number,
         field: keyof WorkExperienceRequest,
@@ -49,16 +50,22 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({records, onChang
         const updated = records.filter((_, idx) => idx !== index);
         onChange(updated);
     };
-
+    const shouldHideRemove = hideRemoveIfSingle && records.length === 1;
     return (
         <div className={styles.workExperienceForm}>
             {records.map((record, idx) => (
                 <div key={record.id} className={styles.recordItem}>
                     <div className={styles.recordHeader}>
                         <h3 className={styles.recordTitle}>{t.entryTitle}</h3>
-                        <ActionButton type="button" onClick={() => handleRemove(idx)} className={styles.removeButton}>
-                            {t.removeButton}
-                        </ActionButton>
+                        {!shouldHideRemove && (
+                            <ActionButton
+                                type="button"
+                                onClick={() => handleRemove(idx)}
+                                className={styles.removeButton}
+                            >
+                                {t.removeButton}
+                            </ActionButton>
+                        )}
                     </div>
 
                     <div className={styles.row}>

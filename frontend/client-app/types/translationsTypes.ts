@@ -3,7 +3,7 @@ import {AuthPages} from "@/translations/en/authForms";
 import {Page} from "@/translations/en/notFoundPage";
 import {SidebarLabels} from "@/translations/en/sidebar";
 import {SettingsPage} from "@/translations/en/settingsPage";
-
+import {FounderPageTranslation} from "@/translations/en/founderOnboardingForm";
 export type LanguageTranslations = {
     en: {
         joinPage: JoinPage,
@@ -11,6 +11,7 @@ export type LanguageTranslations = {
         notFoundPage: Page,
         sidebar: SidebarLabels,
         settingsPage: SettingsPage,
+        founderPages: FounderPageTranslation,
     };
     so: {
         joinPage: JoinPage,
@@ -18,5 +19,6 @@ export type LanguageTranslations = {
         notFoundPage: Page,
         sidebar: SidebarLabels,
         settingsPage: SettingsPage,
+        founderPages: FounderPageTranslation,
     };
 }

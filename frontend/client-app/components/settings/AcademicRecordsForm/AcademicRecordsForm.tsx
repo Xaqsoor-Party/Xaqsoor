@@ -13,9 +13,10 @@ interface AcademicRecordsFormProps {
     records: AcademicRecordRequest[];
     onChange: (newRecords: AcademicRecordRequest[]) => void;
     errors?: { [key: string]: string };
+    hideRemoveIfSingle?: boolean;
 }
 
-const AcademicRecordsForm: React.FC<AcademicRecordsFormProps> = ({records, onChange,errors}) => {
+const AcademicRecordsForm: React.FC<AcademicRecordsFormProps> = ({records, onChange, errors, hideRemoveIfSingle}) => {
     const handleRecordChange = (
         index: number,
         field: keyof AcademicRecordRequest,
@@ -50,7 +51,7 @@ const AcademicRecordsForm: React.FC<AcademicRecordsFormProps> = ({records, onCha
         const updated = records.filter((_, idx) => idx !== index);
         onChange(updated);
     };
-
+    const shouldHideRemove = hideRemoveIfSingle && records.length === 1;
     return (
         <div className={styles.academicRecordsForm}>
             {records.map((record, idx) => (
@@ -58,9 +59,15 @@ const AcademicRecordsForm: React.FC<AcademicRecordsFormProps> = ({records, onCha
 
                     <div className={styles.recordHeader}>
                         <h3 className={styles.recordTitle}>{t.entryTitle} #{idx + 1}</h3>
-                        <ActionButton type="button" onClick={() => handleRemove(idx)} className={styles.removeButton}>
-                            {t.removeButton}
-                        </ActionButton>
+                        {!shouldHideRemove && (
+                            <ActionButton
+                                type="button"
+                                onClick={() => handleRemove(idx)}
+                                className={styles.removeButton}
+                            >
+                                {t.removeButton}
+                            </ActionButton>
+                        )}
                     </div>
 
                     <div className={styles.row}>
