@@ -5,30 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/MembershipLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/MembershipLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/currentUser/CurrentUserFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/currentUser/CurrentUserFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/permission/PermittedResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/permission/PermittedResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/db/migration/V1__initial_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/db/migration/V1__initial_schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/hooks/useAuthApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/hooks/useAuthApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/hooks/useMfaApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/hooks/useMfaApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ProfileAvatar/ProfileAvatar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ProfileAvatar/ProfileAvatar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/authForm/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/authForm/useAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/common/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/common/ProtectedRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/reset-password/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/membership/add.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/membership/add.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/settings/mfa.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/settings/mfa.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/MfaSetupPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/MfaSetupPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/en/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/translations/en/settingsPage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/so/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/translations/so/settingsPage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/api/hooks/useAuthApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/api/hooks/useAuthApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/api/hooks/useMfaApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/api/hooks/useMfaApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/authForm/AuthForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/components/authForm/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/components/authForm/useAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/auth/reset-password/[token].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/pages/settings/mfa.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/pages/settings/mfa.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/styles/MfaSetupPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/styles/MfaSetupPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/translations/en/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/en/settingsPage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/translations/so/settingsPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/translations/so/settingsPage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/types/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client-app/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/next.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,32 +58,32 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Next.js: debug client-side.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/util",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.Next.js: server-side.executor": "Run",
-    "npm.build.executor": "Run",
-    "npm.start.executor": "Run",
-    "ts.external.directory.path": "C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/util&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\util" />
@@ -147,8 +136,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +186,13 @@
       <workItem from="1750349656145" duration="597000" />
       <workItem from="1750355326545" duration="1070000" />
       <workItem from="1750417743201" duration="1941000" />
-      <workItem from="1750503110691" duration="5086000" />
+      <workItem from="1750503110691" duration="8748000" />
+      <workItem from="1750577076021" duration="2191000" />
+      <workItem from="1750588016337" duration="4996000" />
+      <workItem from="1750608829239" duration="5859000" />
+      <workItem from="1750660632245" duration="860000" />
+      <workItem from="1750669812057" duration="237000" />
+      <workItem from="1750670609400" duration="116000" />
     </task>
     <servers />
   </component>
