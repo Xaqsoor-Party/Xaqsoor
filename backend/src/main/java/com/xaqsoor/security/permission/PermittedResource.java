@@ -18,6 +18,8 @@ public class PermittedResource {
             "/api/v1/auth/request-password-reset",
             "/api/v1/auth/verify",
             "/api/v1/auth/refresh-token",
+            "/api/v1/founders/submit",
+            "/api/v1/files/**"
     };
 
     private static final String[] SWAGGER_RESOURCES = {

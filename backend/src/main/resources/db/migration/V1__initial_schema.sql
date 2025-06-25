@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS users (
     mfa_enabled BOOLEAN NOT NULL DEFAULT FALSE,
     mfa_secret VARCHAR(255),
     mfa_qr_code_image_uri TEXT,
+    signature_image TEXT,
 
     street VARCHAR(200),
     city VARCHAR(100),
@@ -192,4 +193,49 @@ CREATE TABLE IF NOT EXISTS academic_record (
     CONSTRAINT fk_education_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_education_created_by FOREIGN KEY (created_by) REFERENCES users (id),
     CONSTRAINT fk_education_modified_by FOREIGN KEY (modified_by) REFERENCES users (id)
+);
+
+-- Create Announcements table
+CREATE TABLE IF NOT EXISTS announcements (
+    id BIGINT PRIMARY KEY DEFAULT nextval('id_sequence'),
+    reference_id VARCHAR(50) NOT NULL UNIQUE,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    created_by BIGINT NOT NULL,
+    modified_by BIGINT,
+    created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    modified_date TIMESTAMP WITHOUT TIME ZONE,
+
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    announcement_date DATE NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Active',
+
+    CONSTRAINT fk_announcements_created_by FOREIGN KEY (created_by) REFERENCES users (id),
+    CONSTRAINT fk_announcements_modified_by FOREIGN KEY (modified_by) REFERENCES users (id)
+);
+
+-- Create user_documents table
+CREATE TABLE IF NOT EXISTS user_documents (
+    id BIGINT PRIMARY KEY DEFAULT nextval('id_sequence'),
+    reference_id VARCHAR(50) NOT NULL UNIQUE,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    created_by BIGINT NOT NULL,
+    modified_by BIGINT,
+    created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    modified_date TIMESTAMP WITHOUT TIME ZONE,
+
+    document_type VARCHAR(30) NOT NULL,
+    file_storage_key VARCHAR(255) NOT NULL,
+    verified BOOLEAN NOT NULL DEFAULT FALSE,
+    rejection_reason VARCHAR(500),
+    country VARCHAR(100) NOT NULL,
+    document_number VARCHAR(50) NOT NULL,
+    issued_at DATE NOT NULL,
+    expires_at DATE,
+
+    user_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_user_documents_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_documents_created_by FOREIGN KEY (created_by) REFERENCES users (id),
+    CONSTRAINT fk_user_documents_modified_by FOREIGN KEY (modified_by) REFERENCES users (id)
 );

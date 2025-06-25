@@ -107,4 +107,7 @@ public class User extends Auditable {
 
     @Column(name = "country", length = 100)
     private String country;
+
+    @Column(name = "signature_image", columnDefinition = "TEXT")
+    private String signatureImageBase64;
 }

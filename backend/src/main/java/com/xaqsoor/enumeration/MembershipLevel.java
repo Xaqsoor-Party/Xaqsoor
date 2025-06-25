@@ -8,6 +8,7 @@ public enum MembershipLevel {
     NEW_MEMBER("New Member"),
     STUDENT("Student"),
     REGULAR("Regular"),
+    FOUNDER("Founder"),
     LIFETIME("Lifetime");
 
     private final String value;

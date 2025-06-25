@@ -23,7 +23,8 @@ public class CurrentUserFilter extends OncePerRequestFilter {
             "/reset-password",
             "/request-password-reset",
             "/verify",
-            "/refresh-token"
+            "/refresh-token",
+            "/founders/submit"
     );
 
     @Override
