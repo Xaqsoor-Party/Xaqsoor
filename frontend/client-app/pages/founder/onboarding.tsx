@@ -24,6 +24,7 @@ import {getOperator} from "@/util/phoneUtils";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import FileUpload from "@/components/FileUpload/FileUpload";
 
 const Onboarding = () => {
     const {submitFounderProfile} = useFounderApi();
@@ -49,7 +50,7 @@ const Onboarding = () => {
         profileImageKey: '',
         city: '',
         country: '',
-        street: '',
+        district: '',
         state: '',
         documents: [{
             documentType: DocumentType.PASSPORT,
@@ -86,7 +87,7 @@ const Onboarding = () => {
     const [countryCode, setCountryCode] = useState("");
     const [agreedToConstitution, setAgreedToConstitution] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+    const [signatureMethod, setSignatureMethod] = useState<'draw' | 'upload'>('draw');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setFormData(prev => ({...prev, [name]: value}));
@@ -194,7 +195,13 @@ const Onboarding = () => {
                 <div className={styles.header}>
                     <h1 className={styles.formTitle}>{t.title}</h1>
                     <p className={styles.formSubtitle}>
-                        {t.subtitle}
+                        {/*{t.subtitle}*/}
+                        {t.subtitle.split('\n').map((line, index) => (
+                            <React.Fragment key={index}>
+                                {line}
+                                <br />
+                            </React.Fragment>
+                        ))}
                     </p>
                 </div>
 
@@ -348,22 +355,20 @@ const Onboarding = () => {
                                 type="text"
                                 value={formData.state}
                                 onChange={handleChange}
-                                required
                                 errorMessage={errors.state}
                                 placeholder={t.fields.state.placeholder}
                                 maxLength={100}
                             />
 
                             <Input
-                                label={t.fields.street.label}
-                                name="street"
+                                label={t.fields.district.label}
+                                name="district"
                                 type="text"
-                                value={formData.street}
+                                value={formData.district}
                                 onChange={handleChange}
-                                required
                                 errorMessage={errors.street}
                                 maxLength={200}
-                                placeholder={t.fields.street.placeholder}
+                                placeholder={t.fields.district.placeholder}
                             />
                         </div>
                     </div>
@@ -378,6 +383,7 @@ const Onboarding = () => {
                             documents={formData.documents}
                             onChange={(newDocs) => setFormData(prev => ({...prev, documents: newDocs}))}
                             errors={errors}
+                            hideRemoveIfSingle={false}
                         />
                     </div>
 
@@ -391,7 +397,7 @@ const Onboarding = () => {
                                 setFormData((prev) => ({...prev, academicRecordRequestList: newRecords}))
                             }
                             errors={errors}
-                            hideRemoveIfSingle={true}
+                            hideRemoveIfSingle={false}
                         />
                     </div>
 
@@ -410,7 +416,7 @@ const Onboarding = () => {
                                 }))
                             }
                             errors={errors}
-                            hideRemoveIfSingle={true}
+                            hideRemoveIfSingle={false}
                         />
                     </div>
 
@@ -424,7 +430,45 @@ const Onboarding = () => {
                                 name="agreeToConstitution"
                             />
                         </div>
-                        <SignaturePad onChange={handleSignatureChange} initialSignature={formData.signatureImageBase64}/>
+                        <div className={styles.signatureMethodToggle}>
+                            <Checkbox
+                                name="signatureMethod"
+                                label={t.fields.signature.options.draw}
+                                checked={signatureMethod === 'draw'}
+                                onChange={() => setSignatureMethod('draw')}
+                            />
+                            <Checkbox
+                                name="signatureMethod"
+                                label={t.fields.signature.options.upload}
+                                checked={signatureMethod === 'upload'}
+                                onChange={() => setSignatureMethod('upload')}
+                            />
+                        </div>
+                        {signatureMethod === 'draw' ? (
+                            <SignaturePad
+                                onChange={handleSignatureChange}
+                                initialSignature={formData.signatureImageBase64}
+                            />
+                        ) : (
+                            <FileUpload
+                                fileType="SIGNATURE"
+                                useBase64={true}
+                                onChange={(result) => {
+                                    if (result?.url) {
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            signatureImageBase64: result.url,
+                                        }));
+                                    } else {
+                                        setFormData(prev => ({ ...prev, signatureImageBase64: '' }));
+                                    }
+                                }}
+                                title={t.fields.signature.uploadTitle}
+                                subTitle={t.fields.signature.uploadSubtitle}
+                                buttonText={t.fields.signature.uploadButton}
+                                accept=".png,.jpg,.jpeg"
+                            />
+                        )}
                     </div>
 
                     <div className={styles.submitButtonContainer}>

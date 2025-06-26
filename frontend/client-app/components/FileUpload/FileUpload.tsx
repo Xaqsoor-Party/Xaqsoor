@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styles from "./FileUpload.module.css";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import useFileStorageApi from "@/api/hooks/useFileApi";
-import { extractErrorMessage } from "@/util/extractErrorMessage";
-import {useLanguage} from "@/context/LanguageContext";
-import {getTranslations} from "@/translations";
+import {extractErrorMessage} from "@/util/extractErrorMessage";
 
 interface FileUploadProps {
     fileType: string;
@@ -13,6 +11,10 @@ interface FileUploadProps {
     required?: boolean;
     currentFile?: string;
     error?: string;
+    title: string;
+    subTitle: string;
+    buttonText: string;
+    useBase64?: boolean;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -22,14 +24,15 @@ const FileUpload: React.FC<FileUploadProps> = ({
                                                    required = false,
                                                    currentFile,
                                                    error,
+                                                   title,
+                                                   subTitle,
+                                                   buttonText,
+                                                   useBase64,
                                                }) => {
-    const { uploadFile, deleteFile } = useFileStorageApi();
+    const {uploadFile, deleteFile} = useFileStorageApi();
     const [loading, setLoading] = useState(false);
     const [fileError, setFileError] = useState<string | null>(null);
     const [originalFileName, setOriginalFileName] = useState<string | null>(null);
-
-    const {language} = useLanguage();
-    const t = getTranslations(language, 'founderPages').founderOnboarding.document.fields.fileUpload;
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -48,37 +51,52 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
         setLoading(true);
         try {
-            if (currentFile) {
-                await deleteFile(currentFile);
+            if (useBase64) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64String = reader.result as string;
+                    setOriginalFileName(file.name);
+                    setFileError(null);
+                    onChange({ key: "", url: base64String });
+                };
+                reader.onerror = () => {
+                    setFileError("Failed to read file as base64.");
+                    onChange(null);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                if (currentFile) {
+                    await deleteFile(currentFile);
+                }
+
+                const result = await uploadFile(file, fileType);
+                setFileError(null);
+                setOriginalFileName(file.name);
+                onChange(result);
             }
-
-            const result = await uploadFile(file, fileType);
-
-            setFileError(null);
-            setOriginalFileName(file.name);
-            onChange(result);
         } catch (err) {
-            setFileError(extractErrorMessage(err, "Failed to upload file. Please try again."));
+            setFileError(extractErrorMessage(err, "Failed to process file. Please try again."));
             onChange(null);
         } finally {
             setLoading(false);
         }
     };
 
+
     const fileName = originalFileName || (currentFile ? currentFile.split("/").pop() : null);
 
     return (
         <div className={styles.uploadSection}>
             <div className={styles.uploadHeader}>
-                <p className={styles.description}>{t.title}</p>
+                <p className={styles.description}>{title}</p>
                 <p className={styles.requirements}>
-                    {t.subTitle}
+                    {subTitle}
                 </p>
             </div>
 
             {loading ? (
                 <div className={styles.loadingContainer}>
-                    <SpinLoading />
+                    <SpinLoading/>
                     <p className={styles.loadingText}>Uploading file, please wait...</p>
                 </div>
             ) : (
@@ -93,10 +111,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         />
                         <div className={styles.buttonContent}>
                             <svg className={styles.uploadIcon} viewBox="0 0 24 24">
-                                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                                <path
+                                    d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
                             </svg>
                             <span className={styles.buttonText}>
-                                {fileName || t.button}
+                                {fileName || buttonText}
                             </span>
                         </div>
                     </label>
