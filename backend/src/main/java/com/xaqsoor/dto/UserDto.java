@@ -30,6 +30,7 @@ public class UserDto {
     private String createdDate;
     private String modifiedDate;
     private String mfaQrCodeImageUrl;
+    private String signatureImageUrl;
 
     private String street;
     private String city;

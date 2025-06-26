@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS users (
 
     street VARCHAR(200),
     city VARCHAR(100),
+    district VARCHAR(100),
     state VARCHAR(100),
     country VARCHAR(100),
 

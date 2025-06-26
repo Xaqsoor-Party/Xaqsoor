@@ -4,6 +4,9 @@ import com.xaqsoor.entity.UserDocument;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserDocumentRepository extends CrudRepository<UserDocument, Long> {
+    List<UserDocument> findByUserId(Long userId);
 }
