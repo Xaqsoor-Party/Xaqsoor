@@ -359,6 +359,24 @@ const UserDetailPage = () => {
                 </ul>
             </div>
 
+            {/*<div className={styles.section}>*/}
+            {/*    <h3>Signature</h3>*/}
+            {/*    {userData.signatureImageUrl ? (*/}
+            {/*        <div className={styles.signatureDisplay}>*/}
+            {/*            <Image*/}
+            {/*                src={userData.signatureImageUrl}*/}
+            {/*                alt="User Signature"*/}
+            {/*                width={400} // Set a default width for the Image component*/}
+            {/*                height={200} // Set a default height for the Image component*/}
+            {/*                className={styles.signatureImage}*/}
+            {/*            />*/}
+            {/*     */}
+            {/*      */}
+            {/*    ) : (*/}
+            {/*        <p>No signature available.</p>*/}
+            {/*    )}*/}
+            {/*</div>*/}
+
             <div className={styles.section}>
                 <h3>Academic Records</h3>
                 {academicRecords.length === 0 ? (

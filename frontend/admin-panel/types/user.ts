@@ -20,6 +20,7 @@ export interface User {
     createdDate: string;
     modifiedDate?: string;
     mfaQrCodeImageUrl?: string;
+    signatureImageUrl?: string;
 
     street?: string;
     city?: string;
@@ -92,6 +93,7 @@ export interface UserProfileResponse {
     userData: User;
     academicRecords: AcademicRecordRequest[];
     workExperiences: WorkExperienceRequest[];
+    userDocuments?: UserDocument[];
 }
 
 export interface UserCardDTO {
@@ -153,4 +155,16 @@ export interface UserSearchParams {
     orderBy?: OrderBy;
     pageNumber?: number;
     pageSize?: number;
+}
+
+export interface UserDocument {
+    id: number;
+    documentType: string;
+    fileStorageKey: string;
+    verified: boolean;
+    rejectionReason: string | null;
+    country: string;
+    documentNumber: string;
+    issuedAt: string;
+    expiresAt: string | null;
 }
