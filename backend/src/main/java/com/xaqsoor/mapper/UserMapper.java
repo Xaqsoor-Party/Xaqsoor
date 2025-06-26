@@ -31,6 +31,7 @@ public class UserMapper {
                 .createdDate(formatDateTime(user.getCreatedDate()))
                 .modifiedDate(formatDateTime(user.getModifiedDate()))
                 .mfaQrCodeImageUrl(user.getMfaQrCodeImageUri())
+                .signatureImageUrl(user.getSignatureImageBase64())
 
                 .street(user.getStreet())
                 .city(user.getCity())

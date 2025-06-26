@@ -1,5 +1,6 @@
 package com.xaqsoor.service.impl;
 
+import com.xaqsoor.dto.UserDocumentDto;
 import com.xaqsoor.dto.UserDto;
 import com.xaqsoor.dto.request.AcademicRecordRequest;
 import com.xaqsoor.dto.request.UserUpdateDTO;
@@ -12,8 +13,10 @@ import com.xaqsoor.entity.User;
 import com.xaqsoor.entity.WorkExperience;
 import com.xaqsoor.enumeration.EducationLevel;
 import com.xaqsoor.exception.ApiException;
+import com.xaqsoor.mapper.UserDocumentMapper;
 import com.xaqsoor.mapper.UserMapper;
 import com.xaqsoor.repository.AcademicRecordRepository;
+import com.xaqsoor.repository.UserDocumentRepository;
 import com.xaqsoor.repository.UserRepository;
 import com.xaqsoor.repository.WorkExperienceRepository;
 import com.xaqsoor.service.S3Service;
@@ -37,6 +40,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final UserRepository userRepository;
     private final AcademicRecordRepository academicRecordRepository;
     private final WorkExperienceRepository workExperienceRepository;
+    private final UserDocumentRepository userDocumentRepository;
     private final S3Service s3Service;
 
     @Override
@@ -57,8 +61,12 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserDto userDto = UserMapper.toDTO(user,profileImageUrl);
         List<AcademicRecordRequest> academicRecords = mapToAcademicRecordRequests(academicRecordRepository.findByUserIdOrderByStartDateDesc(userId));
         List<WorkExperienceRequest> workExperience = mapToWorkExperiences(workExperienceRepository.findByUserIdOrderByStartDateDesc(userId));
-
-        return new UserProfileResponse(userDto, academicRecords, workExperience);
+        List<UserDocumentDto> userDocuments =
+                userDocumentRepository.findByUserId(userId)
+                        .stream()
+                        .map(doc -> UserDocumentMapper.toDto(doc, s3Service))
+                        .toList();
+        return new UserProfileResponse(userDto, academicRecords, workExperience,userDocuments);
     }
 
     @Override

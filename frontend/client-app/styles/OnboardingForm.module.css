@@ -40,6 +40,7 @@
 .formSubtitle {
     font-size: var(--font-size-md);
     color: var(--color-text-secondary);
+    text-align: left;
     line-height: 1.6;
 }
 
@@ -88,7 +89,10 @@
     flex-direction: column;
     gap: var(--spacing-lg);
 }
-
+.signatureMethodToggle{
+    display: flex;
+    gap: var(--spacing-lg);
+}
 .profileAndNameSection {
     display: flex;
     flex-wrap: wrap;
@@ -121,16 +125,55 @@
     font-size: var(--font-size-sm);
 }
 
+/*.agreementSection {*/
+/*    background-color: var(--color-background-accent);*/
+/*    padding: var(--spacing-xl);*/
+/*    border-radius: var(--radius-md);*/
+/*    border: 1px solid var(--color-border);*/
+/*}*/
+
+/*.agreementCheckbox {*/
+/*    width: 100%;*/
+/*    margin-bottom: var(--spacing-xl);*/
+/*}*/
+
 .agreementSection {
     background-color: var(--color-background-accent);
     padding: var(--spacing-xl);
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
+    display: flex; /* Use flexbox for better layout control */
+    flex-direction: column; /* Stack items vertically */
+    gap: var(--spacing-lg); /* Add consistent spacing between elements */
 }
 
 .agreementCheckbox {
-    width: 100%;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md); /* Reduce margin to be consistent with new gap */
+    padding-bottom: var(--spacing-md); /* Add padding to visually separate */
+    border-bottom: 1px solid var(--color-border); /* Subtle separator */
+}
+
+.signatureMethodToggle {
+    display: flex;
+    gap: var(--spacing-xl); /* Increase gap for clear separation of options */
+    margin-bottom: var(--spacing-lg); /* Space before the signature input */
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border); /* Another subtle separator */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center the options horizontally */
+}
+
+/* Add styles for the signature pad/file upload container if needed */
+.signaturePadContainer {
+    /* Optional: Add specific styling for the container holding SignaturePad or FileUpload */
+    border: 1px dashed var(--color-border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    min-height: 150px; /* Ensure some minimum height for visual presence */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .submitButtonContainer {
@@ -227,6 +270,11 @@
 
     .agreementSection {
         padding: var(--spacing-lg);
+    }
+    .signatureMethodToggle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
     }
 }
 

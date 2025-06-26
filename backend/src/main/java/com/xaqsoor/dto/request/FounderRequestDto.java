@@ -60,20 +60,20 @@ public record FounderRequestDto(
         @Size(max = 100, message = "Country must be at most 100 characters")
         String country,
 
-        @NotEmpty(message = "At least one document is required")
+//        @NotEmpty(message = "At least one document is required")
         @Valid
         List<UserDocumentRequestDto> documents,
 
-        @NotEmpty(message = "At least one document is required")
+//        @NotEmpty(message = "At least one document is required")
         @Valid
         List<WorkExperienceRequest> workExperienceRequestList,
 
-        @NotEmpty(message = "At least one document is required")
+//        @NotEmpty(message = "At least one document is required")
         @Valid
         List<AcademicRecordRequest> academicRecordRequestList,
 
-        @Size(max = 200, message = "Street must be at most 200 characters")
-        String street,
+        @Size(max = 100, message = "Street must be at most 200 characters")
+        String district,
 
         @Size(max = 100, message = "State must be at most 100 characters")
         String state

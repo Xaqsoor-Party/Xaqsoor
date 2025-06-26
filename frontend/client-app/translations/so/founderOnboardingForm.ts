@@ -3,8 +3,10 @@ import {DocumentType} from "@/types/FounderFormData";
 
 export const founderPageTranslation: FounderPageTranslation = {
     "founderOnboarding": {
-        title: "Foomka Diiwaangelinta Aasaasayaasha Xaqsoor",
-        subtitle: "Noqo qayb ka mid ah taariikhda. Xubin ahaan oo ka mid ah aasaasayaasha, waxaad door weyn ku yeelan doontaa jihada, qiyamka, iyo mustaqbalka Ururka Xaqsoor. Buuxi codsigan si taxaddar iyo daacadnimo leh.",
+        title: "Arjiga Xubinnimada Aasaasayaasha Ururka Xaqsoor",
+        subtitle:
+            "Urur siyaasadeedka Xaqsoor waa dhaqdhaqaaq waddani ah oo ay hagayaan mabaadi’ida islaannimada iyo Soomaalinnimada. Xaqsoor waxaa aasaasay muwaadiniin Soomaaliyeed oo ka damqaday xaaladda murugsan ee dadka iyo dalkaba ragaadiyey.Ururka Xaqsoor waxaa loo yagleelay inuu kaalin hormuud ah ka qaato halganka lagu samatabixinayo dalka iyo dadka Soomaaliyeeed.\n\n" +
+            "Fadlan si taxaddar leh u buuxi Arjiga Diiwaangalinta Xubinnimada Aasaasayaasha Ururka Xaqsoor, adigoo ka mid noqonaayo Asaasayaasha Ururka Siyaaasadeedka Xaqsoor.",
         loading: "Loading form...",
         buttons: {
             submit: "Gudbi Codsiga",
@@ -76,9 +78,9 @@ export const founderPageTranslation: FounderPageTranslation = {
                 label: "Lambarka Telefoonka",
                 placeholder: "tusaale: 0612345675"
             },
-            street: {
-                label: "Waddo",
-                placeholder: "tusaale: Wadada KM4"
+            district: {
+                label: "Degmada",
+                placeholder: "tusaale: Hodan"
             },
             city: {
                 label: "Magaalo",
@@ -94,9 +96,16 @@ export const founderPageTranslation: FounderPageTranslation = {
             },
             signature: {
                 label: "Saxeexaaga",
-                button: "tirtir"
+                button: "tirtir",
+                options: {
+                    draw: "Ku Saxiix Gacanta",
+                    upload: "Ku Soo Gudbi Saxeex"
+                },
+                uploadTitle: "Soo Gudbi Saxeexaaga",
+                uploadSubtitle: "Noocyada la oggol yahay: PNG, JPG. Cabbirka ugu badan: 20MB.",
+                uploadButton: "Dooro Faylka"
             },
-            constitutionAgreement: "Waxaan si xor ah u codsanayaa in aan xubin buuxda ka noqdo Ururka Xaqsoor, anigoo oggol in aan ilaaliyo dastuurka, mabaadi’da, iyo qiyamka uu ururku ku dhisan yahay, kuwaas oo aan dhammaantood akhriyey kuna qancay.",
+            constitutionAgreement: "Waxaan si xor ah u codsanayaa in aan xubin buuxda ka noqdo Ururka Xaqsoor, anigoo oggol in aan ilaaliyo dastuurka, mabaadi’ da, iyo qiyamka uu ururku ku dhisan yahay, kuwaas oo aan dhammaantood akhriyey kuna qancay.",
         },
         document: {
             fields: {

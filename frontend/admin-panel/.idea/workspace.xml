@@ -5,19 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2517a1a-8c1e-4767-b7f3-a3a47db0afcf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/MembershipLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/enumeration/MembershipLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/currentUser/CurrentUserFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/currentUser/CurrentUserFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/permission/PermittedResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/security/permission/PermittedResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../backend/src/main/resources/db/migration/V1__initial_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/resources/db/migration/V1__initial_schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/UserDocumentDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/FounderListResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/FounderResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/mapper/UserDocumentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/dto/response/UserProfileResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserDocumentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/repository/UserDocumentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/FounderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/FounderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/FounderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/FounderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/UserProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/main/java/com/xaqsoor/service/impl/UserProfileServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client-app/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client-app/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/membership/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/membership/[id].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,32 +59,32 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/util&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
-    &quot;npm.build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.Next.js: debug client-side.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/abdih/OneDrive/Desktop/Xaqsoor/frontend/admin-panel/util",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Next.js: server-side.executor": "Run",
+    "npm.build.executor": "Run",
+    "npm.start.executor": "Run",
+    "ts.external.directory.path": "C:\\Users\\abdih\\OneDrive\\Desktop\\Xaqsoor\\frontend\\admin-panel\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\abdih\OneDrive\Desktop\Xaqsoor\frontend\admin-panel\util" />
@@ -144,7 +145,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -193,6 +194,10 @@
       <workItem from="1750660632245" duration="860000" />
       <workItem from="1750669812057" duration="237000" />
       <workItem from="1750670609400" duration="116000" />
+      <workItem from="1750852334140" duration="1306000" />
+      <workItem from="1750865946069" duration="2227000" />
+      <workItem from="1750871491512" duration="439000" />
+      <workItem from="1750922874734" duration="821000" />
     </task>
     <servers />
   </component>
