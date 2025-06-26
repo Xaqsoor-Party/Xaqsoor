@@ -13,6 +13,7 @@ import React from "react";
 export default function App({Component, pageProps}: AppProps) {
     const router = useRouter();
     const isAuthPath = router.pathname.startsWith('/auth');
+    const isPublicPath = router.pathname === "/unauthorized";
     return (
         <>
             <Head>
@@ -26,7 +27,8 @@ export default function App({Component, pageProps}: AppProps) {
                         <RedirectAuthenticated>
                             <Component {...pageProps} />
                         </RedirectAuthenticated>
-
+                    ) : isPublicPath ? (
+                        <Component {...pageProps} />
                     ) : (
                         <ProtectedRoute>
                             <Layout>

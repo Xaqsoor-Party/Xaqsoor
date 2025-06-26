@@ -1,4 +1,4 @@
-import { AcademicRecordRequest, WorkExperienceRequest } from "@/types/user";
+import {AcademicRecordRequest, WorkExperienceRequest} from "@/types/user";
 import {UserDocumentRequestDto} from "@/types/FounderFormData";
 
 interface FormData {
@@ -16,12 +16,12 @@ interface FormData {
 
 interface FoundersFormData extends FormData {
     email: string;
-    phone:string;
+    phone: string;
     signatureImageBase64: string;
     profileImageKey: string;
-    documents:UserDocumentRequestDto[];
-    workExperienceRequestList:WorkExperienceRequest[];
-    academicRecordRequestList:AcademicRecordRequest[];
+    documents: UserDocumentRequestDto[];
+    workExperienceRequestList: WorkExperienceRequest[];
+    academicRecordRequestList: AcademicRecordRequest[];
 }
 
 export const validateFormData = (
@@ -41,7 +41,7 @@ export const validateFounderFormData = (
 ) => {
 
     const newErrors: { [key: string]: string } = {};
-    Object.assign(newErrors, validateBasicFormFields(formData));
+    Object.assign(newErrors, validateBasicFormFields(formData,true));
 
     if (!formData.email.trim()) {
         newErrors.email = "Email is required";
@@ -70,7 +70,10 @@ export const validateFounderFormData = (
     return newErrors;
 }
 
-const validateBasicFormFields = (formData: FormData): { [key: string]: string } => {
+const validateBasicFormFields = (
+    formData: FormData,
+    skipAddressValidation: boolean = false
+): { [key: string]: string, } => {
     const errors: { [key: string]: string } = {};
 
     if (!formData.firstName.trim()) errors.firstName = "First name is required";
@@ -79,9 +82,13 @@ const validateBasicFormFields = (formData: FormData): { [key: string]: string } 
     if (!formData.gender) errors.gender = "Gender is required";
     if (!formData.placeOfBirth.trim()) errors.placeOfBirth = "Place of birth is required";
     if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
-    if (!formData.street.trim()) errors.street = "Street is required";
+
+    if (!skipAddressValidation) {
+        if (!formData.street.trim()) errors.street = "Street is required";
+        if (!formData.state.trim()) errors.state = "State is required";
+    }
+
     if (!formData.city.trim()) errors.city = "City is required";
-    if (!formData.state.trim()) errors.state = "State is required";
     if (!formData.country.trim()) errors.country = "Country is required";
 
     return errors;

@@ -15,7 +15,7 @@ export interface FounderFormData {
     profileImageKey: string;
     city: string;
     country: string;
-    street: string;
+    district: string;
     state: string;
 
     documents: UserDocumentRequestDto[];

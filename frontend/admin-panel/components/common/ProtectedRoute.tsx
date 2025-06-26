@@ -1,19 +1,24 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { useAuthentication } from "@/auth/AuthProvider";
 import BubbleLoading from "@/components/common/BubbleLoading/BubbleLoading";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const { authToken, user } = useAuthentication();
     const router = useRouter();
-
+    const [checkingAuth, setCheckingAuth] = useState(true);
     useEffect(() => {
-        if (!authToken || !user || user.role?.toLowerCase() === "member") {
+        const isOnUnauthorizedPage = router.pathname === "/unauthorized";
+        if (!authToken || !user) {
             void router.replace("/auth/login");
+        } else if ((user.role?.toLowerCase() === "member" || user.status.toLowerCase() === "pending") && !isOnUnauthorizedPage) {
+            void router.replace("/unauthorized");
+        }else {
+            setCheckingAuth(false);
         }
     }, [authToken, user, router]);
 
-    if (!authToken || !user || user.role?.toLowerCase() === "member") {
+    if (checkingAuth) {
         return <BubbleLoading />;
     }
 

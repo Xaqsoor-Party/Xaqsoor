@@ -15,12 +15,14 @@ interface DocumentFormSectionProps {
     documents: UserDocumentRequestDto[];
     onChange: (newRecords: UserDocumentRequestDto[]) => void;
     errors?: { [key: string]: string };
+    hideRemoveIfSingle?: boolean;
 }
 
 const DocumentFormSection: React.FC<DocumentFormSectionProps> = ({
                                                                      documents,
                                                                      onChange,
                                                                      errors,
+                                                                     hideRemoveIfSingle,
                                                                  }) => {
 
     const {language} = useLanguage();
@@ -57,13 +59,14 @@ const DocumentFormSection: React.FC<DocumentFormSectionProps> = ({
         return new Date().toISOString().split("T")[0];
     };
 
+    const shouldHideRemove = hideRemoveIfSingle && documents.length === 1;
     return (
         <div className={styles.documentsForm}>
             {documents.map((document, idx) => (
                 <div key={idx} className={styles.documentItem}>
                     <div className={styles.documentHeader}>
                         <h3 className={styles.documentTitle}>Document #{idx + 1}</h3>
-                        {documents.length > 1 && (
+                        {!shouldHideRemove  && (
                             <ActionButton
                                 type="button"
                                 onClick={() => handleRemove(idx)}
@@ -135,6 +138,9 @@ const DocumentFormSection: React.FC<DocumentFormSectionProps> = ({
                         onChange={(result) => handleDocumentChange(idx, "fileStorageKey", result?.key || "")}
                         error={errors?.[`documents.${idx}.fileStorageKey`]}
                         required
+                        buttonText={t.fields.fileUpload.button}
+                        title={t.fields.fileUpload.title}
+                        subTitle={t.fields.fileUpload.subTitle}
                     />
                 </div>
             ))}

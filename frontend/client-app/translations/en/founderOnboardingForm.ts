@@ -64,7 +64,7 @@ type OnboardingTranslation = {
             label: string,
             placeholder: string
         },
-        street: {
+        district: {
             label: string,
             placeholder: string
         },
@@ -82,7 +82,14 @@ type OnboardingTranslation = {
         },
         signature: {
             label: string,
-            button: string
+            button: string,
+            "options": {
+                "draw": string,
+                "upload": string
+            },
+            "uploadTitle": string,
+            "uploadSubtitle": string,
+            "uploadButton": string
         },
         constitutionAgreement: string,
     };
@@ -135,8 +142,9 @@ export type FounderPageTranslation = {
 
 export const founderPageTranslation: FounderPageTranslation = {
         "founderOnboarding": {
-            "title": "Xaqsoor Core Founders Onboarding Form",
-            "subtitle": "Be part of history. As a founding member, you help shape the direction, values, and future of the Xaqsoor Organization. Complete this application with care and conviction.",
+            "title": "Applicaon for Founding Membership – Xaqsoor Political Association",
+            "subtitle": "Xaqsoor Political Association is a patriotic movement guided by patriotism and Islamic values. It was established by concerned Somali citizens moved by the difficult and deteriorating conditions facing the nation and its people. Xaqsoor was established to take a leading role in the collective struggle to rescue Somalia and uplift its citizens.\n\n" +
+                "We kindly ask you to carefully complete the Founding Membership Registration Form as you join the Xaqsoor Political Association as one of its founding members.",
             "loading": "Loading form...",
             "buttons": {
                 "submit": "Submit Application",
@@ -209,9 +217,9 @@ export const founderPageTranslation: FounderPageTranslation = {
                     "label": "Phone Number",
                     "placeholder": "e.g. 0612345675"
                 },
-                "street": {
-                    "label": "Street",
-                    "placeholder": "e.g. KM4 Street"
+                "district": {
+                    "label": "District",
+                    "placeholder": "e.g. Hodan"
                 },
                 "city": {
                     "label": "City",
@@ -228,9 +236,16 @@ export const founderPageTranslation: FounderPageTranslation = {
 
                 "signature": {
                     "label": "Signature",
-                    "button": "clear"
+                    "button": "clear",
+                    "options": {
+                        "draw": "Draw Signature",
+                        "upload": "Upload Signature"
+                    },
+                    "uploadTitle": "Upload Your Signature",
+                    "uploadSubtitle": "Accepted formats: PNG, JPG. Max size: 20MB.",
+                    "uploadButton": "Choose File"
                 },
-                "constitutionAgreement": "I am freely requesting to become a full member of the Xaqsoor Organization, fully prepared to uphold the constitution, principles, and values upon which the organization is founded. I have read them all and am fully convinced.",
+                "constitutionAgreement": "I hereby freely apply to become a full member of the Xaqsoor Political Association. I affirm my commitment to uphold the constitution, principles, and values upon which the Xaqsoor is founded, all of which I have read and fully accepted.",
             },
             "document": {
                 "fields": {

@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    color: var(--color-text-primary);
+    padding: var(--spacing-xl);
+}
+
+.icon {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-error);
+}
+
+.title {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.message {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+}

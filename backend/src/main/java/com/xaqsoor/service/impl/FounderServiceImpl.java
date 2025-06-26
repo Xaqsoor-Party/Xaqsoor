@@ -1,6 +1,7 @@
 package com.xaqsoor.service.impl;
 
 import com.xaqsoor.dto.request.FounderRequestDto;
+import com.xaqsoor.dto.response.FounderListResponse;
 import com.xaqsoor.entity.*;
 import com.xaqsoor.enumeration.EducationLevel;
 import com.xaqsoor.enumeration.IdCardType;
@@ -38,6 +39,11 @@ public class FounderServiceImpl implements FounderService {
         saveAcademicRecords(request, user);
     }
 
+    @Override
+    public FounderListResponse getAllFounders() {
+        return null;
+    }
+
     private User createUserFromRequest(FounderRequestDto request) {
         return User.builder()
                 .userId("XQ-" + UniqueIdGenerator.generateTimestampBased())
@@ -54,7 +60,7 @@ public class FounderServiceImpl implements FounderService {
                 .role(getRole())
                 .city(request.city())
                 .country(request.country())
-                .street(request.street())
+                .street(request.district())
                 .state(request.state())
                 .status(Status.PENDING)
                 .membershipLevel(MembershipLevel.FOUNDER)
@@ -73,6 +79,9 @@ public class FounderServiceImpl implements FounderService {
     }
 
     private void saveUserDocuments(FounderRequestDto request, User user) {
+        if (request.documents() == null) {
+            return;
+        }
         request.documents().forEach(docRequest -> {
             UserDocument document = UserDocument.builder()
                     .documentType(IdCardType.valueOf(docRequest.documentType()))
@@ -90,6 +99,9 @@ public class FounderServiceImpl implements FounderService {
     }
 
     private void saveWorkExperiences(FounderRequestDto request, User user) {
+        if (request.workExperienceRequestList() == null) {
+            return;
+        }
         request.workExperienceRequestList().forEach(exp -> {
             WorkExperience workExperience = WorkExperience.builder()
                     .user(user)
@@ -106,6 +118,9 @@ public class FounderServiceImpl implements FounderService {
     }
 
     private void saveAcademicRecords(FounderRequestDto request, User user) {
+        if (request.academicRecordRequestList() == null) {
+            return;
+        }
         request.academicRecordRequestList().forEach(record -> {
             AcademicRecord academicRecord = AcademicRecord.builder()
                     .user(user)
@@ -129,10 +144,10 @@ public class FounderServiceImpl implements FounderService {
 
     private void validateUniqueFields(String email, String phone) {
         if (userRepository.existsByEmailIgnoreCase(email)) {
-            throw new ApiException("An account with this email already exists.");
+            throw new ApiException("This email is already registered. Please use a different email.");
         }
         if (userRepository.existsByPhoneIgnoreCase(phone)) {
-            throw new ApiException("An account with this phone number already exists.");
+            throw new ApiException("This phone number is already registered. Please use a different phone number.");
         }
     }
 
