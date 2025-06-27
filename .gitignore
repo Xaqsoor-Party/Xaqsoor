@@ -6,7 +6,7 @@
 /frontend/client-app/package-lock.json
 
 frontend/admin-panel/.idea/
-/frontend/client-app/.idea/
+frontend/client-app/.idea/
 /backend/.idea/
 
 .idea
