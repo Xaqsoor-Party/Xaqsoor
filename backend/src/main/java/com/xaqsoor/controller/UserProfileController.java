@@ -65,7 +65,7 @@ public class UserProfileController {
             @RequestParam(required = false) String membershipLevelFilter,
             @RequestParam(required = false, defaultValue = "createdDateAsc") String orderBy,
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "20") int pageSize,
             HttpServletRequest servletRequest
     ) {
         UserCardListDto result = userProfileService.searchUserCards(
