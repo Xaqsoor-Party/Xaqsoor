@@ -7,7 +7,7 @@
 
 frontend/admin-panel/.idea/
 frontend/client-app/.idea/
-/backend/.idea/
+backend/.idea/
 
 .idea
 **/.pnp
