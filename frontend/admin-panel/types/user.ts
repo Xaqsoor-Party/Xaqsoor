@@ -23,6 +23,7 @@ export interface User {
     signatureImageUrl?: string;
 
     street?: string;
+    district?:string;
     city?: string;
     state?: string;
     country?: string;
