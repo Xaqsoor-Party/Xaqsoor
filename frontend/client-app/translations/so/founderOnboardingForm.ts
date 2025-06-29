@@ -4,6 +4,10 @@ import {DocumentType} from "@/types/FounderFormData";
 export const founderPageTranslation: FounderPageTranslation = {
     "founderOnboarding": {
         title: "Arjiga Xubinnimada Aasaasayaasha Ururka Xaqsoor",
+        branding: {
+            logoPath: "/images/Xaqsoor-Logo_Somali1.png",
+            altText: "Xaqsoor Logo"
+        },
         subtitle:
             "Urur siyaasadeedka Xaqsoor waa dhaqdhaqaaq waddani ah oo ay hagayaan mabaadi’ida islaannimada iyo Soomaalinnimada. Xaqsoor waxaa aasaasay muwaadiniin Soomaaliyeed oo ka damqaday xaaladda murugsan ee dadka iyo dalkaba ragaadiyey.Ururka Xaqsoor waxaa loo yagleelay inuu kaalin hormuud ah ka qaato halganka lagu samatabixinayo dalka iyo dadka Soomaaliyeeed.\n\n" +
             "Fadlan si taxaddar leh u buuxi Arjiga Diiwaangalinta Xubinnimada Aasaasayaasha Ururka Xaqsoor, adigoo ka mid noqonaayo Asaasayaasha Ururka Siyaaasadeedka Xaqsoor.",

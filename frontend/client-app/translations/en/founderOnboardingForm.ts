@@ -2,6 +2,10 @@ import {DocumentType} from "@/types/FounderFormData";
 
 type OnboardingTranslation = {
     title: string,
+    branding: {
+        logoPath: string;
+        altText: string;
+    }
     subtitle: string,
     loading: string,
     buttons: {
@@ -142,7 +146,11 @@ export type FounderPageTranslation = {
 
 export const founderPageTranslation: FounderPageTranslation = {
         "founderOnboarding": {
-            "title": "Applicaon for Founding Membership – Xaqsoor Political Association",
+            "title": "Application for Founding Membership – Xaqsoor Political Association",
+            branding: {
+                logoPath: "/images/Xaqsoor_Logo_English_1.png",
+                altText: "Xaqsoor Logo"
+            },
             "subtitle": "Xaqsoor Political Association is a patriotic movement guided by patriotism and Islamic values. It was established by concerned Somali citizens moved by the difficult and deteriorating conditions facing the nation and its people. Xaqsoor was established to take a leading role in the collective struggle to rescue Somalia and uplift its citizens.\n\n" +
                 "We kindly ask you to carefully complete the Founding Membership Registration Form as you join the Xaqsoor Political Association as one of its founding members.",
             "loading": "Loading form...",
