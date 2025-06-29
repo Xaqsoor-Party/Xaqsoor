@@ -184,7 +184,7 @@ const Onboarding = () => {
             <div className={styles.onboardingContainer}>
                 <div className={styles.topBar}>
                     <div className={styles.logo}>
-                        <Image src={"/images/Xaqsoor_Logo_English_1.png"} alt={"logo"} width={280} height={60}/>
+                        <Image src={t.branding.logoPath} alt={t.branding.altText} width={280} height={60}/>
                     </div>
 
                     <div className={styles.languageSwitcher}>
