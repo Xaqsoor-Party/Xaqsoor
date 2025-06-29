@@ -18,6 +18,7 @@ type Sidebar = {
     emails: string,
     donations: string,
     idCards: string,
+    foundersList:string,
 }
 
 export type SidebarLabels = {
@@ -44,6 +45,7 @@ export const sidebarLabels: SidebarLabels = {
         messages: "Messages (Single & Bulk SMS)",
         emails: "Emails (Single & Bulk Email)",
         donations: "Donations",
-        idCards: "Member ID Cards"
+        idCards: "Member ID Cards",
+        foundersList: "Founders",
     }
 }

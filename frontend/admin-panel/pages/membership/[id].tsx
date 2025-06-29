@@ -11,6 +11,9 @@ import {
     FiBriefcase,
     FiCalendar,
     FiCheckCircle,
+    FiChevronDown,
+    FiChevronUp,
+    // FiDatabase,
     FiGlobe,
     FiInfo,
     FiKey,
@@ -19,8 +22,11 @@ import {
     FiMapPin,
     FiMoreVertical,
     FiPhone,
+    FiPenTool,
     FiUser,
-    FiUserX
+    FiUserCheck,
+    FiUserPlus,
+    FiUserX, FiFileText
 } from "react-icons/fi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
@@ -51,6 +57,23 @@ const UserDetailPage = () => {
         "reset-mfa" | "soft-delete" | "enable-disable" |
         "lock-unlock" | "update-role" | "update-membership" | "update-status" | null
     >(null);
+
+    const [expandedSections, setExpandedSections] = useState({
+        personal: true,
+        account: true,
+        security: true,
+        academic: true,
+        work: true,
+        documents: true
+    });
+
+    const toggleSection = (section: string) => {
+        setExpandedSections(prev => ({
+            ...prev,
+            [section]: !prev[section as keyof typeof prev]
+        }));
+    };
+
     const {
         resetMfa,
         softDeleteUser,
@@ -80,17 +103,16 @@ const UserDetailPage = () => {
     }, []);
 
     useEffect(() => {
-        if (!router.isReady || id === null) return; // wait until router is ready
+        if (!router.isReady) return;
+        if (id === null) {
+            setError("Invalid or missing user ID.");
+            setLoading(false);
+            return;
+        }
         const fetchUser = async () => {
-
-            if (!id || isNaN(Number(id))) {
-                setLoading(false);
-                setError("Invalid or missing user ID.");
-            }
 
             try {
                 const response: ApiResponse<{ profile: UserProfileResponse }> = await getUserProfile(Number(id));
-
                 if (response.data?.profile) {
                     setUser(response.data.profile);
                 } else {
@@ -165,20 +187,6 @@ const UserDetailPage = () => {
         }
     };
 
-    // const handlePermanentDeleteUser = async () => {
-    //     setLoading(true);
-    //     try {
-    //         await permanentlyDeleteUser(userData.id);
-    //         void router.push("/membership/list");
-    //     } catch (e) {
-    //         extractErrorMessage(e, "Failed to permanently delete user");
-    //     } finally {
-    //         setLoading(false);
-    //         setShowModal(false);
-    //         setSelectedAction(null);
-    //     }
-    // };
-
     const handleToggleUserEnabled = async () => {
         try {
             await setUserEnabled(userData.id, !userData.enabled);
@@ -239,8 +247,7 @@ const UserDetailPage = () => {
         }
     };
 
-    const {userData, academicRecords, workExperiences} = user;
-
+    const {userData, academicRecords, workExperiences,userDocuments} = user;
     const roleOptions = Object.values(Roles).map(role => ({value: role, label: role}));
     const membershipOptions = Object.values(MembershipLevel).map(level => ({value: level, label: level}));
     const statusOptions = Object.values(Status).map(status => ({value: status, label: status}));
@@ -257,50 +264,23 @@ const UserDetailPage = () => {
                 <div className={styles.userInfo}>
                     <div className={styles.nameRow}>
                         <h2>{`${userData.firstName} ${userData.middleName || ''} ${userData.lastName}`}</h2>
-                        <button ref={buttonRef} onClick={() => setShowDropdown(prev => !prev)}
-                                className={styles.menuButton}>
+                        <button ref={buttonRef} onClick={() => setShowDropdown(prev => !prev)} className={styles.menuButton}>
                             <span className={styles.menuButtonText}>Manage</span>
                             <FiMoreVertical size={20} style={{color: 'black'}}/>
                         </button>
                         {showDropdown && (
                             <ul className={styles.dropdownMenu} ref={dropdownRef}>
-                                <li onClick={() => {
-                                    setSelectedAction("reset-mfa");
-                                    setShowModal(true);
-                                }}>Reset MFA
-                                </li>
-                                <li onClick={() => {
-                                    setSelectedAction("soft-delete");
-                                    setShowModal(true);
-                                }}>Delete User
-                                </li>
-                                <li onClick={() => {
-                                    setSelectedAction("enable-disable");
-                                    setShowModal(true);
-                                }}>
+                                <li onClick={() => { setSelectedAction("reset-mfa"); setShowModal(true); }}>Reset MFA</li>
+                                <li onClick={() => { setSelectedAction("soft-delete"); setShowModal(true); }}>Delete User</li>
+                                <li onClick={() => { setSelectedAction("enable-disable"); setShowModal(true); }}>
                                     {userData.enabled ? "Disable User" : "Enable User"}
                                 </li>
-                                <li onClick={() => {
-                                    setSelectedAction("lock-unlock");
-                                    setShowModal(true);
-                                }}>
+                                <li onClick={() => { setSelectedAction("lock-unlock"); setShowModal(true); }}>
                                     {userData.accountNonLocked ? "Lock Account" : "Unlock Account"}
                                 </li>
-                                <li onClick={() => {
-                                    setSelectedAction("update-role");
-                                    setShowModal(true);
-                                }}>Update Role
-                                </li>
-                                <li onClick={() => {
-                                    setSelectedAction("update-membership");
-                                    setShowModal(true);
-                                }}>Update Membership Level
-                                </li>
-                                <li onClick={() => {
-                                    setSelectedAction("update-status");
-                                    setShowModal(true);
-                                }}>Update Status
-                                </li>
+                                <li onClick={() => { setSelectedAction("update-role"); setShowModal(true); }}>Update Role</li>
+                                <li onClick={() => { setSelectedAction("update-membership"); setShowModal(true); }}>Update Membership Level</li>
+                                <li onClick={() => { setSelectedAction("update-status"); setShowModal(true); }}>Update Status</li>
                             </ul>
                         )}
                     </div>
@@ -311,127 +291,280 @@ const UserDetailPage = () => {
                 </div>
             </div>
 
-            <div className={styles.section}>
-                <h3>Personal Details</h3>
-                <ul className={styles.detailList}>
-                    <li><FiKey/> <strong>User ID:</strong> {userData.userId}</li>
-                    <li><FiCheckCircle/> <strong>Status:</strong> {userData.status}</li>
-                    <li><FiBriefcase/> <strong>Role:</strong> {userData.role}</li>
+            <div className={styles.gridContainer}>
+                {/* Personal Details Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('personal')}>
+                        <h3>Personal Details</h3>
+                        {expandedSections.personal ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
 
-                    <li style={{display: 'flex',}}>
-                        <FiGlobe/> <strong>Authorities:</strong>
-                        <div className={styles.authorityTags}>
-                            {userData.authorities
-                                .split(',')
-                                .map((auth, index) => (
-                                    <span key={index} className={styles.authorityTag}>
-                                    {auth.trim()}
-                                    </span>
-                                ))}
+                    {expandedSections.personal && (
+                        <div className={styles.grid}>
+                            {/*<div className={styles.gridItem}>*/}
+                            {/*    <FiDatabase /> <strong>ID:</strong> {userData.id}*/}
+                            {/*</div>*/}
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiKey /> <strong>User ID:</strong> {userData.userId}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiUserPlus /> <strong>Created By:</strong> {userData.createdBy}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiUserCheck /> <strong>Modified By:</strong> {userData.modifiedBy || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiCalendar /> <strong>Created:</strong> {new Date(userData.createdDate).toLocaleString()}
+                            </div>
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiCalendar /> <strong>Modified:</strong> {userData.modifiedDate ? new Date(userData.modifiedDate).toLocaleString() : 'N/A'}
+                            </div>
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiCheckCircle /> <strong>Status:</strong> {userData.status}
+                            </div>
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiBriefcase /> <strong>Role:</strong> {userData.role}
+                            </div>
+                            <div className={styles.gridItem} style={{ gridColumn: 'span 2' }}>
+                                <FiGlobe /> <strong>Authorities:</strong>
+                                <div className={styles.authorityTags}>
+                                    {userData.authorities
+                                        .split(',')
+                                        .map((auth, index) => (
+                                            <span key={index} className={styles.authorityTag}>
+                        {auth.trim()}
+                      </span>
+                                        ))}
+                                </div>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiMapPin /> <strong>Place of Birth:</strong> {userData.placeOfBirth || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiCalendar /> <strong>Date of Birth:</strong> {userData.dateOfBirth || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiUser /> <strong>Last Login:</strong> {userData.lastLogin || 'N/A'}
+                            </div>
                         </div>
-                    </li>
+                    )}
+                </div>
 
-                    <li><FiMapPin/> <strong>Place of Birth:</strong> {userData.placeOfBirth || 'N/A'}</li>
-                    <li><FiCalendar/> <strong>Date of Birth:</strong> {userData.dateOfBirth || 'N/A'}</li>
-                    <li><FiUser/> <strong>Last Login:</strong> {userData.lastLogin || 'N/A'}</li>
-                </ul>
-            </div>
+                {/* Address Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('address')}>
+                        <h3>Address</h3>
+                        {expandedSections.account ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
 
-            <div className={styles.section}>
-                <h3>Address</h3>
-                <ul className={styles.detailList}>
-                    <li><FiMapPin/> <strong>Street:</strong> {userData.street || 'N/A'}</li>
-                    <li><FiMapPin/> <strong>City:</strong> {userData.city || 'N/A'}</li>
-                    <li><FiMapPin/> <strong>State:</strong> {userData.state || 'N/A'}</li>
-                    <li><FiGlobe/> <strong>Country:</strong> {userData.country || 'N/A'}</li>
-                </ul>
-            </div>
+                    {expandedSections.account && (
+                        <div className={styles.grid}>
+                            <div className={styles.gridItem}>
+                                <FiGlobe /> <strong>Country:</strong> {userData.country || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiMapPin /> <strong>State:</strong> {userData.state || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiMapPin /> <strong>City:</strong> {userData.city || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiMapPin /> <strong>District:</strong> {userData.district || 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiMapPin /> <strong>Street:</strong> {userData.street || 'N/A'}
+                            </div>
+                        </div>
+                    )}
+                </div>
 
-            <div className={styles.section}>
-                <h3>Account Settings</h3>
-                <ul className={styles.detailList}>
-                    <li><FiCheckCircle/> <strong>Email Verified:</strong> {userData.emailVerified ? 'Yes' : 'No'}</li>
-                    <li><FiLock/> <strong>MFA Enabled:</strong> {userData.mfaEnabled ? 'Yes' : 'No'}</li>
-                    <li><FiCheckCircle/> <strong>Account
-                        Non-Expired:</strong> {userData.accountNonExpired ? 'Yes' : 'No'}</li>
-                    <li><FiLock/> <strong>Account Non-Locked:</strong> {userData.accountNonLocked ? 'Yes' : 'No'}</li>
-                    <li><FiCheckCircle/> <strong>Enabled:</strong> {userData.enabled ? 'Yes' : 'No'}</li>
-                </ul>
-            </div>
+                {/* Account Settings Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('account')}>
+                        <h3>Account Settings</h3>
+                        {expandedSections.account ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
 
-            {/*<div className={styles.section}>*/}
-            {/*    <h3>Signature</h3>*/}
-            {/*    {userData.signatureImageUrl ? (*/}
-            {/*        <div className={styles.signatureDisplay}>*/}
-            {/*            <Image*/}
-            {/*                src={userData.signatureImageUrl}*/}
-            {/*                alt="User Signature"*/}
-            {/*                width={400} // Set a default width for the Image component*/}
-            {/*                height={200} // Set a default height for the Image component*/}
-            {/*                className={styles.signatureImage}*/}
-            {/*            />*/}
-            {/*     */}
-            {/*      */}
-            {/*    ) : (*/}
-            {/*        <p>No signature available.</p>*/}
-            {/*    )}*/}
-            {/*</div>*/}
+                    {expandedSections.account && (
+                        <div className={styles.grid}>
+                            <div className={styles.gridItem}>
+                                <FiCheckCircle /> <strong>Email Verified:</strong> {userData.emailVerified ? 'Yes' : 'No'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiLock /> <strong>MFA Enabled:</strong> {userData.mfaEnabled ? 'Yes' : 'No'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiCheckCircle /> <strong>Account Non-Expired:</strong> {userData.accountNonExpired ? 'Yes' : 'No'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiLock /> <strong>Account Non-Locked:</strong> {userData.accountNonLocked ? 'Yes' : 'No'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiCheckCircle /> <strong>Enabled:</strong> {userData.enabled ? 'Yes' : 'No'}
+                            </div>
+                        </div>
+                    )}
+                </div>
 
-            <div className={styles.section}>
-                <h3>Academic Records</h3>
-                {academicRecords.length === 0 ? (
-                    <p>No academic records available.</p>
-                ) : (
-                    <ul className={styles.detailList}>
-                        {academicRecords.map(record => (
-                            <li key={record.id}>
-                                <FiBookOpen/> <strong>{record.institutionName}</strong> — {record.degree || 'N/A'}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Field of Study:</strong> {record.fieldOfStudy}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Level:</strong> {record.level}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Location:</strong> {record.location}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <strong>Duration:</strong> {record.startDate} to {record.currentlyStudying ? 'Present' : record.endDate || 'N/A'}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Currently
-                                Studying:</strong> {record.currentlyStudying ? 'Yes' : 'No'}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+                {/* Security & Signatures Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('security')}>
+                        <h3>Security & Signatures</h3>
+                        {expandedSections.security ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
 
-            <div className={styles.section}>
-                <h3>Work Experience</h3>
-                {workExperiences.length === 0 ? (
-                    <p>No work experiences available.</p>
-                ) : (
-                    <ul className={styles.detailList}>
-                        {workExperiences.map(job => (
-                            <li key={job.id}>
-                                <FiBriefcase/> <strong>{job.jobTitle}</strong> at {job.companyName}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Location:</strong> {job.location}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <strong>Duration:</strong> {job.startDate} to {job.currentlyWorking ? 'Present' : job.endDate || 'N/A'}
-                                <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<strong>Currently
-                                Working:</strong> {job.currentlyWorking ? 'Yes' : 'No'}
-                                {job.description && (
-                                    <>
-                                        <br/>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Description:</strong>
-                                        <span>{job.description}</span>
-                                    </>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                    {expandedSections.security && (
+                        <div className={styles.grid}>
+                            <div className={styles.gridItem}>
+                                <FiLock /> <strong>MFA QR Code:</strong>
+                                {userData.mfaQrCodeImageUrl ? (
+                                    <a href={userData.mfaQrCodeImageUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                                        View QR Code
+                                    </a>
+                                ) : 'N/A'}
+                            </div>
+                            <div className={styles.gridItem}>
+                                <FiPenTool /> <strong>Signature:</strong>
+                                {userData.signatureImageUrl ? (
+                                    <div className={styles.signaturePreview}>
+                                        <img
+                                            src={userData.signatureImageUrl}
+                                            alt="Signature"
+                                            className={styles.signatureImage}
+                                        />
+                                        <a
+                                            href={userData.signatureImageUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={styles.link}
+                                        >
+                                            View Full
+                                        </a>
+                                    </div>
+                                ) : 'N/A'}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Academic Records Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('academic')}>
+                        <h3>Academic Records</h3>
+                        {expandedSections.academic ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
+
+                    {expandedSections.academic && (
+                        <div>
+                            {academicRecords.length === 0 ? (
+                                <p>No academic records available.</p>
+                            ) : (
+                                <ul className={styles.detailList}>
+                                    {academicRecords.map(record => (
+                                        <li key={record.id}>
+                                            <FiBookOpen /> <strong>{record.institutionName}</strong> — {record.degree || 'N/A'}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Field of Study:</strong> {record.fieldOfStudy}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Level:</strong> {record.level}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Location:</strong> {record.location}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Duration:</strong> {record.startDate} to {record.currentlyStudying ? 'Present' : record.endDate || 'N/A'}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Currently Studying:</strong> {record.currentlyStudying ? 'Yes' : 'No'}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {/* Work Experience Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('work')}>
+                        <h3>Work Experience</h3>
+                        {expandedSections.work ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
+
+                    {expandedSections.work && (
+                        <div>
+                            {workExperiences.length === 0 ? (
+                                <p>No work experiences available.</p>
+                            ) : (
+                                <ul className={styles.detailList}>
+                                    {workExperiences.map(job => (
+                                        <li key={job.id}>
+                                            <FiBriefcase /> <strong>{job.jobTitle}</strong> at {job.companyName}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Location:</strong> {job.location}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Duration:</strong> {job.startDate} to {job.currentlyWorking ? 'Present' : job.endDate || 'N/A'}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Currently Working:</strong> {job.currentlyWorking ? 'Yes' : 'No'}
+                                            {job.description && (
+                                                <>
+                                                    <br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>Description:</strong>
+                                                    <span>{job.description}</span>
+                                                </>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {/* User Documents Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('documents')}>
+                        <h3>User Documents</h3>
+                        {expandedSections.documents ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
+
+                    {expandedSections.documents && (
+                        <div>
+                            {userDocuments && userDocuments.length > 0 ? (
+                                <ul className={styles.detailList}>
+                                    {userDocuments.map(doc => (
+                                        <li key={doc.id}>
+                                            <FiFileText /> <strong>{doc.documentType}</strong>
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Document Number:</strong> {doc.documentNumber}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Country:</strong> {doc.country}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Issued At:</strong> {new Date(doc.issuedAt).toLocaleDateString()}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Expires At:</strong> {doc.expiresAt ? new Date(doc.expiresAt).toLocaleDateString() : 'N/A'}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Verified:</strong> {doc.verified ? 'Yes' : 'No'}
+                                            {doc.rejectionReason && (
+                                                <>
+                                                    <br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>Rejection Reason:</strong> {doc.rejectionReason}
+                                                </>
+                                            )}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>File:</strong>{' '}
+                                            <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                                                View Document
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No user documents available.</p>
+                            )}
+                        </div>
+                    )}
+                </div>
+
             </div>
 
             {showModal && ["reset-mfa", "soft-delete", "enable-disable", "lock-unlock"].includes(selectedAction!) && (
@@ -453,16 +586,11 @@ const UserDetailPage = () => {
                     className={styles.customModalStyle}
                     onConfirm={() => {
                         switch (selectedAction) {
-                            case "reset-mfa":
-                                return handleResetMfa();
-                            case "soft-delete":
-                                return handleSoftDeleteUser();
-                            case "enable-disable":
-                                return handleToggleUserEnabled();
-                            case "lock-unlock":
-                                return handleToggleLock();
-                            default:
-                                return;
+                            case "reset-mfa": return handleResetMfa();
+                            case "soft-delete": return handleSoftDeleteUser();
+                            case "enable-disable": return handleToggleUserEnabled();
+                            case "lock-unlock": return handleToggleLock();
+                            default: return;
                         }
                     }}
                     onCancel={() => {
@@ -489,7 +617,6 @@ const UserDetailPage = () => {
                             selectedAction === "update-membership" ? membershipOptions :
                                 statusOptions
                     }
-                    // initialValue={selectedValue}
                     onConfirm={(value) => {
                         if (selectedAction === "update-role") return handleUpdateRole(value);
                         if (selectedAction === "update-membership") return handleUpdateMembershipLevel(value);
@@ -501,7 +628,6 @@ const UserDetailPage = () => {
                     }}
                 />
             )}
-
 
             {alert.visible && (
                 <AlertModal

@@ -3,19 +3,36 @@ package com.xaqsoor.exception;
 import com.xaqsoor.domain.Response;
 import com.xaqsoor.util.RequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Collections;
+import java.util.stream.Collectors;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Response> handleApiException(ApiException ex, HttpServletRequest request) {
         return buildResponseEntity(request, ex.getMessage(), HttpStatus.BAD_REQUEST,ex);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Response> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        // Extract validation error messages for each field
+        String errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining("; "));
+
+        return buildResponseEntity(request, errors, HttpStatus.BAD_REQUEST, ex);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -25,7 +42,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleGenericException(Exception ex, HttpServletRequest request) {
-        return buildResponseEntity(request, "An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, ex);
+        log.error("An unexpected error occurred", ex);
+        return buildResponseEntity(request, "An unexpected error occurred. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
 
     private ResponseEntity<Response> buildResponseEntity(HttpServletRequest request, String message, HttpStatus status , Exception ex) {

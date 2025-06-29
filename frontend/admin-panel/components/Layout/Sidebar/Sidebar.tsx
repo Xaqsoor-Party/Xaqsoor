@@ -81,6 +81,11 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
                     title: t.idCards,
                     path: '/membership/id-cards',
                     icon: <FiChevronRight className={styles.icon} />,
+                },
+                {
+                    title: t.foundersList,
+                    path: '/membership/founders',
+                    icon: <FiChevronRight className={styles.icon} />,
                 }
             ]
         },

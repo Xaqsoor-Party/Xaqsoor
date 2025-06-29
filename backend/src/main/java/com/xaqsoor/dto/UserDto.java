@@ -32,6 +32,7 @@ public class UserDto {
     private String mfaQrCodeImageUrl;
     private String signatureImageUrl;
 
+    private String district;
     private String street;
     private String city;
     private String state;

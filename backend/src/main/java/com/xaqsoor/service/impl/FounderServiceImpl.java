@@ -1,7 +1,7 @@
 package com.xaqsoor.service.impl;
 
 import com.xaqsoor.dto.request.FounderRequestDto;
-import com.xaqsoor.dto.response.FounderListResponse;
+import com.xaqsoor.dto.response.UserCardListDto;
 import com.xaqsoor.entity.*;
 import com.xaqsoor.enumeration.EducationLevel;
 import com.xaqsoor.enumeration.IdCardType;
@@ -10,12 +10,17 @@ import com.xaqsoor.enumeration.Status;
 import com.xaqsoor.exception.ApiException;
 import com.xaqsoor.repository.*;
 import com.xaqsoor.service.FounderService;
+import com.xaqsoor.service.S3Service;
 import com.xaqsoor.util.UniqueIdGenerator;
+import com.xaqsoor.util.UserSortUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import static com.xaqsoor.service.impl.UserProfileServiceImpl.mapToUserCardListDto;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Service
@@ -25,6 +30,7 @@ public class FounderServiceImpl implements FounderService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final S3Service s3Service;
     private final UserDocumentRepository userDocumentRepository;
     private final WorkExperienceRepository workExperienceRepository;
     private final AcademicRecordRepository academicRecordRepository;
@@ -40,8 +46,24 @@ public class FounderServiceImpl implements FounderService {
     }
 
     @Override
-    public FounderListResponse getAllFounders() {
-        return null;
+    public UserCardListDto getAllFounders(String searchTerm, String genderFilter, String statusFilter, String orderBy, int pageNumber, int pageSize) {
+        String status = UserSortUtil.parseStatusFilter(statusFilter);
+
+        if (!UserSortUtil.isValidOrderBy(orderBy)) {
+            orderBy = "createdDateDesc";
+        }
+
+        Pageable pageable = UserSortUtil.createPageable(pageNumber, pageSize, orderBy);
+
+        Page<User> userPage = userRepository.searchUserCardsNative(
+                searchTerm,
+                status,
+                "",
+                genderFilter,
+                "FOUNDER",
+                pageable);
+
+        return mapToUserCardListDto(userPage, s3Service);
     }
 
     private User createUserFromRequest(FounderRequestDto request) {
@@ -150,5 +172,4 @@ public class FounderServiceImpl implements FounderService {
             throw new ApiException("This phone number is already registered. Please use a different phone number.");
         }
     }
-
 }

@@ -12,13 +12,16 @@ import com.xaqsoor.service.S3Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.xaqsoor.constant.Constant.APP_ZONE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class UserUtil {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
 
     public static User createNewUser(UserCreateRequest request, String normalizedEmail, Role role) {
         return User.builder()
@@ -68,7 +71,9 @@ public class UserUtil {
     }
 
     public static String formatDateTime(LocalDateTime dateTime) {
-        return dateTime != null ? FORMATTER.format(dateTime) : "";
+        if (dateTime == null) return "";
+        ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(APP_ZONE);
+        return FORMATTER.format(zonedDateTime);
     }
 
     public static String formatDate(LocalDate date) {

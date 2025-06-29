@@ -3,6 +3,7 @@ package com.xaqsoor.service.impl;
 import com.xaqsoor.dto.AnnouncementDto;
 import com.xaqsoor.dto.response.AnnouncementListDto;
 import com.xaqsoor.entity.Announcement;
+import com.xaqsoor.enumeration.AnnouncementStatus;
 import com.xaqsoor.exception.ApiException;
 import com.xaqsoor.mapper.AnnouncementMapper;
 import com.xaqsoor.repository.AnnouncementRepository;
@@ -13,29 +14,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static com.xaqsoor.util.UserUtil.DATE_FORMATTER;
+
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@Transactional(rollbackFor = { Exception.class })
 public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Override
-    public AnnouncementListDto getAnnouncements(int pageNumber, int pageSize) {
+    public AnnouncementListDto searchAnnouncements(String keyword, String status, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-        Page<Announcement> announcementPage  = announcementRepository.findAll(pageable);
+        AnnouncementStatus announcementStatus = null;
+        if (status != null && !status.isBlank()) {
+            announcementStatus = AnnouncementStatus.fromString(status);
+        }
 
-        List<AnnouncementDto> announcementDtos = announcementPage.stream()
+        Page<Announcement> page = announcementRepository.searchAnnouncements(keyword == null ? "" : keyword, announcementStatus, pageable);
+
+        List<AnnouncementDto> dtos = page.stream()
                 .map(AnnouncementMapper::toDto)
                 .toList();
-
         return new AnnouncementListDto(
-                announcementPage.getTotalElements(),
-                pageNumber,
-                pageSize,
-                announcementDtos
+                page.getTotalElements(),
+                page.getNumber(),
+                page.getSize(),
+                dtos
         );
     }
 
@@ -47,4 +57,43 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return announcementOpt.map(AnnouncementMapper::toDto)
                 .orElseThrow(() -> new ApiException("Announcement not found with Id: " + id));
     }
+
+    @Override
+    public AnnouncementDto createAnnouncement(AnnouncementDto announcementDto) {
+        Announcement announcement = AnnouncementMapper.toEntity(announcementDto);
+        Announcement saved = announcementRepository.save(announcement);
+        return AnnouncementMapper.toDto(saved);
+    }
+
+    @Override
+    public AnnouncementDto updateAnnouncement(Long id, AnnouncementDto dto) {
+        Announcement existing = getNonDeletedAnnouncementById(id);
+
+        existing.setTitle(dto.title());
+        existing.setContent(dto.content());
+        LocalDate parsedDate = null;
+        if (dto.announcementDate() != null && !dto.announcementDate().isBlank()) {
+            parsedDate = LocalDate.parse(dto.announcementDate(), DATE_FORMATTER);
+        }
+
+        existing.setAnnouncementDate(parsedDate);
+        existing.setStatus(AnnouncementStatus.fromString(dto.status()));
+
+        Announcement updated = announcementRepository.save(existing);
+        return AnnouncementMapper.toDto(updated);
+    }
+
+    @Override
+    public void softDeleteAnnouncement(Long id) {
+        Announcement announcement = getNonDeletedAnnouncementById(id);
+        announcement.setDeleted(true);
+        announcementRepository.save(announcement);
+    }
+
+    private Announcement getNonDeletedAnnouncementById(Long id) {
+        return announcementRepository.findById(id)
+                .filter(a -> !a.isDeleted())
+                .orElseThrow(() -> new ApiException("Announcement not found or already deleted"));
+    }
+
 }

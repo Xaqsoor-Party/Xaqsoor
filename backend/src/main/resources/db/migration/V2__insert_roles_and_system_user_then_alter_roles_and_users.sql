@@ -51,7 +51,7 @@ VALUES (
            FALSE,
            0,
            NOW(),
-           'AsalGuardian',
+           'XQ-RZKT-968721-KMRG',
            'Asal',    -- First Name
            '',      -- Middle Name
            'Solutions',     -- Last Name
@@ -78,6 +78,71 @@ VALUES (
     NULL         -- MFA QR code image URI
     );
 
+
+-- Insert normal user (role_id retrieved from roles table where name = 'USER')
+INSERT INTO users (
+    reference_id,
+    is_deleted,
+    created_by,
+    created_date,
+    user_id,
+    first_name,
+    middle_name,
+    last_name,
+    gender,
+    place_of_birth,
+    date_of_birth,
+    status,
+    membership_level,
+    role_id,
+    email,
+    phone,
+    network_operator,
+    bio,
+    failed_login_attempts,
+    last_login,
+    profile_image_key,
+    account_non_expired,
+    account_non_locked,
+    is_login_restricted,
+    email_verified,
+    enabled,
+    mfa_enabled,
+    mfa_secret,
+    mfa_qr_code_image_uri
+)
+VALUES (
+
+           uuid_generate_v4()::text,    -- Reference ID
+           FALSE,                      -- Is deleted
+           0,                          -- Created by
+           NOW(),                      -- Created date
+           'XQ-VKGD-357548-JRMV',              -- User ID
+           'Abdihakim',                -- First Name
+           'Ismail',                         -- Middle Name (optional)
+           'Mohamed',                  -- Last Name
+           'Male',                     -- Gender
+           'Mogadishu',                -- Place of Birth (example)
+           '1998-01-01',               -- Date of Birth (example)
+           'ACTIVE',                   -- Status (default value)
+           'LIFETIME',                 -- Membership Level (example, adjust as needed)
+           (SELECT id FROM roles WHERE name = 'ADMIN' LIMIT 1),  -- Role ID for 'USER'
+    'abdihakin18@gmail.com',    -- Email
+    '+252771700700',            -- Phone
+    'Hormuud',                  -- Network Operator
+    'Normal user account with access to basic features.', -- Bio
+    0,                          -- Failed login attempts
+    NULL,                       -- Last login (to be set on first login)
+    NULL,  -- Profile image key (can be changed)
+    TRUE,                       -- Account non expired
+    TRUE,                       -- Account non locked
+    FALSE,                      -- Is login restricted
+    TRUE,                      -- Email verified
+    TRUE,                       -- Enabled
+    FALSE,                      -- MFA enabled
+    NULL,                       -- MFA secret
+    NULL                        -- MFA QR code image URI
+    );
 
 -- Enforce NOT NULL on role_id
 ALTER TABLE users

@@ -2,6 +2,9 @@
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: Arial, sans-serif;
+    padding-bottom: var(--spacing-xl);
+    max-width: var(--breakpoint-desktop);
+    margin: 0 auto;
 }
 
 .statusContainer {
@@ -54,10 +57,12 @@
     flex-direction: column;
     gap: var(--spacing-lg);
     padding: var(--spacing-lg);
-    /*background-color: var(--color-background-accent);*/
     background: var(--color-background);
+    position: relative;
+    z-index: 1;
 }
-.backgroundBox{
+
+.backgroundBox {
     background: var(--color-primary-gradient);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
@@ -65,12 +70,14 @@
     height: 250px;
     width: 100%;
 }
+
 .initialsCircle {
     overflow: hidden;
     position: absolute;
     left: 30px;
     bottom: -50px;
 }
+
 .userInfo {
     flex-grow: 1;
     margin-top: var(--spacing-xxl);
@@ -100,7 +107,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding:  var(--spacing-sm);
+    padding: var(--spacing-sm);
     border-radius: var(--radius-sm);
     font-size: var(--font-size-sm);
     color: var(--color-text-primary);
@@ -164,42 +171,70 @@
 
 .section {
     padding: var(--spacing-lg);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
 }
 
-.section h3 {
-    color: var(--color-primary);
-    margin-top: 0;
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--spacing-sm) 0;
     margin-bottom: var(--spacing-md);
     border-bottom: 1px solid var(--color-border);
-    padding-bottom: var(--spacing-sm);
+}
+
+.sectionHeader h3 {
+    margin: 0;
+    color: var(--color-primary);
     font-size: var(--font-size-lg);
 }
 
-.detailList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.gridItem {
+    width: 100%;
+    /*grid-column: span 2;*/
+    background-color: var(--color-background-accent);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    min-height: 60px;
+    transition: transform var(--transition-fast);
 }
 
-.detailList li {
-    margin-bottom: var(--spacing-sm);
-    line-height: 1.5;
-    font-size: var(--font-size-base);
-    color: var(--color-text-secondary);
+.gridItem:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
 }
 
-.detailList li strong {
-    color: var(--color-text-primary);
+.gridItem strong {
+    min-width: 130px;
     display: inline-block;
-    min-width: 120px;
 }
 
 .authorityTags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
 }
 
 .authorityTag {
@@ -208,24 +243,57 @@
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     font-size: var(--font-size-sm);
+    white-space: nowrap;
 }
 
-.detailList li strong + span {
-    display: inline-block;
+.detailList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detailList li {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-background-accent);
+    border-radius: var(--radius-md);
+    transition: transform var(--transition-fast);
+}
+
+.detailList li:hover {
+    transform: translateX(5px);
+}
+
+.signaturePreview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-top: var(--spacing-xs);
-    font-style: italic;
-    color: var(--color-text-tertiary);
 }
 
-.customModalStyle{
+.signatureImage {
+    max-width: 200px;
+    max-height: 80px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-xs);
+    background-color: white;
+    padding: var(--spacing-xs);
+}
+
+.link {
+    color: var(--color-primary);
+    text-decoration: underline;
+    margin-top: var(--spacing-xs);
+    display: inline-block;
+}
+
+.customModalStyle {
     width: 400px;
 }
 
 @media (max-width: 768px) {
     .profileHeader {
-        margin-bottom: var(--spacing-md);
-        flex-direction: column;
-        align-items: flex-start;
         padding: var(--spacing-md);
     }
 
@@ -242,12 +310,6 @@
     .userInfo {
         margin-top: var(--spacing-xl);
         padding-top: var(--spacing-sm);
-
-
-    }
-
-    .nameRow {
-        width: 100%;
     }
 
     .nameRow h2 {
@@ -256,7 +318,6 @@
 
     .menuButton {
         padding: var(--spacing-xs);
-
     }
 
     .dropdownMenu {
@@ -264,22 +325,64 @@
         min-width: 160px;
     }
 
-    .section {
+    .gridContainer {
+        grid-template-columns: 1fr;
         padding: var(--spacing-md);
-        margin-bottom: var(--spacing-lg);
     }
 
-    .section h3 {
-        font-size: var(--font-size-base);
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .gridItem {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: unset;
+        padding: var(--spacing-sm);
+    }
+
+    .gridItem strong {
+        min-width: unset;
+        margin-right: 0;
+        margin-bottom: var(--spacing-xs);
+        display: block;
+        font-size: var(--font-size-sm);
+    }
+
+    .gridItem svg {
+        margin-bottom: var(--spacing-xs);
+        margin-right: 0;
+    }
+    .authorityTags {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-sm);
+    }
+
+    .authorityTag {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-xxs) var(--spacing-sm);
+    }
+
+    .userInfo p, .userInfo strong {
+        font-size: var(--font-size-sm);
+    }
+
+    .sectionHeader h3 {
+        font-size: var(--font-size-md);
     }
 
     .detailList li {
         font-size: var(--font-size-sm);
+        padding: var(--spacing-sm);
+    }
+    .section {
+        padding: var(--spacing-md);
     }
 
-    .authorityTag {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
+    .signatureImage {
+        max-width: 150px;
     }
 }
 
@@ -292,10 +395,19 @@
         font-size: var(--font-size-sm);
     }
 
-    .detailList li strong {
-        min-width: 100px;
+    .gridItem {
+        font-size: var(--font-size-sm);
     }
-    .customModalStyle{
+
+    .gridItem strong {
+        font-size: var(--font-size-sm);
+    }
+    .authorityTag {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+    .customModalStyle {
         width: 340px;
     }
 }
+

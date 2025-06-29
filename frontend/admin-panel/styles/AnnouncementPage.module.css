@@ -1,0 +1,134 @@
+.container {
+    max-width: 900px; /* Limit width for readability */
+    margin: var(--spacing-xxl) auto; /* Center the container with vertical margin */
+    padding: var(--spacing-xl);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align title and button at the top */
+    margin-bottom: var(--spacing-lg);
+    position: relative; /* For dropdown positioning */
+}
+
+.title {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary);
+    font-weight: 700;
+    line-height: 1.2;
+    flex-grow: 1; /* Allow title to take up available space */
+    padding-right: var(--spacing-md); /* Space between title and button */
+}
+
+.moreBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.moreBtn:hover {
+    background-color: var(--color-background-secondary);
+    color: var(--color-primary);
+}
+
+.moreBtn:active {
+    transform: translateY(1px);
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%; /* Position below the button */
+    right: 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-index-dropdown);
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensures rounded corners on buttons */
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.dropdown button:hover {
+    background-color: var(--color-primary-transparent); /* Light primary background on hover */
+    color: var(--color-primary);
+}
+
+.dropdown button:not(:last-child) {
+    border-bottom: 1px solid var(--color-background-secondary); /* Separator between buttons */
+}
+
+.date {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.icon {
+    color: var(--color-secondary); /* Use secondary color for icons */
+    font-size: var(--font-size-lg);
+}
+
+.content {
+    background-color: var(--color-background-accent);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-background-secondary);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+}
+
+.contentText {
+    margin: 0; /* Remove default paragraph margin */
+}
+
+/* Responsive adjustments */
+@media (max-width: var(--breakpoint-mobile)) {
+    .container {
+        margin: var(--spacing-lg) auto;
+        padding: var(--spacing-lg);
+    }
+
+    .title {
+        font-size: var(--font-size-xl); /* Smaller title on mobile */
+    }
+
+    .header {
+        flex-direction: row; /* Keep row for title and button on smaller screens */
+        align-items: flex-start;
+    }
+
+    .dropdown {
+        min-width: 120px; /* Adjust dropdown width for mobile */
+    }
+}

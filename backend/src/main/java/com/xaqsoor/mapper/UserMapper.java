@@ -37,6 +37,7 @@ public class UserMapper {
                 .city(user.getCity())
                 .state(user.getState())
                 .country(user.getCountry())
+                .district(user.getDistrict())
 
                 .emailVerified(user.isEmailVerified())
                 .mfaEnabled(user.isMfaEnabled())
