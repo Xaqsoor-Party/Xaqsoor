@@ -150,6 +150,7 @@ const Announcements = () => {
                 title: formData.title,
                 content: formData.content,
                 status: formData.status as AnnouncementStatus,
+                announcementDate:""
             });
             if (response.data?.announcement) {
                 const newAnnouncement = response.data.announcement;
