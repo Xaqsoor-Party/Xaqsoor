@@ -9,8 +9,8 @@ import {getTranslations} from "@/translations";
 import useAuthApi from "@/api/hooks/useAuthApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import styles from "@/styles/AddNewMemberPage.module.css";
-import {getOperator} from "@/util/phoneValidator";
 import {UserCreateRequest} from "@/types/auth";
+import {getOperator} from "@/util/phoneUtils";
 
 const RegistrationForm: React.FC = () => {
 

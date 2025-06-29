@@ -26,7 +26,7 @@ import {
     FiUser,
     FiUserCheck,
     FiUserPlus,
-    FiUserX
+    FiUserX, FiFileText
 } from "react-icons/fi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
@@ -63,7 +63,8 @@ const UserDetailPage = () => {
         account: true,
         security: true,
         academic: true,
-        work: true
+        work: true,
+        documents: true
     });
 
     const toggleSection = (section: string) => {
@@ -246,7 +247,7 @@ const UserDetailPage = () => {
         }
     };
 
-    const {userData, academicRecords, workExperiences} = user;
+    const {userData, academicRecords, workExperiences,userDocuments} = user;
     const roleOptions = Object.values(Roles).map(role => ({value: role, label: role}));
     const membershipOptions = Object.values(MembershipLevel).map(level => ({value: level, label: level}));
     const statusOptions = Object.values(Status).map(status => ({value: status, label: status}));
@@ -518,6 +519,52 @@ const UserDetailPage = () => {
                         </div>
                     )}
                 </div>
+
+                {/* User Documents Section */}
+                <div className={styles.section}>
+                    <div className={styles.sectionHeader} onClick={() => toggleSection('documents')}>
+                        <h3>User Documents</h3>
+                        {expandedSections.documents ? <FiChevronUp /> : <FiChevronDown />}
+                    </div>
+
+                    {expandedSections.documents && (
+                        <div>
+                            {userDocuments && userDocuments.length > 0 ? (
+                                <ul className={styles.detailList}>
+                                    {userDocuments.map(doc => (
+                                        <li key={doc.id}>
+                                            <FiFileText /> <strong>{doc.documentType}</strong>
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Document Number:</strong> {doc.documentNumber}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Country:</strong> {doc.country}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Issued At:</strong> {new Date(doc.issuedAt).toLocaleDateString()}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Expires At:</strong> {doc.expiresAt ? new Date(doc.expiresAt).toLocaleDateString() : 'N/A'}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Verified:</strong> {doc.verified ? 'Yes' : 'No'}
+                                            {doc.rejectionReason && (
+                                                <>
+                                                    <br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>Rejection Reason:</strong> {doc.rejectionReason}
+                                                </>
+                                            )}
+                                            <br/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>File:</strong>{' '}
+                                            <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                                                View Document
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No user documents available.</p>
+                            )}
+                        </div>
+                    )}
+                </div>
+
             </div>
 
             {showModal && ["reset-mfa", "soft-delete", "enable-disable", "lock-unlock"].includes(selectedAction!) && (

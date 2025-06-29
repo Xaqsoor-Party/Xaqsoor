@@ -161,7 +161,7 @@ export interface UserSearchParams {
 export interface UserDocument {
     id: number;
     documentType: string;
-    fileStorageKey: string;
+    fileUrl: string;
     verified: boolean;
     rejectionReason: string | null;
     country: string;

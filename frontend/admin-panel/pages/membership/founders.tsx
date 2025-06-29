@@ -23,7 +23,7 @@ interface Pagination {
     pageSize: number;
 }
 
-interface Status {
+export interface Status {
     loading: boolean;
     error: string | null;
 }
@@ -89,7 +89,7 @@ const FoundersList = () => {
         try {
             const response = await getAllFounders({
                 ...filters,
-                pageNumber: pagination.pageNumber,
+                pageNumber: pagination.pageNumber + 1,
                 pageSize: pagination.pageSize,
             });
             if (response.data?.founders) {
