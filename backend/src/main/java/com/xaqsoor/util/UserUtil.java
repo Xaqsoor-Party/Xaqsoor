@@ -20,8 +20,8 @@ import static com.xaqsoor.constant.Constant.APP_ZONE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class UserUtil {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss");
 
     public static User createNewUser(UserCreateRequest request, String normalizedEmail, Role role) {
         return User.builder()
