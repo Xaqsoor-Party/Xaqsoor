@@ -41,7 +41,7 @@ export const validateFounderFormData = (
 ) => {
 
     const newErrors: { [key: string]: string } = {};
-    Object.assign(newErrors, validateBasicFormFields(formData,true));
+    Object.assign(newErrors, validateBasicFormFields(formData, true));
 
     if (!formData.email.trim()) {
         newErrors.email = "Email is required";
@@ -80,16 +80,15 @@ const validateBasicFormFields = (
     if (!formData.middleName.trim()) errors.middleName = "Middle name is required";
     if (!formData.lastName.trim()) errors.lastName = "Last name is required";
     if (!formData.gender) errors.gender = "Gender is required";
-    if (!formData.placeOfBirth.trim()) errors.placeOfBirth = "Place of birth is required";
-    if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
 
     if (!skipAddressValidation) {
+        if (!formData.placeOfBirth.trim()) errors.placeOfBirth = "Place of birth is required";
+        if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
         if (!formData.street.trim()) errors.street = "Street is required";
         if (!formData.state.trim()) errors.state = "State is required";
+        if (!formData.city.trim()) errors.city = "City is required";
+        if (!formData.country.trim()) errors.country = "Country is required";
     }
-
-    if (!formData.city.trim()) errors.city = "City is required";
-    if (!formData.country.trim()) errors.country = "Country is required";
 
     return errors;
 };
