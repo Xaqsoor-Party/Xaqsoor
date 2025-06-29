@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.xaqsoor.constant.Constant.APP_ZONE;
 import static com.xaqsoor.dto.Dashboard.Range.*;
 
 import oshi.SystemInfo;
@@ -100,7 +99,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 timeline,
                 percentageChange,
                 getComparisonPeriodLabel(request.range()),
-                UserUtil.formatDateTime(LocalDateTime.now(APP_ZONE))
+                UserUtil.formatDateTime(LocalDateTime.now())
         );
 
         // Cache the result with the generated key
@@ -129,7 +128,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                         activity.getFirstName(),
                         UserUtil.resolveProfileImageUrl(activity.getProfileImageKey(), s3Service),
                         activity.getDescription(),
-                        activity.getTimestamp().toString() // Converting LocalDateTime to String
+                        UserUtil.formatDateTime(activity.getTimestamp())
                 ))
                 .collect(Collectors.toList());
 
@@ -180,7 +179,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 usedMemory,
                 uptimeInMinutes,
                 activeThreads,
-                UserUtil.formatDateTime(LocalDateTime.now(APP_ZONE))
+                UserUtil.formatDateTime(LocalDateTime.now())
         );
 
         dashboardCache.put(cacheKey, systemHealthDto);
@@ -208,7 +207,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 maleCount,
                 femaleCount,
                 profileCompletionRate,
-                UserUtil.formatDateTime(LocalDateTime.now(APP_ZONE)),
+                UserUtil.formatDateTime(LocalDateTime.now()),
                 membershipLevelDistribution,
                 userStatusDistribution,
                 newMembersThisMonth,

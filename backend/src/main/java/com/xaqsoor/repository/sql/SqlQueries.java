@@ -35,6 +35,7 @@ public class SqlQueries {
                 u.city,
                 u.state,
                 u.country,
+                u.district,
                 u.created_by,
                 u.modified_by,
                 u.created_date,

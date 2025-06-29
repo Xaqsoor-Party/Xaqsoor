@@ -23,6 +23,7 @@ export interface User {
     signatureImageUrl?: string;
 
     street?: string;
+    district?:string;
     city?: string;
     state?: string;
     country?: string;
@@ -160,7 +161,7 @@ export interface UserSearchParams {
 export interface UserDocument {
     id: number;
     documentType: string;
-    fileStorageKey: string;
+    fileUrl: string;
     verified: boolean;
     rejectionReason: string | null;
     country: string;

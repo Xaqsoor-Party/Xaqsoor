@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/announcements")
@@ -20,17 +20,18 @@ public class AnnouncementController {
     private final AnnouncementService announcementService;
 
     @GetMapping
-    public ResponseEntity<Response> getAnnouncements(
+    public ResponseEntity<Response> searchAnnouncements(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
-            HttpServletRequest request) {
-
-        AnnouncementListDto announcementList = announcementService.getAnnouncements(pageNumber, pageSize);
-
+            HttpServletRequest request
+    ) {
+        AnnouncementListDto announcements = announcementService.searchAnnouncements(keyword, status, pageNumber, pageSize);
         return ResponseEntity.ok(
                 RequestUtils.getResponse(
                         request,
-                        Collections.singletonMap("announcements", announcementList),
+                        Map.of("announcements", announcements),
                         "Announcements fetched successfully",
                         HttpStatus.OK
                 )
@@ -46,8 +47,50 @@ public class AnnouncementController {
         return ResponseEntity.ok(
                 RequestUtils.getResponse(
                         request,
-                        Collections.singletonMap("announcement", announcement),
+                        Map.of("announcement", announcement),
                         "Announcement fetched successfully",
+                        HttpStatus.OK
+                )
+        );
+    }
+
+    @PostMapping
+    public ResponseEntity<Response> createAnnouncement(@RequestBody AnnouncementDto dto, HttpServletRequest request) {
+        AnnouncementDto created = announcementService.createAnnouncement(dto);
+        return new ResponseEntity<>(
+                RequestUtils.getResponse(
+                        request,
+                        Map.of("announcement", created),
+                        "Announcement created successfully",
+                        HttpStatus.CREATED
+                ),
+                HttpStatus.CREATED
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Response> updateAnnouncement(@PathVariable Long id,
+                                                       @RequestBody AnnouncementDto dto,
+                                                       HttpServletRequest request) {
+        AnnouncementDto updated = announcementService.updateAnnouncement(id, dto);
+        return ResponseEntity.ok(
+                RequestUtils.getResponse(
+                        request,
+                        Map.of("announcement", updated),
+                        "Announcement updated successfully",
+                        HttpStatus.OK
+                )
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> deleteAnnouncement(@PathVariable Long id, HttpServletRequest request) {
+        announcementService.softDeleteAnnouncement(id);
+        return ResponseEntity.ok(
+                RequestUtils.getResponse(
+                        request,
+                        null,
+                        "Announcement deleted successfully",
                         HttpStatus.OK
                 )
         );

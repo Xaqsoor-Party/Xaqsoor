@@ -20,6 +20,7 @@ export const sidebarLabels: SidebarLabels = {
         messages: "Fariimo (SMS keli ah & badan)",
         emails: "Emails (Email keli ah & badan)",
         donations: "Deeqo",
-        idCards: "Kaadhadhka Aqoonsiga Xubnaha"
+        idCards: "Kaadhadhka Aqoonsiga Xubnaha",
+        foundersList:"aasaasayaasha"
     }
 }

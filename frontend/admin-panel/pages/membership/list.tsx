@@ -11,7 +11,7 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import UserCard from "@/components/UserCard/UserCard";
 import styles from "@/styles/UserListPage.module.css";
 
-const orderByOptions = [
+export const orderByOptions = [
     {value: "createdDateDesc", label: "Created Date ↓"},
     {value: "createdDateAsc", label: "Created Date ↑"},
     {value: "firstNameAsc", label: "First Name A-Z"},
