@@ -12,6 +12,7 @@ import {AnnouncementListDto, AnnouncementStatus} from "@/types/announcement";
 import useAnnouncementApi from "@/api/hooks/useAnnouncementApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AnnouncementCard from "@/components/Announcement/AnnouncementCard/AnnouncementCard";
+import {useRouter} from "next/router";
 
 interface Filters {
     keyword: string;
@@ -49,6 +50,7 @@ const Announcements = () => {
 
     const {getAnnouncements,createAnnouncement} = useAnnouncementApi();
     const [announcements, setAnnouncements] = useState<AnnouncementListDto | null>(null);
+    const router = useRouter();
 
     const fetchAnnouncements = async () => {
         try {
@@ -133,8 +135,8 @@ const Announcements = () => {
     ];
 
     const handleDetailClick = (id: number) => {
-        console.log("Detail clicked for announcement ID:", id);
-    };
+        void router.push(`/campaign/announcements/${id}`);
+    }
 
     const handleCreate = async (formData: {
         title: string;
