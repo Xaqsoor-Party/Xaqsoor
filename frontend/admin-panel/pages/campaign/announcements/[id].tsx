@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {AnnouncementDto} from "@/types/announcement";
 import {Status} from "@/pages/membership/founders";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
@@ -10,6 +10,7 @@ import AlertModal from "@/components/common/AlertModal/AlertModal";
 import {FaRegCalendarAlt} from "react-icons/fa";
 import styles from "@/styles/AnnouncementPage.module.css";
 import {FiMoreVertical} from "react-icons/fi";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 const AnnouncementPage = () => {
     const router = useRouter();
@@ -22,6 +23,7 @@ const AnnouncementPage = () => {
         error: null,
     });
     const [menuOpen, setMenuOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const fetchAnnouncement = async () => {
         if (!router.isReady) return;
@@ -49,6 +51,22 @@ const AnnouncementPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setMenuOpen(false);
+            }
+        };
+
+        if (menuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [menuOpen]);
+
     const handleUpdate = () => {
         // TODO: Implement update logic
         console.log("Update clicked");
@@ -59,6 +77,12 @@ const AnnouncementPage = () => {
         console.log("Delete clicked");
     };
 
+    const breadcrumbData = [
+        {label: 'Home', link: '/'},
+        {label: 'Announcements', link: '/campaign/announcements'},
+        {label: 'Announcement', link: `/campaign/announcements/${id}`},
+    ];
+
     return (
         <div>
             {status.loading ? (
@@ -68,13 +92,14 @@ const AnnouncementPage = () => {
                 </div>
             ) : announcement ? (
                 <div className={styles.container}>
+                    <Breadcrumb breadcrumbs={breadcrumbData}/>
                     <div className={styles.header}>
                         <h1 className={styles.title}>{announcement.title}</h1>
                         <button className={styles.moreBtn} onClick={() => setMenuOpen(prev => !prev)}>
                             <FiMoreVertical />
                         </button>
                         {menuOpen && (
-                            <div className={styles.dropdown}>
+                            <div className={styles.dropdown} ref={dropdownRef}>
                                 <button onClick={handleUpdate}>Update</button>
                                 <button onClick={handleDelete}>Delete</button>
                             </div>

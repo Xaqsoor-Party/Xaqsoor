@@ -1,19 +1,17 @@
 .container {
-    max-width: 900px; /* Limit width for readability */
-    margin: var(--spacing-xxl) auto; /* Center the container with vertical margin */
+    max-width: var(--breakpoint-tablet);
+    margin: 0 auto;
     padding: var(--spacing-xl);
     background-color: var(--color-white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Align title and button at the top */
+    align-items: flex-start;
     margin-bottom: var(--spacing-lg);
-    position: relative; /* For dropdown positioning */
+    position: relative;
 }
 
 .title {
@@ -21,8 +19,8 @@
     color: var(--color-primary);
     font-weight: 700;
     line-height: 1.2;
-    flex-grow: 1; /* Allow title to take up available space */
-    padding-right: var(--spacing-md); /* Space between title and button */
+    flex-grow: 1;
+    padding-right: var(--spacing-md);
 }
 
 .moreBtn {
@@ -49,7 +47,7 @@
 
 .dropdown {
     position: absolute;
-    top: 100%; /* Position below the button */
+    top: 100%;
     right: 0;
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
@@ -59,7 +57,7 @@
     min-width: 150px;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Ensures rounded corners on buttons */
+    overflow: hidden;
 }
 
 .dropdown button {
@@ -75,12 +73,12 @@
 }
 
 .dropdown button:hover {
-    background-color: var(--color-primary-transparent); /* Light primary background on hover */
+    background-color: var(--color-primary-transparent);
     color: var(--color-primary);
 }
 
 .dropdown button:not(:last-child) {
-    border-bottom: 1px solid var(--color-background-secondary); /* Separator between buttons */
+    border-bottom: 1px solid var(--color-background-secondary);
 }
 
 .date {
@@ -94,7 +92,7 @@
 }
 
 .icon {
-    color: var(--color-secondary); /* Use secondary color for icons */
+    color: var(--color-secondary);
     font-size: var(--font-size-lg);
 }
 
@@ -109,26 +107,26 @@
 }
 
 .contentText {
-    margin: 0; /* Remove default paragraph margin */
+    margin: 0;
 }
 
 /* Responsive adjustments */
-@media (max-width: var(--breakpoint-mobile)) {
+@media (max-width: 768px) {
     .container {
         margin: var(--spacing-lg) auto;
         padding: var(--spacing-lg);
     }
 
     .title {
-        font-size: var(--font-size-xl); /* Smaller title on mobile */
+        font-size: var(--font-size-xl);
     }
 
     .header {
-        flex-direction: row; /* Keep row for title and button on smaller screens */
+        flex-direction: row;
         align-items: flex-start;
     }
 
     .dropdown {
-        min-width: 120px; /* Adjust dropdown width for mobile */
+        min-width: 120px;
     }
 }
