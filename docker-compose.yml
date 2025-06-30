@@ -14,10 +14,8 @@ services:
     image: postgres:17-alpine
     container_name: xaqsoor_db
     restart: on-failure
-    environment:
-      POSTGRES_DB: xaqsoor_db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+    env_file:
+      - ./backend/.env.prod
     ports:
       - "5462:5432"
     volumes:
@@ -27,7 +25,7 @@ services:
     build:
       context: ./frontend/client-app
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8080
+        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so
     container_name: client_app
     ports:
       - "3000:3000"
@@ -38,7 +36,7 @@ services:
     build:
       context: ./frontend/admin-panel
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8080
+        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so
     container_name: admin_panel
     ports:
       - "3001:3001"
