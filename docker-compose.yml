@@ -25,7 +25,7 @@ services:
     build:
       context: ./frontend/client-app
       args:
-        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so
+        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so/api
     container_name: client_app
     ports:
       - "3000:3000"
@@ -36,7 +36,7 @@ services:
     build:
       context: ./frontend/admin-panel
       args:
-        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so
+        NEXT_PUBLIC_API_URL: https://app.xaqsoorparty.so/api
     container_name: admin_panel
     ports:
       - "3001:3001"
