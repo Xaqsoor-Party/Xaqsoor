@@ -52,35 +52,9 @@ const Onboarding = () => {
         country: '',
         district: '',
         state: '',
-        documents: [{
-            documentType: DocumentType.PASSPORT,
-            fileStorageKey: '',
-            country: '',
-            documentNumber: "",
-            issuedAt: "",
-            expiresAt: "",
-        }],
-        workExperienceRequestList: [
-            {
-                jobTitle: '',
-                companyName: '',
-                location: '',
-                startDate: '',
-                endDate: '',
-                currentlyWorking: false,
-                description: '',
-            },
-        ],
-        academicRecordRequestList: [{
-            institutionName: '',
-            degree: '',
-            fieldOfStudy: '',
-            level: '',
-            location: '',
-            currentlyStudying: false,
-            startDate: '',
-            endDate: '',
-        }],
+        documents: [],
+        workExperienceRequestList: [],
+        academicRecordRequestList: [],
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -205,7 +179,7 @@ const Onboarding = () => {
                     </p>
                 </div>
 
-                <form className={styles.form}>
+                <div className={styles.form}>
                     <div className={styles.personalInfoSection}>
                         <h2 className={styles.sectionHeading}>{t.sections.personal}</h2>
 
@@ -282,7 +256,6 @@ const Onboarding = () => {
                                 type="text"
                                 value={formData.placeOfBirth}
                                 onChange={handleChange}
-                                required
                                 errorMessage={errors.placeOfBirth}
                                 placeholder={t.fields.placeOfBirth.placeholder}
                                 maxLength={50}
@@ -291,7 +264,6 @@ const Onboarding = () => {
                                 label={t.fields.dateOfBirth.label}
                                 value={formData.dateOfBirth}
                                 onChange={handleDateChange}
-                                required
                                 max={today}
                                 errorMessage={errors.dateOfBirth}
                             />
@@ -332,7 +304,6 @@ const Onboarding = () => {
                                 onChange={handleCountryChange}
                                 options={Object.entries(countryMap).map(([code, name]) => ({value: code, label: name}))}
                                 placeholder={t.fields.country.placeholder}
-                                required
                                 errorMessage={errors.country}
                             />
                             <Input
@@ -341,7 +312,6 @@ const Onboarding = () => {
                                 type="text"
                                 value={formData.city}
                                 onChange={handleChange}
-                                required
                                 errorMessage={errors.city}
                                 maxLength={100}
                                 placeholder={t.fields.city.placeholder}
@@ -481,7 +451,7 @@ const Onboarding = () => {
                             {isSubmitting ? t.buttons.submitting : t.buttons.submit}
                         </ActionButton>
                     </div>
-                </form>
+                </div>
             </div>
             {modal.show && (
                 <AlertModal
