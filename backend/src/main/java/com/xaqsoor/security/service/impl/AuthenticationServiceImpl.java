@@ -52,9 +52,9 @@ import java.util.Map;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private static final String AUTH_TOKEN_COOKIE_NAME = "auth_token";
     private static final String COOKIE_PATH = "/";
-    private static final int COOKIE_MAX_AGE = 24 * 60 * 60; // 1 hour (in seconds)
+    private static final int COOKIE_MAX_AGE = 30 * 24 * 60 * 60; // 30 days (in seconds)
     private static final long ACCESS_TOKEN_VALIDITY = 15; // 15 minutes
-    private static final long REFRESH_TOKEN_VALIDITY = 24 * 60; // 1 hour
+    private static final long REFRESH_TOKEN_VALIDITY = 30 * 24 * 60; // 30 days (in minutes)
 
     private final LoginService loginService;
     private final UserCredentialRepository credentialRepository;
