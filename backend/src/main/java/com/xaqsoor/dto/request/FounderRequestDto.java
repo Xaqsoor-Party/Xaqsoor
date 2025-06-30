@@ -24,11 +24,11 @@ public record FounderRequestDto(
         String gender,
 
         @Size(max = 50, message = "Place of birth must be at most 50 characters")
-        @NotBlank(message = "Place of birth is required")
+//        @NotBlank(message = "Place of birth is required")
         String placeOfBirth,
 
         @Past(message = "Date of birth must be in the past")
-        @NotNull(message = "Date of birth is required")
+//        @NotNull(message = "Date of birth is required")
         LocalDate dateOfBirth,
 
         @Email(message = "Invalid email format")
@@ -52,11 +52,11 @@ public record FounderRequestDto(
         @NotBlank(message = "Signature image is required")
         String signatureImageBase64,
 
-        @NotBlank(message = "City is required")
+//        @NotBlank(message = "City is required")
         @Size(max = 100,message = "City must be at most 100 characters")
         String city,
 
-        @NotBlank(message = "Country is required")
+//        @NotBlank(message = "Country is required")
         @Size(max = 100, message = "Country must be at most 100 characters")
         String country,
 
