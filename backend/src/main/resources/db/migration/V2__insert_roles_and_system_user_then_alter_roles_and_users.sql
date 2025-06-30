@@ -67,7 +67,7 @@ VALUES (
     'Core system guardian account responsible for security, auditing, and system integrity. Not for interactive use. Visit us at https://asalsolutions.com/',
     0,           -- Failed login attempts
     NULL,        -- Last login
-    'https://asalsolutions.com/wp-content/themes/asalsolutions/assets/images/logo.svg', -- Profile image key
+    'profileImages/logo_Asal.jpg', -- Profile image key
     TRUE,        -- Account non expired
     TRUE,        -- Account non locked
     FALSE,       -- Is login restricted
