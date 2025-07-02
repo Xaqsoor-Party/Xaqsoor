@@ -3,16 +3,11 @@ package com.xaqsoor.mapper;
 import com.xaqsoor.dto.AnnouncementDto;
 import com.xaqsoor.entity.Announcement;
 import com.xaqsoor.enumeration.AnnouncementStatus;
-import com.xaqsoor.exception.ApiException;
 import com.xaqsoor.util.UserUtil;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 
 public class AnnouncementMapper {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static AnnouncementDto toDto(Announcement announcement) {
         if (announcement == null) {
             return null;

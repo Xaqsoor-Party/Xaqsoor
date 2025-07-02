@@ -9,8 +9,8 @@ MAX_REQUEST_SIZE: 20MB
 DB_HOST: localhost
 DB_PORT: 5462
 DB_NAME: xaqsoor_db
-DB_USER: admin
-DB_PASSWORD: admin
+DB_USER: xqsr_pr0d_us3r_94f1
+DB_PASSWORD: A&S*_6nC!N
 DB_DDL_STRATEGY: validate
 SHOW_SQL: true
 
