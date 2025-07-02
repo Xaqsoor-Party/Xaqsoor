@@ -3,7 +3,7 @@ import Input from '@/components/common/Input/Input';
 import TextArea from '@/components/common/TextArea/TextArea';
 import SelectInput from '@/components/common/SelectInput/SelectInput';
 import ActionButton from '@/components/common/ActionButton/ActionButton';
-import styles from './CreateAnnouncementForm.module.css';
+import styles from './AnnouncementForm.module.css';
 import {statusOptions} from "@/pages/campaign/announcements";
 
 interface CreateAnnouncementFormProps {
@@ -14,13 +14,19 @@ interface CreateAnnouncementFormProps {
     }) => void;
     onCancel: () => void;
     loading?: boolean;
+    formTitle: string;
+    submitButtonText: string;
+    defaultValues?: {
+        title?: string;
+        content?: string;
+        status?: string;
+    };
 }
 
-
-const CreateAnnouncementForm: React.FC<CreateAnnouncementFormProps> = ({onSubmit, loading,onCancel}) => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [status, setStatus] = useState('');
+const AnnouncementForm: React.FC<CreateAnnouncementFormProps> = ({onSubmit, loading,onCancel,formTitle ,submitButtonText,defaultValues = {}}) => {
+    const [title, setTitle] = useState(defaultValues.title || '');
+    const [content, setContent] = useState(defaultValues.content || '');
+    const [status, setStatus] = useState(defaultValues.status || '');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,7 +42,7 @@ const CreateAnnouncementForm: React.FC<CreateAnnouncementFormProps> = ({onSubmit
     return (
         <div className={styles.modalOverlay}>
            <div className={styles.modalContent}>
-               <h2 className={styles.formTitle}>Create New Announcement</h2>
+               <h2 className={styles.formTitle}>{formTitle}</h2>
                <form onSubmit={handleSubmit} className={styles.formContainer}>
                    <Input
                        label="Title"
@@ -66,7 +72,7 @@ const CreateAnnouncementForm: React.FC<CreateAnnouncementFormProps> = ({onSubmit
 
                    <div className={styles.buttonWrapper}>
                        <ActionButton type="submit" disabled={loading} className={styles.button}>
-                           {loading ? 'Creating...' : 'Create Announcement'}
+                           {loading ? 'Processing...' : submitButtonText}
                        </ActionButton>
 
                        <ActionButton
@@ -82,4 +88,4 @@ const CreateAnnouncementForm: React.FC<CreateAnnouncementFormProps> = ({onSubmit
     );
 };
 
-export default CreateAnnouncementForm;
+export default AnnouncementForm;

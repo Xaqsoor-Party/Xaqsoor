@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 import React, {useEffect, useRef, useState} from "react";
-import {AnnouncementDto} from "@/types/announcement";
+import {AnnouncementDto, AnnouncementStatus} from "@/types/announcement";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import useAnnouncementApi from "@/api/hooks/useAnnouncementApi";
 import filterStyles from "@/styles/UserListPage.module.css";
@@ -10,6 +10,7 @@ import {FaRegCalendarAlt} from "react-icons/fa";
 import styles from "@/styles/AnnouncementPage.module.css";
 import {FiMoreVertical} from "react-icons/fi";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import AnnouncementForm from "@/components/Announcement/AnnouncementForm/AnnouncementForm";
 
 export interface Status {
     loading: boolean;
@@ -20,7 +21,7 @@ const AnnouncementPage = () => {
     const router = useRouter();
     const idParam = router.query.id;
     const id = typeof idParam === 'string' && /^\d+$/.test(idParam) ? parseInt(idParam, 10) : null;
-    const {getAnnouncementById} = useAnnouncementApi();
+    const {getAnnouncementById,deleteAnnouncement,updateAnnouncement} = useAnnouncementApi();
     const [announcement, setAnnouncement] = useState<AnnouncementDto | null>(null);
     const [status, setStatus] = useState<Status>({
         loading: false,
@@ -28,6 +29,7 @@ const AnnouncementPage = () => {
     });
     const [menuOpen, setMenuOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
 
     const fetchAnnouncement = async () => {
         if (!router.isReady) return;
@@ -47,6 +49,7 @@ const AnnouncementPage = () => {
             setStatus({loading: false, error: extractErrorMessage(error, "Failed to fetch the announcement.")});
         } finally {
             setStatus(prev => ({...prev, loading: false}));
+            setShowUpdateForm(false);
         }
     };
 
@@ -72,14 +75,57 @@ const AnnouncementPage = () => {
     }, [menuOpen]);
 
     const handleUpdate = () => {
-        // TODO: Implement update logic
-        console.log("Update clicked");
+        setShowUpdateForm(true);
     };
 
-    const handleDelete = () => {
-        // TODO: Implement delete logic
-        console.log("Delete clicked");
+    const handleDelete = async () => {
+        if (id === null) {
+            setStatus({loading: true, error: "Invalid or missing announcement ID."});
+            return;
+        }
+
+        try {
+            setStatus({loading: true, error: null});
+            await deleteAnnouncement(id);
+            void router.push("/campaign/announcements");
+        } catch (error) {
+            setStatus({
+                loading: false,
+                error: extractErrorMessage(error, "Failed to delete the announcement."),
+            });
+        } finally {
+            setStatus(prev => ({...prev, loading: false}));
+        }
     };
+
+    const handleUpdateSubmit = async (data: { title: string; content: string; status: string }) => {
+        if (id === null) {
+            setStatus({loading: true, error: "Invalid or missing announcement ID."});
+            return;
+        }
+        try {
+            setStatus({ loading: true, error: null });
+            const updated = await updateAnnouncement(id, {
+                ...data,
+                status: data.status as AnnouncementStatus,
+            });
+
+            if (updated.data?.announcement) {
+                setAnnouncement(updated.data.announcement);
+            } else {
+                setStatus({ loading: false, error: "Invalid response from server." });
+            }
+        } catch (error) {
+            setStatus({
+                loading: false,
+                error: extractErrorMessage(error, "Failed to update the announcement."),
+            });
+        } finally {
+            setStatus(prev => ({ ...prev, loading: false }));
+            setShowUpdateForm(false);
+        }
+
+    }
 
     const breadcrumbData = [
         {label: 'Home', link: '/'},
@@ -134,6 +180,22 @@ const AnnouncementPage = () => {
                     error
                 />
             )}
+
+            {showUpdateForm && announcement && (
+                <AnnouncementForm
+                    formTitle="Update Announcement"
+                    submitButtonText="Update"
+                    loading={status.loading}
+                    defaultValues={{
+                        title: announcement.title,
+                        content: announcement.content,
+                        status: announcement.status || '',
+                    }}
+                    onSubmit={handleUpdateSubmit}
+                    onCancel={() => setShowUpdateForm(false)}
+                />
+            )}
+
         </div>
     )
 };

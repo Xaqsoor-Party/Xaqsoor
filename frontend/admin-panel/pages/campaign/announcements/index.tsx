@@ -2,9 +2,7 @@ import SearchInput from "@/components/common/SearchInput/SearchInput";
 import React, {useEffect, useState} from "react";
 import SelectInput from "@/components/common/SelectInput/SelectInput";
 import ActionButton from "@/components/common/ActionButton/ActionButton";
-import CreateAnnouncementForm from "@/components/Announcement/CreateAnnouncementForm/CreateAnnouncementForm";
 import filterStyles from "@/styles/UserListPage.module.css";
-import styles from "@/styles/AnnouncementsPage.module.css";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import {AnnouncementListDto, AnnouncementStatus} from "@/types/announcement";
@@ -13,6 +11,8 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AnnouncementCard from "@/components/Announcement/AnnouncementCard/AnnouncementCard";
 import {useRouter} from "next/router";
 import {Status} from "@/pages/campaign/announcements/[id]";
+import AnnouncementForm from "@/components/Announcement/AnnouncementForm/AnnouncementForm";
+import styles from "@/styles/AnnouncementsPage.module.css";
 
 interface Filters {
     keyword: string;
@@ -272,9 +272,12 @@ const Announcements = () => {
             )}
 
             {showModal &&
-                <CreateAnnouncementForm
+                <AnnouncementForm
                     onSubmit={handleCreate}
                     onCancel={() => setShowModal(false)}
+                    loading={status.loading}
+                    formTitle={"Create New Announcement"}
+                    submitButtonText={"Create Announcement"}
                 />
             }
         </div>
