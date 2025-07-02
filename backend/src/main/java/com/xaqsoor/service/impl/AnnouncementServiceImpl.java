@@ -71,12 +71,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         existing.setTitle(dto.title());
         existing.setContent(dto.content());
-        LocalDate parsedDate = null;
-        if (dto.announcementDate() != null && !dto.announcementDate().isBlank()) {
-            parsedDate = LocalDate.parse(dto.announcementDate(), DATE_FORMATTER);
-        }
-
-        existing.setAnnouncementDate(parsedDate);
         existing.setStatus(AnnouncementStatus.fromString(dto.status()));
 
         Announcement updated = announcementRepository.save(existing);
