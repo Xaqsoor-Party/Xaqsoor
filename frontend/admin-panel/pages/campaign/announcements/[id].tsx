@@ -1,7 +1,6 @@
 import {useRouter} from "next/router";
 import React, {useEffect, useRef, useState} from "react";
 import {AnnouncementDto} from "@/types/announcement";
-import {Status} from "@/pages/membership/founders";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import useAnnouncementApi from "@/api/hooks/useAnnouncementApi";
 import filterStyles from "@/styles/UserListPage.module.css";
@@ -11,6 +10,11 @@ import {FaRegCalendarAlt} from "react-icons/fa";
 import styles from "@/styles/AnnouncementPage.module.css";
 import {FiMoreVertical} from "react-icons/fi";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+
+export interface Status {
+    loading: boolean;
+    error: string | null;
+}
 
 const AnnouncementPage = () => {
     const router = useRouter();

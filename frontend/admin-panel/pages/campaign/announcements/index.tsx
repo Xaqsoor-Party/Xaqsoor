@@ -5,7 +5,6 @@ import ActionButton from "@/components/common/ActionButton/ActionButton";
 import CreateAnnouncementForm from "@/components/Announcement/CreateAnnouncementForm/CreateAnnouncementForm";
 import filterStyles from "@/styles/UserListPage.module.css";
 import styles from "@/styles/AnnouncementsPage.module.css";
-import {Status} from "@/pages/membership/founders";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import {AnnouncementListDto, AnnouncementStatus} from "@/types/announcement";
@@ -13,6 +12,7 @@ import useAnnouncementApi from "@/api/hooks/useAnnouncementApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AnnouncementCard from "@/components/Announcement/AnnouncementCard/AnnouncementCard";
 import {useRouter} from "next/router";
+import {Status} from "@/pages/campaign/announcements/[id]";
 
 interface Filters {
     keyword: string;
