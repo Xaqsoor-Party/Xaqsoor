@@ -19,6 +19,7 @@ type Sidebar = {
     donations: string,
     idCards: string,
     foundersList:string,
+    recycleBin:string
 }
 
 export type SidebarLabels = {
@@ -47,5 +48,6 @@ export const sidebarLabels: SidebarLabels = {
         donations: "Donations",
         idCards: "Member ID Cards",
         foundersList: "Founders",
+        recycleBin: "Recycle Bin",
     }
 }

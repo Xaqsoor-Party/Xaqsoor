@@ -2,9 +2,6 @@
 /frontend/admin-panel/node_modules
 /frontend/client-app/node_modules
 
-/frontend/admin-panel/package-lock.json
-/frontend/client-app/package-lock.json
-
 frontend/admin-panel/.idea/
 frontend/client-app/.idea/
 backend/.idea/
