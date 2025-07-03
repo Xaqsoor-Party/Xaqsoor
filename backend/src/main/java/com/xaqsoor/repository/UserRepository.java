@@ -101,4 +101,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     long countByGender(String gender);
+    Page<User> findAllByIsDeletedTrue(Pageable pageable);
+    Optional<User> findByIdAndIsDeletedTrue(Long id);
+    boolean existsByIdAndIsDeletedTrue(Long id);
 }
