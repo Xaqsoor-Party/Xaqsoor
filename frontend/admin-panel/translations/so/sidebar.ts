@@ -22,6 +22,6 @@ export const sidebarLabels: SidebarLabels = {
         donations: "Deeqo",
         idCards: "Kaadhadhka Aqoonsiga Xubnaha",
         foundersList:"aasaasayaasha",
-        recycleBin: "Recycle Bin",
+        recycleBin: "Qashin-qubka",
     }
 }
