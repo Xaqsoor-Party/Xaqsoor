@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Image from "next/image";
 
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import useDashboardApi from "@/api/hooks/useDashboardApi";
@@ -6,9 +8,9 @@ import {RecentActivityDto} from "@/types/dashboard";
 import ActionButton from "@/components/common/ActionButton/ActionButton";
 import styles from '@/styles/RecentActivitiesPage.module.css';
 import {extractErrorMessage} from "@/util/extractErrorMessage";
-import Image from "next/image";
 
 const RecentActivitiesPage: React.FC = () => {
+    const router = useRouter();
     const { getRecentActivities } = useDashboardApi();
     const [activities, setActivities] = useState<RecentActivityDto[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -55,11 +57,12 @@ const RecentActivitiesPage: React.FC = () => {
     };
 
     const handlePageChange = (newPage: number) => {
-        setPagination(prev => ({
-            ...prev,
-            currentPage: newPage
-        }));
+        const totalPages = Math.ceil(pagination.totalItems / pagination.pageSize);
+        if (newPage >= 0 && newPage < totalPages) {
+            setPagination(prev => ({ ...prev, currentPage: newPage }));
+        }
     };
+
 
     const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setPagination(prev => ({
@@ -85,6 +88,10 @@ const RecentActivitiesPage: React.FC = () => {
             hour: '2-digit',
             minute: '2-digit'
         });
+    };
+
+    const handleUserClick = (userId: number) => {
+        void router.push(`/membership/${userId}`);
     };
 
     const breadcrumbData = [
@@ -165,7 +172,10 @@ const RecentActivitiesPage: React.FC = () => {
                         {activities.map((activity, index) => (
                             <tr key={index} className={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
                                 <td className={styles.userCell}>
-                                    <div className={styles.userInfo}>
+                                    <div
+                                        className={styles.userInfo}
+                                        onClick={() => handleUserClick(activity.userId)} // Make entire userInfo clickable
+                                    >
                                         {activity.profileImageKey ? (
                                             <Image
                                                 src={activity.profileImageKey}
@@ -179,12 +189,9 @@ const RecentActivitiesPage: React.FC = () => {
                                                 {activity.firstName.charAt(0)}
                                             </div>
                                         )}
-                                        <div>
+                                        <div className={styles.userNameContainer}>
                                             <div className={styles.userName}>
                                                 {activity.firstName}
-                                            </div>
-                                            <div className={styles.userId}>
-                                                ID: {activity.userId}
                                             </div>
                                         </div>
                                     </div>
@@ -203,8 +210,11 @@ const RecentActivitiesPage: React.FC = () => {
 
                 <div className={styles.pagination}>
                     <div className={styles.paginationInfo}>
-                        Showing {activities.length} of {pagination.totalItems} activities
+                        Showing {pagination.currentPage * pagination.pageSize + 1}
+                        –
+                        {Math.min((pagination.currentPage + 1) * pagination.pageSize, pagination.totalItems)} of {pagination.totalItems} activities
                     </div>
+
                     <div className={styles.paginationControls}>
                         <ActionButton
                             onClick={() => handlePageChange(pagination.currentPage - 1)}
