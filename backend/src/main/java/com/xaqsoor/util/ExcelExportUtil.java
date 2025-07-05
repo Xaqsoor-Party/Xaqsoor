@@ -37,7 +37,6 @@ public class ExcelExportUtil {
             CellStyle activeCellStyle = null;
             CellStyle inactiveCellStyle = null;
             CellStyle suspendedCellStyle = null;
-            CellStyle lapsedCellStyle = null;
             CellStyle pendingCellStyle = null;
 
             if (colorCodeRows) {
@@ -52,10 +51,6 @@ public class ExcelExportUtil {
                 suspendedCellStyle = workbook.createCellStyle();
                 suspendedCellStyle.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
                 suspendedCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-                lapsedCellStyle = workbook.createCellStyle();
-                lapsedCellStyle.setFillForegroundColor(IndexedColors.CORAL.getIndex());
-                lapsedCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
                 pendingCellStyle = workbook.createCellStyle();
                 pendingCellStyle.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
@@ -72,7 +67,6 @@ public class ExcelExportUtil {
                         case ACTIVE -> rowCellStyle = activeCellStyle;
                         case INACTIVE -> rowCellStyle = inactiveCellStyle;
                         case SUSPENDED -> rowCellStyle = suspendedCellStyle;
-                        case LAPSED -> rowCellStyle = lapsedCellStyle;
                         case PENDING -> rowCellStyle = pendingCellStyle;
                     }
                 }

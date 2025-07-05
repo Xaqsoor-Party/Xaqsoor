@@ -11,6 +11,7 @@ import AlertModal from "@/components/common/AlertModal/AlertModal";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
+import Head from "next/head";
 
 const Sessions: React.FC = () => {
     const {user} = useAuthentication();
@@ -119,84 +120,90 @@ const Sessions: React.FC = () => {
     }
 
     return (
-        <div className={styles.sessionsPage}>
-            <Breadcrumb breadcrumbs={breadcrumbData}/>
-            <h1 className={styles.pageTitle}>{t.title}</h1>
+       <>
+           <Head>
+               <title>{t.title} • Xaqsoor</title>
+           </Head>
 
-            <div className={styles.contentCard}>
-                <p className={styles.infoText}>
-                    {t.infoText}
-                </p>
+           <div className={styles.sessionsPage}>
+               <Breadcrumb breadcrumbs={breadcrumbData}/>
+               <h1 className={styles.pageTitle}>{t.title}</h1>
 
-                {error && (
-                    <div className={`${styles.messageBox} ${styles.error}`}>
-                        <FiXCircle/>
-                        <p>{error}</p>
-                    </div>
-                )}
-                {successMessage && (
-                    <div className={`${styles.messageBox} ${styles.success}`}>
-                        <FiCheckCircle/>
-                        <p>{successMessage}</p>
-                    </div>
-                )}
+               <div className={styles.contentCard}>
+                   <p className={styles.infoText}>
+                       {t.infoText}
+                   </p>
 
-                {isLoading ? (
-                    <div className={styles.loadingContainer}>
-                        <SpinLoading size={50}/>
-                        <p>{t.loading.sessionsLoading}</p>
-                    </div>
-                ) : sessions.length === 0 ? (
-                    <div className={styles.noSessions}>
-                        <FiInfo size={40} className={styles.noSessionsIcon}/>
-                        <p>{t.errors.noSessions}</p>
-                    </div>
-                ) : (
-                    <>
-                        <div className={styles.sessionList}>
-                            {sessions.map((session) => (
-                                <div key={session.id} className={styles.sessionCard}>
-                                    <div className={styles.sessionIconContainer}>
-                                        <FiMonitor className={styles.sessionIcon}/>
-                                    </div>
-                                    <div className={styles.sessionDetails}>
-                                        <h3 className={styles.userAgent}>{session.deviceInfo || t.sessions.unknownDevice}</h3>
-                                        <div className={styles.detailItem}>
-                                            <FiMapPin className={styles.detailIcon}/>
-                                            <span>{session.ipAddress || t.sessions.unknownIp}</span>
-                                        </div>
-                                        <div className={styles.detailItem}>
-                                            <FiClock className={styles.detailIcon}/>
-                                            <span>{t.sessions.lastActiveLabel}: {formatLastAccessed(session.loginTimestamp)}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <ActionButton
-                            onClick={handleRevokeOtherSessions}
-                            disabled={isLoading || sessions.length <= 1}
-                            className={styles.revokeButton}
-                        >
-                            {isLoading ? <SpinLoading size={20}/> : t.sessions.revokeButton}
-                        </ActionButton>
-                        {sessions.length <= 1 && (
-                            <p className={styles.hintText}>{t.sessions.revokeButtonHint}</p>
-                        )}
-                    </>
-                )}
-            </div>
-            {showConfirmModal && (
-                <AlertModal
-                    title={t.sessions.confirmModal.title}
-                    message={t.sessions.confirmModal.message}
-                    onConfirm={confirmRevokeSessions}
-                    onClose={() => setShowConfirmModal(false)}
-                    error={false}
-                    buttonText={t.sessions.confirmModal.confirmButtonText}
-                />
-            )}
-        </div>
+                   {error && (
+                       <div className={`${styles.messageBox} ${styles.error}`}>
+                           <FiXCircle/>
+                           <p>{error}</p>
+                       </div>
+                   )}
+                   {successMessage && (
+                       <div className={`${styles.messageBox} ${styles.success}`}>
+                           <FiCheckCircle/>
+                           <p>{successMessage}</p>
+                       </div>
+                   )}
+
+                   {isLoading ? (
+                       <div className={styles.loadingContainer}>
+                           <SpinLoading size={50}/>
+                           <p>{t.loading.sessionsLoading}</p>
+                       </div>
+                   ) : sessions.length === 0 ? (
+                       <div className={styles.noSessions}>
+                           <FiInfo size={40} className={styles.noSessionsIcon}/>
+                           <p>{t.errors.noSessions}</p>
+                       </div>
+                   ) : (
+                       <>
+                           <div className={styles.sessionList}>
+                               {sessions.map((session) => (
+                                   <div key={session.id} className={styles.sessionCard}>
+                                       <div className={styles.sessionIconContainer}>
+                                           <FiMonitor className={styles.sessionIcon}/>
+                                       </div>
+                                       <div className={styles.sessionDetails}>
+                                           <h3 className={styles.userAgent}>{session.deviceInfo || t.sessions.unknownDevice}</h3>
+                                           <div className={styles.detailItem}>
+                                               <FiMapPin className={styles.detailIcon}/>
+                                               <span>{session.ipAddress || t.sessions.unknownIp}</span>
+                                           </div>
+                                           <div className={styles.detailItem}>
+                                               <FiClock className={styles.detailIcon}/>
+                                               <span>{t.sessions.lastActiveLabel}: {formatLastAccessed(session.loginTimestamp)}</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               ))}
+                           </div>
+                           <ActionButton
+                               onClick={handleRevokeOtherSessions}
+                               disabled={isLoading || sessions.length <= 1}
+                               className={styles.revokeButton}
+                           >
+                               {isLoading ? <SpinLoading size={20}/> : t.sessions.revokeButton}
+                           </ActionButton>
+                           {sessions.length <= 1 && (
+                               <p className={styles.hintText}>{t.sessions.revokeButtonHint}</p>
+                           )}
+                       </>
+                   )}
+               </div>
+               {showConfirmModal && (
+                   <AlertModal
+                       title={t.sessions.confirmModal.title}
+                       message={t.sessions.confirmModal.message}
+                       onConfirm={confirmRevokeSessions}
+                       onClose={() => setShowConfirmModal(false)}
+                       error={false}
+                       buttonText={t.sessions.confirmModal.confirmButtonText}
+                   />
+               )}
+           </div>
+       </>
     );
 };
 

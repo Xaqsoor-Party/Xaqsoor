@@ -70,9 +70,9 @@ const BAR_HOVER_COLOR_PALETTE = [
 ];
 
 interface BarChartProps {
-    dataObject: { [key: string]: number }; // Your input data: e.g., { "Active": 58, "Inactive": 75 }
-    title?: string; // Optional chart title
-    orientation?: 'vertical' | 'horizontal'; // 'vertical' is default
+    dataObject: { [key: string]: number };
+    title?: string;
+    orientation?: 'vertical' | 'horizontal';
 }
 
 const BarChart: React.FC<BarChartProps> = ({
@@ -92,13 +92,13 @@ const BarChart: React.FC<BarChartProps> = ({
         labels: labels,
         datasets: [
             {
-                label: 'Count', // This label appears in the legend and tooltip
+                label: 'Count',
                 data: dataValues,
                 backgroundColor: backgroundColors,
                 hoverBackgroundColor: hoverBackgroundColors,
-                borderColor: COLOR_WHITE, // White border for bars
+                borderColor: COLOR_WHITE,
                 borderWidth: 1,
-                borderRadius: 4, // Slightly rounded bars
+                borderRadius: 4,
             },
         ],
     };
@@ -106,10 +106,10 @@ const BarChart: React.FC<BarChartProps> = ({
     const options = {
         responsive: true,
         maintainAspectRatio: false,
-        indexAxis: orientation === 'horizontal' ? 'y' as const : 'x' as const, // Key for horizontal/vertical flip
+        indexAxis: orientation === 'horizontal' ? 'y' as const : 'x' as const,
         elements: {
             bar: {
-                borderSkipped: false, // Prevents border being skipped on bar edges
+                borderSkipped: false,
             },
         },
         plugins: {
@@ -124,7 +124,7 @@ const BarChart: React.FC<BarChartProps> = ({
                 },
             },
             legend: {
-                display: false, // Often not needed for single-dataset bar charts
+                display: false,
                 labels: {
                     color: COLOR_TEXT_PRIMARY,
                     font: {
@@ -136,9 +136,9 @@ const BarChart: React.FC<BarChartProps> = ({
             tooltip: {
                 callbacks: {
                     // *** IMPORTANT CHANGE HERE ***
-                    label: function (context: TooltipItem<'bar'>) { // Use specific TooltipItem type for 'bar' chart
-                        const label = context.label || ''; // The category label (e.g., "Active")
-                        const value = context.raw as number; // Direct access to the raw number value
+                    label: function (context: TooltipItem<'bar'>) {
+                        const label = context.label || '';
+                        const value = context.raw as number;
                         return `${label}: ${value}`;
                     },
                 },
@@ -163,8 +163,8 @@ const BarChart: React.FC<BarChartProps> = ({
         scales: {
             x: {
                 title: {
-                    display: orientation === 'vertical', // Only display X-axis title for vertical chart
-                    text: 'Category', // Or whatever makes sense for your data
+                    display: orientation === 'vertical',
+                    text: 'Category',
                     color: COLOR_TEXT_SECONDARY,
                     font: {
                         size: 14,
@@ -179,13 +179,13 @@ const BarChart: React.FC<BarChartProps> = ({
                     }
                 },
                 grid: {
-                    color: `${COLOR_BORDER}80`, // Lighter grid lines
+                    color: `${COLOR_BORDER}80`,
                 },
             },
             y: {
                 title: {
-                    display: orientation === 'horizontal', // Only display Y-axis title for horizontal chart
-                    text: 'Count', // Or whatever makes sense for your data
+                    display: orientation === 'horizontal',
+                    text: 'Count',
                     color: COLOR_TEXT_SECONDARY,
                     font: {
                         size: 14,
@@ -200,12 +200,12 @@ const BarChart: React.FC<BarChartProps> = ({
                     }
                 },
                 grid: {
-                    color: `${COLOR_BORDER}80`, // Lighter grid lines
+                    color: `${COLOR_BORDER}80`,
                 },
             },
         },
         animation: {
-            duration: 1000, // Smooth animation on load/update
+            duration: 1000,
             easing: 'easeOutQuart',
         },
     };

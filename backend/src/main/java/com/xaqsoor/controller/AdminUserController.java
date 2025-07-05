@@ -32,14 +32,6 @@ public class AdminUserController {
         );
     }
 
-    @DeleteMapping("/{userId}/permanent-delete")
-    public ResponseEntity<Response> permanentlyDeleteUser(@PathVariable Long userId, HttpServletRequest request) {
-        adminUserService.permanentlyDeleteUser(userId);
-        return ResponseEntity.ok(
-                RequestUtils.getResponse(request, null, "User permanently deleted", HttpStatus.OK)
-        );
-    }
-
     @PatchMapping("/{userId}/enabled")
     public ResponseEntity<Response> setUserEnabled(
             @PathVariable Long userId,

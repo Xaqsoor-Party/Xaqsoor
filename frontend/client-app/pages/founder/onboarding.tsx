@@ -1,6 +1,6 @@
 import useFounderApi from "@/api/hooks/useFounderApi";
 import React, {useState} from "react";
-import {DocumentType, FounderFormData} from "@/types/FounderFormData";
+import { FounderFormData} from "@/types/FounderFormData";
 import Input from "@/components/common/Input/Input";
 import DatePicker from "@/components/common/DatePicker/DatePicker";
 import SelectInput from "@/components/common/SelectInput/SelectInput";

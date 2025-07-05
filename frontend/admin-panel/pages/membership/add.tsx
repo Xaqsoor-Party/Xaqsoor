@@ -11,11 +11,16 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import styles from "@/styles/AddNewMemberPage.module.css";
 import {UserCreateRequest} from "@/types/auth";
 import {getOperator} from "@/util/phoneUtils";
+import Head from "next/head";
+import {useAuthentication} from "@/auth/AuthProvider";
+import {Roles} from "@/types/user";
 
 const RegistrationForm: React.FC = () => {
 
     const {language} = useLanguage();
     const translations = getTranslations(language, "authPages").AuthForms;
+
+    const {user} = useAuthentication();
 
     const {registerUser} = useAuthApi();
 
@@ -56,9 +61,14 @@ const RegistrationForm: React.FC = () => {
     };
 
     const roleOptions = [
-        {value: "ADMIN", label: "Admin"},
-        {value: "MEMBER", label: "Member"},
+        {value: Roles.ADMIN, label: "Admin"},
+        {value: Roles.MEMBER, label: "Member"},
     ];
+
+    if (user?.role === Roles.SUPER_ADMIN) {
+        roleOptions.unshift({value: Roles.SUPER_ADMIN, label: "Super Admin"});
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const phoneInfo = getOperator(formData.phone);
@@ -121,6 +131,9 @@ const RegistrationForm: React.FC = () => {
 
     return (
         <>
+            <Head>
+                <title>Add New Member • Xaqsoor</title>
+            </Head>
             <div className={styles.container}>
                 <div className={styles.loginContainer}>
                     <div className={styles.headerContainer}>

@@ -17,6 +17,7 @@ import AlertModal from "@/components/common/AlertModal/AlertModal";
 import styles from "@/styles/EditProfile.module.css";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import Head from "next/head";
 
 const EditProfile = () => {
     const [formData, setFormData] = useState({
@@ -191,175 +192,185 @@ const EditProfile = () => {
     ];
 
     return (
-        <div className={styles.container}>
-            <Breadcrumb breadcrumbs={breadcrumbData}/>
-            <h1 className={styles.pageTitle}>{t.title}</h1>
-            <p className={styles.pageSubtitle}>{t.subtitle}</p>
-            {loading.profile ? (
-                    <div className={styles.loadingContainer}>
-                        <SpinLoading size={50}/>
-                        <p>{t.loading}</p>
-                    </div>
-                ) :
-                <form>
-                    <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>{t.sections.personal}</h2>
-                        <div className={styles.row}>
+        <>
+            <Head>
+                <title>{t.title} • Xaqsoor</title>
+            </Head>
+            <div className={styles.container}>
+                <Breadcrumb breadcrumbs={breadcrumbData}/>
+                <h1 className={styles.pageTitle}>{t.title}</h1>
+                <p className={styles.pageSubtitle}>{t.subtitle}</p>
+                {loading.profile ? (
+                        <div className={styles.loadingContainer}>
+                            <SpinLoading size={50}/>
+                            <p>{t.loading}</p>
+                        </div>
+                    ) :
+                    <form>
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>{t.sections.personal}</h2>
+                            <div className={styles.row}>
+                                <Input
+                                    label={t.fields.firstName.label}
+                                    type="text"
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    placeholder={t.fields.firstName.placeholder}
+                                    required
+                                    maxLength={15}
+                                    errorMessage={errors.firstName}
+                                />
+                                <Input
+                                    label={t.fields.middleName.label}
+                                    type="text"
+                                    name="middleName"
+                                    value={formData.middleName}
+                                    onChange={handleChange}
+                                    placeholder={t.fields.middleName.placeholder}
+                                    maxLength={15}
+                                    required
+                                    errorMessage={errors.middleName}
+                                />
+                            </div>
                             <Input
-                                label={t.fields.firstName.label}
+                                label={t.fields.lastName.label}
                                 type="text"
-                                name="firstName"
-                                value={formData.firstName}
+                                name="lastName"
+                                value={formData.lastName}
                                 onChange={handleChange}
-                                placeholder={t.fields.firstName.placeholder}
+                                placeholder={t.fields.lastName.placeholder}
                                 required
                                 maxLength={15}
-                                errorMessage={errors.firstName}
+                                errorMessage={errors.lastName}
+                            />
+                            <SelectInput
+                                label={t.fields.gender.label}
+                                name="gender"
+                                value={formData.gender}
+                                onChange={handleSelectChange}
+                                placeholder={t.fields.gender.placeholder}
+                                required
+                                options={Object.entries(t.fields.gender.options).map(([value, label]) => ({
+                                    value,
+                                    label
+                                }))}
+                                errorMessage={errors.gender}
                             />
                             <Input
-                                label={t.fields.middleName.label}
+                                label={t.fields.placeOfBirth.label}
                                 type="text"
-                                name="middleName"
-                                value={formData.middleName}
+                                name="placeOfBirth"
+                                value={formData.placeOfBirth}
                                 onChange={handleChange}
-                                placeholder={t.fields.middleName.placeholder}
-                                maxLength={15}
+                                placeholder={t.fields.placeOfBirth.placeholder}
+                                maxLength={50}
                                 required
-                                errorMessage={errors.middleName}
+                                errorMessage={errors.placeOfBirth}
+                            />
+                            <DatePicker
+                                label={t.fields.dateOfBirth.label}
+                                name="dateOfBirth"
+                                value={formData.dateOfBirth}
+                                onChange={handleChange}
+                                required
+                                min="1960-01-01"
+                                max={new Date().toISOString().split('T')[0]}
+                                errorMessage={errors.dateOfBirth}
                             />
                         </div>
-                        <Input
-                            label={t.fields.lastName.label}
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleChange}
-                            placeholder={t.fields.lastName.placeholder}
-                            required
-                            maxLength={15}
-                            errorMessage={errors.lastName}
-                        />
-                        <SelectInput
-                            label={t.fields.gender.label}
-                            name="gender"
-                            value={formData.gender}
-                            onChange={handleSelectChange}
-                            placeholder={t.fields.gender.placeholder}
-                            required
-                            options={Object.entries(t.fields.gender.options).map(([value, label]) => ({ value, label }))}
-                            errorMessage={errors.gender}
-                        />
-                        <Input
-                            label={t.fields.placeOfBirth.label}
-                            type="text"
-                            name="placeOfBirth"
-                            value={formData.placeOfBirth}
-                            onChange={handleChange}
-                            placeholder={t.fields.placeOfBirth.placeholder}
-                            maxLength={50}
-                            required
-                            errorMessage={errors.placeOfBirth}
-                        />
-                        <DatePicker
-                            label={t.fields.dateOfBirth.label}
-                            name="dateOfBirth"
-                            value={formData.dateOfBirth}
-                            onChange={handleChange}
-                            required
-                            min="1960-01-01"
-                            max={new Date().toISOString().split('T')[0]}
-                            errorMessage={errors.dateOfBirth}
-                        />
-                    </div>
 
-                    <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>{t.sections.address}</h2>
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>{t.sections.address}</h2>
 
-                        <Input
-                            label={t.fields.street.label}
-                            type="text"
-                            name="street"
-                            value={formData.street}
-                            onChange={handleChange}
-                            placeholder={t.fields.street.placeholder}
-                            maxLength={200}
-                            required
-                            errorMessage={errors.street}
-                        />
-                        <Input
-                            label={t.fields.city.label}
-                            type="text"
-                            name="city"
-                            value={formData.city}
-                            onChange={handleChange}
-                            placeholder={t.fields.city.placeholder}
-                            maxLength={50}
-                            required
-                            errorMessage={errors.city}
-                        />
-                        <Input
-                            label={t.fields.state.label}
-                            type="text"
-                            name="state"
-                            value={formData.state}
-                            onChange={handleChange}
-                            placeholder={t.fields.state.placeholder}
-                            maxLength={100}
-                            required
-                            errorMessage={errors.state}
-                        />
-                        <Input
-                            label={t.fields.country.label}
-                            type="text"
-                            name="country"
-                            value={formData.country}
-                            onChange={handleChange}
-                            placeholder={t.fields.country.placeholder}
-                            maxLength={50}
-                            required
-                            errorMessage={errors.country}
-                        />
-                    </div>
+                            <Input
+                                label={t.fields.street.label}
+                                type="text"
+                                name="street"
+                                value={formData.street}
+                                onChange={handleChange}
+                                placeholder={t.fields.street.placeholder}
+                                maxLength={200}
+                                required
+                                errorMessage={errors.street}
+                            />
+                            <Input
+                                label={t.fields.city.label}
+                                type="text"
+                                name="city"
+                                value={formData.city}
+                                onChange={handleChange}
+                                placeholder={t.fields.city.placeholder}
+                                maxLength={50}
+                                required
+                                errorMessage={errors.city}
+                            />
+                            <Input
+                                label={t.fields.state.label}
+                                type="text"
+                                name="state"
+                                value={formData.state}
+                                onChange={handleChange}
+                                placeholder={t.fields.state.placeholder}
+                                maxLength={100}
+                                required
+                                errorMessage={errors.state}
+                            />
+                            <Input
+                                label={t.fields.country.label}
+                                type="text"
+                                name="country"
+                                value={formData.country}
+                                onChange={handleChange}
+                                placeholder={t.fields.country.placeholder}
+                                maxLength={50}
+                                required
+                                errorMessage={errors.country}
+                            />
+                        </div>
 
-                    <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>{t.sections.academic}</h2>
-                        <AcademicRecordsForm records={academicRecords} onChange={setAcademicRecords} errors={errors}/>
-                    </div>
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>{t.sections.academic}</h2>
+                            <AcademicRecordsForm records={academicRecords} onChange={setAcademicRecords}
+                                                 errors={errors}/>
+                        </div>
 
-                    <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>{t.sections.work}</h2>
-                        <WorkExperienceForm records={workExperiences} onChange={setWorkExperiences} errors={errors}/>
-                    </div>
+                        <div className={styles.section}>
+                            <h2 className={styles.sectionTitle}>{t.sections.work}</h2>
+                            <WorkExperienceForm records={workExperiences} onChange={setWorkExperiences}
+                                                errors={errors}/>
+                        </div>
 
-                    <TextArea
-                        label={t.fields.bio.label}
-                        name="bio"
-                        value={formData.bio}
-                        onChange={handleTextAreaChange}
-                        placeholder={t.fields.bio.placeholder}
-                        maxLength={500}
+                        <TextArea
+                            label={t.fields.bio.label}
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleTextAreaChange}
+                            placeholder={t.fields.bio.placeholder}
+                            maxLength={500}
+                        />
+
+                        <ActionButton
+                            type="submit"
+                            className={styles.button}
+                            onClick={handleSubmit}
+                            disabled={loading.submit}
+                        >
+                            {loading.submit ? t.buttons.submitting : t.buttons.submit}
+                        </ActionButton>
+                    </form>
+                }
+                {modal.show && (
+                    <AlertModal
+                        title={modal.title}
+                        message={modal.message}
+                        error={modal.error}
+                        onConfirm={() => setModal(prev => ({...prev, show: false}))}
+                        onClose={() => setModal(prev => ({...prev, show: false}))}
                     />
-
-                    <ActionButton
-                        type="submit"
-                        className={styles.button}
-                        onClick={handleSubmit}
-                        disabled={loading.submit}
-                    >
-                        {loading.submit ? t.buttons.submitting : t.buttons.submit}
-                    </ActionButton>
-                </form>
-            }
-            {modal.show && (
-                <AlertModal
-                    title={modal.title}
-                    message={modal.message}
-                    error={modal.error}
-                    onConfirm={() => setModal(prev => ({...prev, show: false}))}
-                    onClose={() => setModal(prev => ({...prev, show: false}))}
-                />
-            )}
-        </div>
+                )}
+            </div>
+        </>
     )
 }
 

@@ -102,10 +102,15 @@ public class SqlQueries {
                     u.id AS userId,
                     u.first_name AS firstName,
                     u.profile_image_key AS profileImageKey,
-                    'Updated their profile' AS description,
+                    CASE
+                      WHEN u.modified_by IS NOT NULL AND u.modified_by != u.id AND u.modified_by != 0 THEN
+                          CONCAT('Profile was updated by ', mu.first_name)
+                      ELSE 'Updated their profile'
+                     END AS description,
                     u.modified_date AS timestamp
                 FROM users u
-                WHERE u.modified_date IS NOT NULL)
+                LEFT JOIN users mu ON u.modified_by = mu.id
+                WHERE u.modified_date IS NOT NULL AND (u.modified_by IS NULL OR u.modified_by != 0))
             
                 UNION ALL
             
@@ -152,15 +157,29 @@ public class SqlQueries {
             """;
 
     public static final String RECENT_ACTIVITIES_COUNT_QUERY = """
-                (SELECT count(*) FROM (
-                    SELECT 1 FROM users u WHERE u.modified_date IS NOT NULL
+                SELECT count(*) FROM (
+                    SELECT 1 FROM users u
+                    WHERE u.modified_date IS NOT NULL AND (u.modified_by IS NULL OR u.modified_by != 0)
+            
                     UNION ALL
-                    SELECT 1 FROM users u WHERE u.last_login IS NOT NULL
+            
+                    SELECT 1 FROM users u
+                    WHERE u.last_login IS NOT NULL
+            
                     UNION ALL
-                    SELECT 1 FROM work_experience we JOIN users u ON we.user_id = u.id
+            
+                    SELECT 1 FROM work_experience we
+                    JOIN users u ON we.user_id = u.id
+            
                     UNION ALL
-                    SELECT 1 FROM academic_record ar JOIN users u ON ar.user_id = u.id
-                ) AS count_table)
+            
+                    SELECT 1 FROM academic_record ar
+                    JOIN users u ON ar.user_id = u.id
+            
+                    UNION ALL
+            
+                    SELECT 1 FROM users u
+                ) AS count_table
             """;
 
     public static final String DAILY_SIGNUPS_QUERY = """

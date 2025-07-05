@@ -17,7 +17,6 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
             'ACTIVE': styles.statusActive,
             'INACTIVE': styles.statusInactive,
             'SUSPENDED': styles.statusSuspended,
-            'LAPSED': styles.statusLapsed,
             'PENDING': styles.statusPending
         };
         return statusMap[status] || '';
@@ -60,8 +59,8 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 </div>
 
                 <div className={styles.infoRow}>
-                    <span className={styles.infoLabel}>Role:</span>
-                    <span className={styles.infoValue}>{user.roleName || 'N/A'}</span>
+                    <span className={styles.infoLabel}>Membership Level:</span>
+                    <span className={styles.infoValue}>{user.membershipLevel || 'N/A'}</span>
                 </div>
 
                 <div className={styles.infoRow}>

@@ -12,6 +12,7 @@ import Image from "next/image";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import Head from "next/head";
 
 const MfaSetupPage: React.FC = () => {
     const {user, setUser} = useAuthentication();
@@ -112,6 +113,10 @@ const MfaSetupPage: React.FC = () => {
 
     return (
         <>
+            <Head>
+                <title>{t.title} • Xaqsoor</title>
+            </Head>
+
             <Breadcrumb breadcrumbs={breadcrumbData}/>
             <div className={styles.container}>
                 <h1 className={styles.header}>{t.title}</h1>

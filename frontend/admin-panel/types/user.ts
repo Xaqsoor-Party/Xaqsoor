@@ -10,6 +10,7 @@ export interface User {
     placeOfBirth?: string;
     dateOfBirth?: string;
     status: string;
+    membershipLevel: string ;
     role: string;
     authorities: string;
     email: string;
@@ -103,7 +104,7 @@ export interface UserCardDTO {
     email: string;
     phone: string;
     profileImageUrl: string | null;
-    roleName: string;
+    membershipLevel: string;
     status: string;
 }
 
@@ -114,19 +115,18 @@ export interface UserCardListDto {
     users: UserCardDTO[];
 }
 
-
 export enum MembershipLevel {
     NEW_MEMBER = "NEW_MEMBER",
-    STUDENT = "STUDENT",
-    REGULAR = "REGULAR",
-    LIFETIME = "LIFETIME",
+    SUPPORTER = "SUPPORTER",
+    FOUNDER = "FOUNDER",
+    TECH_TEAM = "TECH_TEAM",
+    PERSONNEL = "PERSONNEL",
 }
 
 export enum Status {
     ACTIVE = "ACTIVE",
     INACTIVE = "INACTIVE",
     SUSPENDED = "SUSPENDED",
-    LAPSED = "LAPSED",
     PENDING = "PENDING",
 }
 

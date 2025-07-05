@@ -21,6 +21,7 @@ export const sidebarLabels: SidebarLabels = {
         emails: "Emails (Email keli ah & badan)",
         donations: "Deeqo",
         idCards: "Kaadhadhka Aqoonsiga Xubnaha",
-        foundersList:"aasaasayaasha"
+        foundersList:"aasaasayaasha",
+        recycleBin: "Qashin-qubka",
     }
 }

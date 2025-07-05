@@ -1,18 +1,17 @@
 package com.xaqsoor.mapper;
 
 import com.xaqsoor.dto.AnnouncementDto;
+import com.xaqsoor.dto.response.AnnouncementRecycleDto;
 import com.xaqsoor.entity.Announcement;
+import com.xaqsoor.entity.User;
 import com.xaqsoor.enumeration.AnnouncementStatus;
-import com.xaqsoor.exception.ApiException;
 import com.xaqsoor.util.UserUtil;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AnnouncementMapper {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static AnnouncementDto toDto(Announcement announcement) {
         if (announcement == null) {
             return null;
@@ -41,4 +40,20 @@ public class AnnouncementMapper {
                 .build();
     }
 
+    public static AnnouncementRecycleDto toRecycleDto(Announcement announcement, User user) {
+        String fullName = Stream.of(user.getFirstName(), user.getMiddleName(), user.getLastName())
+                .filter(namePart -> namePart != null && !namePart.isBlank())
+                .collect(Collectors.joining(" "));
+
+        return new AnnouncementRecycleDto(
+                announcement.getId(),
+                announcement.getTitle(),
+                announcement.getContent(),
+                UserUtil.formatDate(announcement.getAnnouncementDate()),
+                announcement.getStatus().getValue(),
+                announcement.getModifiedBy(),
+                fullName,
+                UserUtil.formatDateTime(announcement.getModifiedDate())
+        );
+    }
 }

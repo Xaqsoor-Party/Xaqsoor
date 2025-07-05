@@ -226,20 +226,14 @@ public class UserProfileServiceImpl implements UserProfileService {
     public static UserCardListDto mapToUserCardListDto(Page<User> userPage, S3Service s3Service) {
         List<UserCardDTO> userCards = userPage.getContent().stream()
                 .map(user -> {
-                    String profileImageUrl;
-                    if ("AsalGuardian".equals(user.getUserId())) {
-                        profileImageUrl = user.getProfileImageKey();
-                    } else {
-                        profileImageUrl = UserUtil.resolveProfileImageUrl(user.getProfileImageKey(), s3Service);
-                    }
-
+                    String profileImageUrl = UserUtil.resolveProfileImageUrl(user.getProfileImageKey(), s3Service);
                     return new UserCardDTO(
                             user.getId(),
                             buildFullName(user.getFirstName(), user.getMiddleName(), user.getLastName()),
                             user.getEmail(),
                             user.getPhone(),
                             profileImageUrl,
-                            user.getRole() != null ? user.getRole().getName() : null,
+                            user.getMembershipLevel() != null ? user.getMembershipLevel().getValue() : null,
                             user.getStatus().name()
                     );
                 })
