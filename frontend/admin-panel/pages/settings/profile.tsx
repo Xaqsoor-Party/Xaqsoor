@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
     return (
         <>
             <Head>
-                <title>Profile</title>
+                <title>{user.firstName} {user.lastName} • Xaqsoor</title>
                 <meta name="description" content={`Profile page for ${user.firstName} ${user.lastName}`}/>
             </Head>
             <div className={styles.container}>

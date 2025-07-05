@@ -10,6 +10,7 @@ import SearchInput from "@/components/common/SearchInput/SearchInput";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import UserCard from "@/components/UserCard/UserCard";
 import styles from "@/styles/UserListPage.module.css";
+import Head from "next/head";
 
 export const orderByOptions = [
     {value: "createdDateDesc", label: "Created Date ↓"},
@@ -143,123 +144,128 @@ const UserListPage: React.FC = () => {
 
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Manage Members & Accounts</h1>
-            <p className={styles.subtitle}>Search and filter users by name, email, phone, role, status, and more.</p>
-            <div className={styles.filters}>
-                <div className={styles.searchBar}>
-                    <SearchInput
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        placeholder="Search by name, email, or phone..."
-                    />
-                </div>
-
-                <div className={styles.filterRow}>
-                    <SelectInput
-                        label="Status"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                        options={statusOptions}
-                    />
-
-                    <SelectInput
-                        label="Role"
-                        value={roleFilter}
-                        onChange={(e) => setRoleFilter(e.target.value)}
-                        options={roleOptions}
-                    />
-
-                    <SelectInput
-                        label="Gender"
-                        value={genderFilter}
-                        onChange={(e) => setGenderFilter(e.target.value)}
-                        options={genderOptions}
-                    />
-
-                </div>
-
-                <div className={styles.filterRow}>
-                    <SelectInput
-                        label="Membership"
-                        value={membershipLevelFilter}
-                        onChange={(e) => setMembershipLevelFilter(e.target.value)}
-                        options={membershipLevelOptions}
-                    />
-
-                    <SelectInput
-                        label="Order By"
-                        value={orderBy}
-                        onChange={(e) => setOrderBy(e.target.value as OrderBy)}
-                        options={orderByOptions}
-                    />
-
-                    <ActionButton onClick={handleResetFilters} className={styles.resetButton}>
-                        Reset Filters
-                    </ActionButton>
-                </div>
-                <div className={styles.pageSizeRow}>
-                    <SelectInput
-                        label="Users per page"
-                        value={pageSize.toString()}
-                        onChange={handlePageSizeChange}
-                        options={pageSizeOptions}
-                    />
-                </div>
-            </div>
-
-            {loading ? (
-                <div className={styles.loading}>
-                    <SpinLoading size={50}/>
-                    <p className={styles.loadingText}>Loading users, please wait...</p>
-                </div>
-            ) : userList ? (
-                <>
-                    <div className={styles.resultsInfo}>
-                        Showing {(pageNumber * pageSize) + 1} -{" "}
-                        {Math.min((pageNumber + 1) * pageSize, userList.totalItems)} of {userList.totalItems} users
+        <>
+            <Head>
+                <title>Manage Members & Accounts • Xaqsoor</title>
+            </Head>
+            <div className={styles.container}>
+                <h1 className={styles.title}>Manage Members & Accounts</h1>
+                <p className={styles.subtitle}>Search and filter users by name, email, phone, role, status, and more.</p>
+                <div className={styles.filters}>
+                    <div className={styles.searchBar}>
+                        <SearchInput
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            placeholder="Search by name, email, or phone..."
+                        />
                     </div>
 
-                    <ul className={styles.userList}>
-                        {userList.users.map((user) => (
-                            <UserCard user={user} key={user.userId}/>
-                        ))}
-                    </ul>
+                    <div className={styles.filterRow}>
+                        <SelectInput
+                            label="Status"
+                            value={statusFilter}
+                            onChange={(e) => setStatusFilter(e.target.value)}
+                            options={statusOptions}
+                        />
 
-                    <div className={styles.pagination}>
-                        <ActionButton onClick={onPrevPage} disabled={pageNumber === 0}
-                                      className={styles.paginationButton}>
-                            Previous
+                        <SelectInput
+                            label="Role"
+                            value={roleFilter}
+                            onChange={(e) => setRoleFilter(e.target.value)}
+                            options={roleOptions}
+                        />
+
+                        <SelectInput
+                            label="Gender"
+                            value={genderFilter}
+                            onChange={(e) => setGenderFilter(e.target.value)}
+                            options={genderOptions}
+                        />
+
+                    </div>
+
+                    <div className={styles.filterRow}>
+                        <SelectInput
+                            label="Membership"
+                            value={membershipLevelFilter}
+                            onChange={(e) => setMembershipLevelFilter(e.target.value)}
+                            options={membershipLevelOptions}
+                        />
+
+                        <SelectInput
+                            label="Order By"
+                            value={orderBy}
+                            onChange={(e) => setOrderBy(e.target.value as OrderBy)}
+                            options={orderByOptions}
+                        />
+
+                        <ActionButton onClick={handleResetFilters} className={styles.resetButton}>
+                            Reset Filters
                         </ActionButton>
+                    </div>
+                    <div className={styles.pageSizeRow}>
+                        <SelectInput
+                            label="Users per page"
+                            value={pageSize.toString()}
+                            onChange={handlePageSizeChange}
+                            options={pageSizeOptions}
+                        />
+                    </div>
+                </div>
 
-                        <span className={styles.pageInfo}>
+                {loading ? (
+                    <div className={styles.loading}>
+                        <SpinLoading size={50}/>
+                        <p className={styles.loadingText}>Loading users, please wait...</p>
+                    </div>
+                ) : userList ? (
+                    <>
+                        <div className={styles.resultsInfo}>
+                            Showing {(pageNumber * pageSize) + 1} -{" "}
+                            {Math.min((pageNumber + 1) * pageSize, userList.totalItems)} of {userList.totalItems} users
+                        </div>
+
+                        <ul className={styles.userList}>
+                            {userList.users.map((user) => (
+                                <UserCard user={user} key={user.userId}/>
+                            ))}
+                        </ul>
+
+                        <div className={styles.pagination}>
+                            <ActionButton onClick={onPrevPage} disabled={pageNumber === 0}
+                                          className={styles.paginationButton}>
+                                Previous
+                            </ActionButton>
+
+                            <span className={styles.pageInfo}>
                            Page {pageNumber + 1} of {Math.ceil(userList.totalItems / pageSize)}
                         </span>
 
-                        <ActionButton
-                            onClick={onNextPage}
-                            disabled={userList.totalItems <= (pageNumber + 1) * pageSize}
-                            className={styles.paginationButton}
-                        >
-                            Next
-                        </ActionButton>
-                    </div>
-                </>
-            ) : (
-                <div className={styles.noUsersMessage}>No users found.</div>
-            )}
+                            <ActionButton
+                                onClick={onNextPage}
+                                disabled={userList.totalItems <= (pageNumber + 1) * pageSize}
+                                className={styles.paginationButton}
+                            >
+                                Next
+                            </ActionButton>
+                        </div>
+                    </>
+                ) : (
+                    <div className={styles.noUsersMessage}>No users found.</div>
+                )}
 
 
-            {error && (
-                <AlertModal
-                    title="Error"
-                    message={error}
-                    onConfirm={() => setError(null)}
-                    buttonText="Close"
-                    error
-                />
-            )}
-        </div>
+                {error && (
+                    <AlertModal
+                        title="Error"
+                        message={error}
+                        onConfirm={() => setError(null)}
+                        buttonText="Close"
+                        error
+                    />
+                )}
+            </div>
+        </>
     );
 };
 

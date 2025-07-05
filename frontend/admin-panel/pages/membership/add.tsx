@@ -11,6 +11,7 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import styles from "@/styles/AddNewMemberPage.module.css";
 import {UserCreateRequest} from "@/types/auth";
 import {getOperator} from "@/util/phoneUtils";
+import Head from "next/head";
 
 const RegistrationForm: React.FC = () => {
 
@@ -121,6 +122,9 @@ const RegistrationForm: React.FC = () => {
 
     return (
         <>
+            <Head>
+                <title>Add New Member • Xaqsoor</title>
+            </Head>
             <div className={styles.container}>
                 <div className={styles.loginContainer}>
                     <div className={styles.headerContainer}>

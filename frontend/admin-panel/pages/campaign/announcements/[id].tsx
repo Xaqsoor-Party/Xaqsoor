@@ -11,6 +11,7 @@ import styles from "@/styles/AnnouncementPage.module.css";
 import {FiMoreVertical} from "react-icons/fi";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import AnnouncementForm from "@/components/Announcement/AnnouncementForm/AnnouncementForm";
+import Head from "next/head";
 
 export interface Status {
     loading: boolean;
@@ -134,7 +135,10 @@ const AnnouncementPage = () => {
     ];
 
     return (
-        <div>
+        <>
+            <Head>
+                <title>{announcement?.title ? `${announcement.title} • Xaqsoor` : 'Announcement • Xaqsoor'}</title>
+            </Head>
             {status.loading ? (
                 <div className={filterStyles.loading}>
                     <SpinLoading size={50}/>
@@ -196,7 +200,7 @@ const AnnouncementPage = () => {
                 />
             )}
 
-        </div>
+        </>
     )
 };
 

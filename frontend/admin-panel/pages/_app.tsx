@@ -17,7 +17,7 @@ export default function App({Component, pageProps}: AppProps) {
     return (
         <>
             <Head>
-                <title>Xaqsoor</title>
+                <title>Xaqsoor — Secure Account Management Made Simple</title>
                 <link rel="icon" href="/icons/Icon_Xaqsoor_Logo.png"/>
             </Head>
             <AuthProvider>
