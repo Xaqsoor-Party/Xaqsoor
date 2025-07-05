@@ -8,7 +8,6 @@ public enum Status {
     ACTIVE("Active"),
     INACTIVE("Inactive"),
     SUSPENDED("Suspended"),
-    LAPSED("Lapsed"),
     PENDING("Pending");
 
     private final String value;

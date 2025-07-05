@@ -233,7 +233,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                             user.getEmail(),
                             user.getPhone(),
                             profileImageUrl,
-                            user.getRole() != null ? user.getRole().getName() : null,
+                            user.getMembershipLevel() != null ? user.getMembershipLevel().getValue() : null,
                             user.getStatus().name()
                     );
                 })

@@ -1,6 +1,7 @@
 package com.xaqsoor.mapper;
 
 import com.xaqsoor.dto.UserDto;
+import com.xaqsoor.dto.response.MembershipCardDto;
 import com.xaqsoor.dto.response.UserRecycleDto;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.util.UserUtil;
@@ -66,6 +67,21 @@ public class UserMapper {
                 deletedByUser.getId(),
                 deletedByUserFullName,
                 UserUtil.formatDateTime(deletedUser.getModifiedDate())
+        );
+    }
+
+    public static MembershipCardDto toMembershipCardDto(User user, String profileImageUrl, String qrCodeUri,String validUntil) {
+        return new MembershipCardDto(
+                user.getUserId(),
+                getFullName(user),
+                user.getGender(),
+                user.getPlaceOfBirth(),
+                user.getMembershipLevel().getValue(),
+                user.getStatus().getValue(),
+                profileImageUrl,
+                validUntil,
+                user.getSignatureImageBase64(),
+                qrCodeUri
         );
     }
 

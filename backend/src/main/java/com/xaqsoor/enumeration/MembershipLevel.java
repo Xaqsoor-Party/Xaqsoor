@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 public enum MembershipLevel {
     NEW_MEMBER("New Member"),
-    STUDENT("Student"),
-    REGULAR("Regular"),
+    SUPPORTER("Supporter"),
     FOUNDER("Founder"),
-    LIFETIME("Lifetime");
+    TECH_TEAM("Tech Team"),
+    PERSONNEL("Personnel");
 
     private final String value;
 

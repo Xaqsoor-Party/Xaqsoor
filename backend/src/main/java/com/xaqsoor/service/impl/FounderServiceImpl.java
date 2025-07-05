@@ -55,7 +55,7 @@ public class FounderServiceImpl implements FounderService {
                 .role(getRole())
                 .city(request.city())
                 .country(request.country())
-                .street(request.district())
+                .district(request.district())
                 .state(request.state())
                 .status(Status.PENDING)
                 .membershipLevel(MembershipLevel.FOUNDER)
