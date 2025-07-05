@@ -35,6 +35,7 @@ import ConfirmationModal from "@/components/common/ConfirmationModal/Confirmatio
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import SelectActionModal from '@/components/SelectActionModal/SelectActionModal';
 import Head from "next/head";
+import {useAuthentication} from "@/auth/AuthProvider";
 
 const UserDetailPage = () => {
     const router = useRouter();
@@ -48,7 +49,8 @@ const UserDetailPage = () => {
         message: string;
     }>({visible: false, title: '', message: ''});
 
-    const [user, setUser] = useState<UserProfileResponse | null>(null);
+    const [currentUserProfile, setCurrentUserProfile] = useState<UserProfileResponse | null>(null);
+    const {user} = useAuthentication();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLUListElement | null>(null);
@@ -115,7 +117,7 @@ const UserDetailPage = () => {
             try {
                 const response: ApiResponse<{ profile: UserProfileResponse }> = await getUserProfile(Number(id));
                 if (response.data?.profile) {
-                    setUser(response.data.profile);
+                    setCurrentUserProfile(response.data.profile);
                 } else {
                     setError('Profile data is missing from the response');
                 }
@@ -149,7 +151,7 @@ const UserDetailPage = () => {
         </div>
     );
 
-    if (!user) return (
+    if (!currentUserProfile) return (
         <div className={styles.statusContainer}>
             <p className={styles.notFoundText}>
                 <FiUserX className={styles.statusIcon}/>
@@ -248,7 +250,7 @@ const UserDetailPage = () => {
         }
     };
 
-    const {userData, academicRecords, workExperiences,userDocuments} = user;
+    const {userData, academicRecords, workExperiences,userDocuments} = currentUserProfile;
     const roleOptions = Object.values(Roles).map(role => ({value: role, label: role}));
     const membershipOptions = Object.values(MembershipLevel).map(level => ({value: level, label: level}));
     const statusOptions = Object.values(Status).map(status => ({value: status, label: status}));
@@ -262,7 +264,7 @@ const UserDetailPage = () => {
                <div className={styles.profileHeader}>
                    <div className={styles.backgroundBox}>
                        <div className={styles.initialsCircle}>
-                           <ProfileAvatar firstName={user.userData.firstName} imageUrl={user.userData.profileImageUrl}/>
+                           <ProfileAvatar firstName={currentUserProfile.userData.firstName} imageUrl={currentUserProfile.userData.profileImageUrl}/>
                        </div>
                    </div>
 
@@ -283,7 +285,9 @@ const UserDetailPage = () => {
                                    <li onClick={() => { setSelectedAction("lock-unlock"); setShowModal(true); }}>
                                        {userData.accountNonLocked ? "Lock Account" : "Unlock Account"}
                                    </li>
-                                   <li onClick={() => { setSelectedAction("update-role"); setShowModal(true); }}>Update Role</li>
+                                   {user?.role === Roles.SUPER_ADMIN && (
+                                       <li onClick={() => { setSelectedAction("update-role"); setShowModal(true); }}>Update Role</li>
+                                   )}
                                    <li onClick={() => { setSelectedAction("update-membership"); setShowModal(true); }}>Update Membership Level</li>
                                    <li onClick={() => { setSelectedAction("update-status"); setShowModal(true); }}>Update Status</li>
                                </ul>
@@ -631,6 +635,12 @@ const UserDetailPage = () => {
                            setShowModal(false);
                            setSelectedAction(null);
                        }}
+                       initialValue={
+                           selectedAction === "update-role" ? userData.role :
+                               selectedAction === "update-membership" ? userData.membershipLevel || '' :
+                                   selectedAction === "update-status" ? userData.status :
+                                       ""
+                       }
                    />
                )}
 

@@ -28,12 +28,12 @@ export const statusOptions = [
     {value: "ACTIVE", label: "Active"},
     {value: "INACTIVE", label: "Inactive"},
     {value: "SUSPENDED", label: "Suspended"},
-    {value: "LAPSED", label: "Lapsed"},
     {value: "PENDING", label: "pending"},
 ];
 
 export const roleOptions = [
     {value: "", label: "All Roles"},
+    {value: "SUPER_ADMIN", label: "Super Admin"},
     {value: "ADMIN", label: "Admin"},
     {value: "MEMBER", label: "Member"},
 ];
@@ -45,13 +45,14 @@ export const genderOptions = [
 ];
 
 export const membershipLevelOptions = [
-    {value: "", label: "All Memberships"},
-    {value: "NEW_MEMBER", label: "New Member"},
-    {value: "STUDENT", label: "Student"},
-    {value: "REGULAR", label: "Regular"},
-    {value: "FOUNDER", label: "Founder"},
-    {value: "LIFETIME", label: "Lifetime"},
+    { value: "", label: "All Memberships" },
+    { value: "NEW_MEMBER", label: "New Member" },
+    { value: "SUPPORTER", label: "Supporter" },
+    { value: "FOUNDER", label: "Founder" },
+    { value: "TECH_TEAM", label: "Tech Team" },
+    { value: "PERSONNEL", label: "Personnel" },
 ];
+
 
 const UserListPage: React.FC = () => {
     const {searchUserCards} = useUserSearchApi();
