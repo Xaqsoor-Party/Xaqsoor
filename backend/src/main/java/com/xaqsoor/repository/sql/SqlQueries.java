@@ -190,4 +190,26 @@ public class SqlQueries {
                 GROUP BY CAST(created_date AS date)
                 ORDER BY signup_date
             """;
+
+    public static final String FILTERED_USERS_QUERY = """
+                SELECT u.*
+                FROM users u
+                WHERE u.is_deleted = false
+                  AND (:status IS NULL OR u.status = CAST(:status AS TEXT))
+                  AND (:gender IS NULL OR u.gender = :gender)
+                  AND (:operator IS NULL OR u.network_operator = :operator)
+                  AND (:membershipLevel IS NULL OR u.membership_level = CAST(:membershipLevel AS TEXT))
+            """;
+
+
+    public static final String FILTERED_USERS_COUNT_QUERY = """
+                SELECT COUNT(*)
+                FROM users u
+                WHERE u.is_deleted = false
+                  AND (:status IS NULL OR u.status = CAST(:status AS TEXT))
+                  AND (:gender IS NULL OR u.gender = :gender)
+                  AND (:operator IS NULL OR u.network_operator = :operator)
+                  AND (:membershipLevel IS NULL OR u.membership_level = CAST(:membershipLevel AS TEXT))
+            """;
+
 }
