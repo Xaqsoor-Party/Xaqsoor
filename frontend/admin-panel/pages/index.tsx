@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import useDashboardApi from '@/api/hooks/useDashboardApi';
 import {DashboardSummaryDto, RecentActivityListDto, SystemHealthDto,} from '@/types/dashboard';
 import styles from '../styles/Home.module.css';
-import DashboardCard from '../components/Dashboard/DashboardCard';
+import DashboardCard from '../components/Dashboard/DashboardCard/DashboardCard';
 import UserGrowthChart from '../components/Dashboard/UserGrowthChart/UserGrowthChart';
 
 import {FaChartLine, FaEnvelopeOpenText, FaHeartbeat, FaHistory, FaLock, FaUsers} from 'react-icons/fa';

@@ -1,0 +1,106 @@
+.container {
+    padding: var(--spacing-xl);
+    background-color: var(--color-background);
+    font-family: Arial, sans-serif;
+    color: var(--color-text-primary);
+    max-width: var(--breakpoint-desktop);
+    margin: 0 auto;
+}
+
+.pageTitle {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+}
+
+.pageSubtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.statusMessage,
+.errorMessage,
+.infoMessage {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+    font-size: var(--font-size-base);
+}
+
+.statusMessage {
+    background-color: var(--color-background-accent);
+    color: var(--color-text-secondary);
+}
+
+.errorMessage {
+    background-color: var(--color-error-background);
+    color: var(--color-error-dark);
+}
+
+.infoMessage {
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+}
+
+.icon {
+    font-size: var(--font-size-lg);
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.actionsSectionTitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    margin: var(--spacing-xxl) 0 var(--spacing-sm) 0;
+    font-weight: 600;
+}
+
+.actionsSectionSubtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.actionCardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.downloadCard {
+    background: var(--color-primary-gradient);
+}
+
+.sendCard {
+    background: linear-gradient(135deg, #4a7d2a 0%, #3a6a1f 100%);
+}
+
+.whatsappCard {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.telegramCard {
+    background: linear-gradient(135deg, #0088cc 0%, #004d7a 100%);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .cardGrid,
+    .actionCardsGrid {
+        grid-template-columns: 1fr;
+    }
+}
