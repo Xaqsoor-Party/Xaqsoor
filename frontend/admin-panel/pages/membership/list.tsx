@@ -65,7 +65,7 @@ const UserListPage: React.FC = () => {
     const [orderBy, setOrderBy] = useState<OrderBy>("createdDateDesc");
 
     const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
