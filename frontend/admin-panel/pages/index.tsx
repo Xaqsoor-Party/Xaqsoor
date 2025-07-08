@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import useDashboardApi from '@/api/hooks/useDashboardApi';
 import {DashboardSummaryDto, RecentActivityListDto, SystemHealthDto,} from '@/types/dashboard';
 import styles from '../styles/Home.module.css';
-import DashboardCard from '../components/Dashboard/DashboardCard';
+import DashboardCard from '../components/Dashboard/DashboardCard/DashboardCard';
 import UserGrowthChart from '../components/Dashboard/UserGrowthChart/UserGrowthChart';
 
 import {FaChartLine, FaEnvelopeOpenText, FaHeartbeat, FaHistory, FaLock, FaUsers} from 'react-icons/fa';
@@ -16,6 +16,7 @@ import DataTable, {TableColumn} from "@/components/Dashboard/DataTable/DataTable
 import RecentActivityFeed from "@/components/Dashboard/RecentActivityFeed/RecentActivityFeed";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 const Dashboard = () => {
     const {getDashboardSummary, getRecentActivities, getSystemHealthMetrics} = useDashboardApi();
@@ -124,185 +125,195 @@ const Dashboard = () => {
     };
 
     return (
-        <div className={styles.dashboardContainer}>
-            <div className={styles.dashboardHeader}>
-                <div>
-                    <h1 className={styles.mainTitle}>
-                        Hello, {user?.firstName || 'Admin'}!
-                    </h1>
-                    <p className={styles.dateInfo}>
-                        {dayName}, {currentDate}
-                    </p>
-                </div>
-                <div className={styles.headerControls}>
-                    <button onClick={handleRefresh} className={styles.refreshButton}>
-                        <FaHistory/> Refresh Data
-                    </button>
-                </div>
-            </div>
+        <>
+            <Head>
+                <title>Dashboard • Xaqsoor</title>
+                <meta
+                    name="description"
+                    content="Overview of user statistics, recent activities, and system health metrics on the Xaqsoor platform."
+                />
+            </Head>
 
-            {/* Dashboard Summary Section */}
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Overview</h2>
-                {summary && (
-                    <>
-                        <div className={styles.dashboardGrid}>
+            <div className={styles.dashboardContainer}>
+                <div className={styles.dashboardHeader}>
+                    <div>
+                        <h1 className={styles.mainTitle}>
+                            Hello, {user?.firstName || 'Admin'}!
+                        </h1>
+                        <p className={styles.dateInfo}>
+                            {dayName}, {currentDate}
+                        </p>
+                    </div>
+                    <div className={styles.headerControls}>
+                        <button onClick={handleRefresh} className={styles.refreshButton}>
+                            <FaHistory/> Refresh Data
+                        </button>
+                    </div>
+                </div>
+
+                {/* Dashboard Summary Section */}
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Overview</h2>
+                    {summary && (
+                        <>
+                            <div className={styles.dashboardGrid}>
+                                <DashboardCard
+                                    title="Total Members"
+                                    value={summary.totalMembers.toLocaleString()}
+                                    icon={<FaUsers/>}
+                                    colorVar="--color-primary-light"
+                                />
+                                <DashboardCard
+                                    title="New Members (This Month)"
+                                    value={summary.newMembersThisMonth.toLocaleString()}
+                                    icon={<FaChartLine/>}
+                                    description="Growth this month"
+                                    colorVar="--color-secondary-dark"
+                                />
+                                <DashboardCard
+                                    title="Profile Completion Rate"
+                                    value={`${summary.profileCompletionRate.toFixed(2)}%`}
+                                    icon={<IoShieldCheckmarkSharp/>}
+                                    description="Average profile completeness"
+                                    colorVar="--color-success"
+                                />
+                                <DashboardCard
+                                    title="MFA Enabled Users"
+                                    value={summary.mfaEnabledUsers.toLocaleString()}
+                                    icon={<FaLock/>}
+                                    description="Users with MFA enabled"
+                                    colorVar="--color-primary-accent"
+                                />
+                                <DashboardCard
+                                    title="Locked Accounts"
+                                    value={summary.lockedAccounts.toLocaleString()}
+                                    icon={<FaLock/>}
+                                    description="Accounts temporarily locked"
+                                    colorVar="--color-error"
+                                />
+                                <DashboardCard
+                                    title="Unverified Emails"
+                                    value={summary.unverifiedEmails.toLocaleString()}
+                                    icon={<FaEnvelopeOpenText/>}
+                                    description="Users with unverified emails"
+                                    colorVar="--color-warning"
+                                />
+                            </div>
+
+                            <div className={styles.distributionSection}>
+                                <div className={styles.chartPanel}>
+                                    <div className={styles.barChartBlock}>
+                                        <BarChart
+                                            dataObject={summary.userStatusDistribution}
+                                            title="User Status Distribution"
+                                            orientation="vertical"
+                                        />
+                                    </div>
+                                    <div className={styles.genderChartBlock}>
+                                        <GenderDonutChart maleCount={summary.maleCount} femaleCount={summary.femaleCount}/>
+                                    </div>
+                                </div>
+
+                                <div className={styles.tablePanel}>
+                                    <div className={styles.tableBlock}>
+                                        <DataTable
+                                            data={roleData}
+                                            columns={roleColumns}
+                                            title="Role Distribution"
+                                            getRowKey={(row) => row.role}
+                                        />
+                                    </div>
+                                    <div className={styles.chartBlock}>
+                                        <MultiSeriesDoughnutChart
+                                            title="Membership Level Distribution"
+                                            labels={Object.keys(summary.membershipLevelDistribution)}
+                                            dataSeries={[
+                                                {
+                                                    label: 'Members',
+                                                    counts: Object.values(summary.membershipLevelDistribution),
+                                                },
+                                            ]}
+                                            showLegend={true}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p className={styles.lastUpdated}>Summary Last Updated: {summary.lastUpdated}</p>
+                        </>
+                    )}
+                </div>
+
+                <hr className={styles.sectionDivider}/>
+
+
+                <div className={styles.section}>
+                    <div className={styles.chartAndActivity}>
+                        <div className={styles.userGrowthChartWrapper}>
+                            <UserGrowthChart
+                                forceRefresh={forceChartRefresh}
+                                setForceRefresh={setForceChartRefresh}
+                            />
+                        </div>
+                        <div className={styles.recentActivityWrapper}>
+                            {recentActivities && (
+                                <RecentActivityFeed
+                                    activities={recentActivities.activities}
+                                    onViewAllClick={handleViewAllClick}
+                                />
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <hr className={styles.sectionDivider}/>
+
+                {/* System Health Section */}
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>System Health Metrics</h2>
+                    {systemHealth && (
+                        <div className={styles.systemHealthGrid}>
                             <DashboardCard
-                                title="Total Members"
-                                value={summary.totalMembers.toLocaleString()}
-                                icon={<FaUsers/>}
+                                title="CPU Load"
+                                value={`${systemHealth.cpuLoad.toFixed(2)}%`}
+                                icon={<FaHeartbeat/>}
                                 colorVar="--color-primary-light"
                             />
                             <DashboardCard
-                                title="New Members (This Month)"
-                                value={summary.newMembersThisMonth.toLocaleString()}
-                                icon={<FaChartLine/>}
-                                description="Growth this month"
+                                title="Total Memory"
+                                value={`${(systemHealth.totalMemory / 1e9).toFixed(2)} GB`}
+                                icon={<FaHeartbeat/>}
                                 colorVar="--color-secondary-dark"
                             />
                             <DashboardCard
-                                title="Profile Completion Rate"
-                                value={`${summary.profileCompletionRate.toFixed(2)}%`}
-                                icon={<IoShieldCheckmarkSharp/>}
-                                description="Average profile completeness"
-                                colorVar="--color-success"
-                            />
-                            <DashboardCard
-                                title="MFA Enabled Users"
-                                value={summary.mfaEnabledUsers.toLocaleString()}
-                                icon={<FaLock/>}
-                                description="Users with MFA enabled"
-                                colorVar="--color-primary-accent"
-                            />
-                            <DashboardCard
-                                title="Locked Accounts"
-                                value={summary.lockedAccounts.toLocaleString()}
-                                icon={<FaLock/>}
-                                description="Accounts temporarily locked"
+                                title="Used Memory"
+                                value={`${(systemHealth.usedMemory / 1e9).toFixed(2)} GB`} icon={<FaHeartbeat/>}
                                 colorVar="--color-error"
                             />
                             <DashboardCard
-                                title="Unverified Emails"
-                                value={summary.unverifiedEmails.toLocaleString()}
-                                icon={<FaEnvelopeOpenText/>}
-                                description="Users with unverified emails"
+                                title="Free Memory"
+                                value={`${(systemHealth.freeMemory / 1e9).toFixed(2)} GB`}
+                                icon={<FaHeartbeat/>}
+                                colorVar="--color-success"
+                            />
+                            <DashboardCard
+                                title="System Uptime"
+                                value={formatUptime(systemHealth.uptime)}
+                                icon={<FaHeartbeat/>}
+                                colorVar="--color-primary-accent"
+                            />
+                            <DashboardCard
+                                title="Active Threads"
+                                value={systemHealth.activeThreads.toLocaleString()}
+                                icon={<FaHeartbeat/>}
                                 colorVar="--color-warning"
                             />
                         </div>
-
-                        <div className={styles.distributionSection}>
-                            <div className={styles.chartPanel}>
-                                <div className={styles.barChartBlock}>
-                                    <BarChart
-                                        dataObject={summary.userStatusDistribution}
-                                        title="User Status Distribution"
-                                        orientation="vertical"
-                                    />
-                                </div>
-                                <div className={styles.genderChartBlock}>
-                                    <GenderDonutChart maleCount={summary.maleCount} femaleCount={summary.femaleCount}/>
-                                </div>
-                            </div>
-
-                            <div className={styles.tablePanel}>
-                                <div className={styles.tableBlock}>
-                                    <DataTable
-                                        data={roleData}
-                                        columns={roleColumns}
-                                        title="Role Distribution"
-                                        getRowKey={(row) => row.role}
-                                    />
-                                </div>
-                                <div className={styles.chartBlock}>
-                                    <MultiSeriesDoughnutChart
-                                        title="Membership Level Distribution"
-                                        labels={Object.keys(summary.membershipLevelDistribution)}
-                                        dataSeries={[
-                                            {
-                                                label: 'Members',
-                                                counts: Object.values(summary.membershipLevelDistribution),
-                                            },
-                                        ]}
-                                        showLegend={true}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <p className={styles.lastUpdated}>Summary Last Updated: {summary.lastUpdated}</p>
-                    </>
-                )}
-            </div>
-
-            <hr className={styles.sectionDivider}/>
-
-
-            <div className={styles.section}>
-                <div className={styles.chartAndActivity}>
-                    <div className={styles.userGrowthChartWrapper}>
-                        <UserGrowthChart
-                            forceRefresh={forceChartRefresh}
-                            setForceRefresh={setForceChartRefresh}
-                        />
-                    </div>
-                    <div className={styles.recentActivityWrapper}>
-                        {recentActivities && (
-                            <RecentActivityFeed
-                                activities={recentActivities.activities}
-                                onViewAllClick={handleViewAllClick}
-                            />
-                        )}
-                    </div>
+                    )}
+                    <p className={styles.lastUpdated}>System Health Last Updated: {systemHealth?.lastUpdated}</p>
                 </div>
             </div>
-
-            <hr className={styles.sectionDivider}/>
-
-            {/* System Health Section */}
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>System Health Metrics</h2>
-                {systemHealth && (
-                    <div className={styles.systemHealthGrid}>
-                        <DashboardCard
-                            title="CPU Load"
-                            value={`${systemHealth.cpuLoad.toFixed(2)}%`}
-                            icon={<FaHeartbeat/>}
-                            colorVar="--color-primary-light"
-                        />
-                        <DashboardCard
-                            title="Total Memory"
-                            value={`${(systemHealth.totalMemory / 1e9).toFixed(2)} GB`}
-                            icon={<FaHeartbeat/>}
-                            colorVar="--color-secondary-dark"
-                        />
-                        <DashboardCard
-                            title="Used Memory"
-                            value={`${(systemHealth.usedMemory / 1e9).toFixed(2)} GB`} icon={<FaHeartbeat/>}
-                            colorVar="--color-error"
-                        />
-                        <DashboardCard
-                            title="Free Memory"
-                            value={`${(systemHealth.freeMemory / 1e9).toFixed(2)} GB`}
-                            icon={<FaHeartbeat/>}
-                            colorVar="--color-success"
-                        />
-                        <DashboardCard
-                            title="System Uptime"
-                            value={formatUptime(systemHealth.uptime)}
-                            icon={<FaHeartbeat/>}
-                            colorVar="--color-primary-accent"
-                        />
-                        <DashboardCard
-                            title="Active Threads"
-                            value={systemHealth.activeThreads.toLocaleString()}
-                            icon={<FaHeartbeat/>}
-                            colorVar="--color-warning"
-                        />
-                    </div>
-                )}
-                <p className={styles.lastUpdated}>System Health Last Updated: {systemHealth?.lastUpdated}</p>
-            </div>
-        </div>
+        </>
     );
 };
 

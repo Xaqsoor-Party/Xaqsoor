@@ -9,9 +9,16 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const [checkingAuth, setCheckingAuth] = useState(true);
     useEffect(() => {
         const isOnUnauthorizedPage = router.pathname === "/unauthorized";
+        const role = user?.role?.toUpperCase();
+        const status = user?.status?.toUpperCase();
+
+        const isAuthorized =
+            (role === "ADMIN" || role === "SUPER_ADMIN") &&
+            status === "ACTIVE";
+
         if (!authToken || !user) {
             void router.replace("/auth/login");
-        } else if ((user.role?.toLowerCase() === "member" || user.status.toLowerCase() === "pending") && !isOnUnauthorizedPage) {
+        } else if (!isAuthorized && !isOnUnauthorizedPage) {
             void router.replace("/unauthorized");
         }else {
             setCheckingAuth(false);

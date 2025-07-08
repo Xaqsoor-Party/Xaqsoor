@@ -1,7 +1,13 @@
 package com.xaqsoor.mapper;
 
 import com.xaqsoor.dto.UserDto;
+import com.xaqsoor.dto.response.MembershipCardDto;
+import com.xaqsoor.dto.response.UserRecycleDto;
 import com.xaqsoor.entity.User;
+import com.xaqsoor.util.UserUtil;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.xaqsoor.util.UserUtil.formatDate;
 import static com.xaqsoor.util.UserUtil.formatDateTime;
@@ -45,5 +51,47 @@ public class UserMapper {
                 .accountNonLocked(user.isAccountNonLocked())
                 .enabled(user.isEnabled())
                 .build();
+    }
+
+    public static UserRecycleDto toRecycleDto(User deletedUser, User deletedByUser) {
+        String deletedUserFullName = getFullName(deletedUser);
+        String deletedByUserFullName = getFullName(deletedByUser);
+
+        return new UserRecycleDto(
+                deletedUser.getId(),
+                deletedUserFullName,
+                deletedUser.getEmail(),
+                deletedUser.getPhone(),
+                deletedUser.getRole().getName(),
+                deletedUser.getStatus().getValue(),
+                deletedByUser.getId(),
+                deletedByUserFullName,
+                UserUtil.formatDateTime(deletedUser.getModifiedDate())
+        );
+    }
+
+    public static MembershipCardDto toMembershipCardDto(User user, String profileImageUrl, String qrCodeUri,String validUntil) {
+        return new MembershipCardDto(
+                user.getUserId(),
+                getFullName(user),
+                user.getGender(),
+                user.getPlaceOfBirth(),
+                user.getMembershipLevel().getValue(),
+                user.getStatus().getValue(),
+                profileImageUrl,
+                validUntil,
+                user.getSignatureImageBase64(),
+                qrCodeUri
+        );
+    }
+
+    private static String getFullName(User user) {
+        return Stream.of(
+                        user.getFirstName(),
+                        user.getMiddleName(),
+                        user.getLastName()
+                )
+                .filter(name -> name != null && !name.isBlank())
+                .collect(Collectors.joining(" "));
     }
 }

@@ -1,8 +1,15 @@
 import UnderConstructionPage from "@/components/UnderConstructionPage/UnderConstructionPage";
+import Head from "next/head";
+import React from "react";
 
-const Add = () => {
+const AddConstituency = () => {
     return (
-        <UnderConstructionPage/>
+        <>
+            <Head>
+                <title>Add Constituency • Xaqsoor</title>
+            </Head>
+            <UnderConstructionPage/>
+        </>
     )
 }
-export default Add;
+export default AddConstituency;

@@ -11,6 +11,7 @@ import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import Head from "next/head";
 
 const ChangePasswordPage: React.FC = () => {
     const {user} = useAuthentication();
@@ -93,6 +94,10 @@ const ChangePasswordPage: React.FC = () => {
 
     return (
         <>
+            <Head>
+                <title>{t.title} • Xaqsoor</title>
+            </Head>
+
             <Breadcrumb breadcrumbs={breadcrumbData}/>
 
             <div className={styles.container}>

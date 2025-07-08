@@ -4,11 +4,12 @@ import Link from 'next/link';
 import {FiChevronDown, FiChevronRight, FiHome, FiX,} from 'react-icons/fi';
 
 import styles from './Sidebar.module.css'
-import {FaBullhorn, FaCogs, FaDonate, FaIdCard, FaMapMarkedAlt, FaPhotoVideo} from "react-icons/fa";
+import {FaBullhorn, FaCogs, FaDonate, FaIdCard, FaMapMarkedAlt, FaPhotoVideo, FaRecycle} from "react-icons/fa";
 
 import {AiOutlineDoubleLeft, AiOutlineDoubleRight} from "react-icons/ai";
 import {useLanguage} from "@/context/LanguageContext";
 import {getTranslations} from "@/translations";
+import {useAuthentication} from "@/auth/AuthProvider";
 
 interface NavItem {
     title: string;
@@ -28,6 +29,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
     const router = useRouter();
     const {language} = useLanguage();
     const t = getTranslations(language, "sidebar").sideBar;
+    const {user} = useAuthentication();
 
     const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
 
@@ -36,13 +38,13 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.dashboard,
             path: '/',
             icon: <FiHome className={styles.icon}/>,
-            roles: ['admin', 'coordinator', 'viewer']
+            roles: ['SUPER_ADMIN', 'ADMIN']
         },
         {
             title: t.constituencies,
             path: '/constituencies',
             icon: <FaMapMarkedAlt className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
+            roles: ['SUPER_ADMIN', 'ADMIN'],
             items: [
                 {
                     title: t.viewConstituencies,
@@ -60,7 +62,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.membership,
             path: '/membership',
             icon: <FaIdCard className={styles.icon}/>,
-            roles: ['admin', 'coordinator', 'viewer'],
+            roles: ['SUPER_ADMIN', 'ADMIN'],
             items: [
                 {
                     title: t.memberList,
@@ -81,11 +83,6 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
                     title: t.idCards,
                     path: '/membership/id-cards',
                     icon: <FiChevronRight className={styles.icon} />,
-                },
-                {
-                    title: t.foundersList,
-                    path: '/membership/founders',
-                    icon: <FiChevronRight className={styles.icon} />,
                 }
             ]
         },
@@ -93,7 +90,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.campaignTools,
             path: '/campaign',
             icon: <FaBullhorn className={styles.icon}/>,
-            roles: ['admin', 'coordinator'],
+            roles: ['SUPER_ADMIN', 'ADMIN'],
             items: [
                 {
                     title: t.announcements,
@@ -121,7 +118,7 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.mediaResources,
             path: '/media',
             icon: <FaPhotoVideo className={styles.icon}/>,
-            roles: ['admin'],
+            roles: ['SUPER_ADMIN', 'ADMIN'],
             items: [
                 {
                     title: t.gallery,
@@ -139,14 +136,19 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.donations,
             path: '/donations',
             icon: <FaDonate className={styles.icon} />,
-            roles: ['admin']
+            roles: ['SUPER_ADMIN', 'ADMIN'],
         },
-
+        {
+            title: t.recycleBin,
+            path: '/recycle-bin',
+            icon: <FaRecycle className={styles.icon}/>,
+            roles: ['SUPER_ADMIN'],
+        },
         {
             title: t.settings,
             path: '/settings',
             icon: <FaCogs className={styles.icon}/>,
-            roles: ['admin'],
+            roles: ['SUPER_ADMIN', 'ADMIN'],
         }
     ];
 
@@ -167,9 +169,9 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
         const hasChildren = item.items && item.items.length > 0;
         const isExpanded = expandedItems[item.title];
 
-        // if (item.roles && !item.roles.some(role => roles.includes(role))) {
-        //     return null;
-        // }
+        if (item.roles && !item.roles.some(role => user?.role.includes(role))) {
+            return null;
+        }
 
         return (
             <div key={item.path} className={styles.navItemContainer}>

@@ -6,7 +6,7 @@ public record UserCardDTO(
         String email,
         String phone,
         String profileImageUrl,
-        String roleName,
+        String membershipLevel,
         String status
 ) {}
 

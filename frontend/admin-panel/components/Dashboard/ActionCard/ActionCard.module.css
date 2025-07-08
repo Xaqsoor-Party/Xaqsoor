@@ -1,0 +1,73 @@
+/* ActionCard.module.css */
+.actionCard {
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    min-height: 220px;
+    justify-content: center;
+}
+
+.actionCard:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.actionCard:active {
+    transform: translateY(0);
+}
+
+.actionCard:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+}
+
+.cardIcon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cardTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cardSubtitle {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Color Variants */
+.downloadCard {
+    background: var(--color-primary-gradient);
+}
+
+.sendCard {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+}
+
+.whatsappCard {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.telegramCard {
+    background: linear-gradient(135deg, #0088cc 0%, #004d7a 100%);
+}

@@ -10,7 +10,7 @@ interface AnnouncementCardProps {
 const AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcement, onDetailClick }) => {
 
 
-    const date = new Date(announcement.announcementDate);
+    const date = new Date(announcement.announcementDate!);
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'short' });
 

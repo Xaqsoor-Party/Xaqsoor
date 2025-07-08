@@ -99,6 +99,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<RecentActivityProjection> findRecentActivities(Pageable pageable);
 
 
+    @Query(value = SqlQueries.FILTERED_USERS_QUERY, nativeQuery = true)
+    List<User> findUsersByFiltersNative(
+            @Param("status") String status,
+            @Param("gender") String gender,
+            @Param("operator") String operator,
+            @Param("membershipLevel") String membershipLevel
+    );
+
+    @Query(value = SqlQueries.FILTERED_USERS_COUNT_QUERY, nativeQuery = true)
+    long countUsersByFiltersNative(
+            @Param("status") String status,
+            @Param("gender") String gender,
+            @Param("operator") String operator,
+            @Param("membershipLevel") String membershipLevel
+    );
 
     long countByGender(String gender);
+
+    Page<User> findAllByIsDeletedTrue(Pageable pageable);
+
+    Optional<User> findByIdAndIsDeletedTrue(Long id);
+
+    boolean existsByIdAndIsDeletedTrue(Long id);
 }

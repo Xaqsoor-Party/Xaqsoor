@@ -31,7 +31,7 @@ public class UserUtil {
                 .lastName(request.lastName())
                 .gender(request.gender())
                 .status(Status.PENDING)
-                .membershipLevel(MembershipLevel.NEW_MEMBER)
+                .membershipLevel(MembershipLevel.SUPPORTER)
                 .role(role)
                 .email(normalizedEmail)
                 .phone(request.phone())

@@ -14,6 +14,6 @@ public class CacheConfig {
     }
     @Bean(name = "dashboardCache")
     public CacheStore<String, Object> dashboardCache() {
-        return new CacheStore<>(5, TimeUnit.MINUTES); // Or any TTL you want
+        return new CacheStore<>(5, TimeUnit.MINUTES);
     }
 }

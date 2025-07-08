@@ -29,4 +29,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     Page<Announcement> searchAnnouncements(@Param("keyword") String keyword,
                                            @Param("status") AnnouncementStatus status,
                                            Pageable pageable);
+
+    Page<Announcement> findAllByIsDeletedTrue(Pageable pageable);
+    Optional<Announcement> findByIdAndIsDeletedTrue(Long id);
+    boolean existsByIdAndIsDeletedTrue(Long id);
 }

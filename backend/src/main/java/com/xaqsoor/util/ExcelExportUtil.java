@@ -37,7 +37,6 @@ public class ExcelExportUtil {
             CellStyle activeCellStyle = null;
             CellStyle inactiveCellStyle = null;
             CellStyle suspendedCellStyle = null;
-            CellStyle lapsedCellStyle = null;
             CellStyle pendingCellStyle = null;
 
             if (colorCodeRows) {
@@ -52,10 +51,6 @@ public class ExcelExportUtil {
                 suspendedCellStyle = workbook.createCellStyle();
                 suspendedCellStyle.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
                 suspendedCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-                lapsedCellStyle = workbook.createCellStyle();
-                lapsedCellStyle.setFillForegroundColor(IndexedColors.CORAL.getIndex());
-                lapsedCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
                 pendingCellStyle = workbook.createCellStyle();
                 pendingCellStyle.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
@@ -72,7 +67,6 @@ public class ExcelExportUtil {
                         case ACTIVE -> rowCellStyle = activeCellStyle;
                         case INACTIVE -> rowCellStyle = inactiveCellStyle;
                         case SUSPENDED -> rowCellStyle = suspendedCellStyle;
-                        case LAPSED -> rowCellStyle = lapsedCellStyle;
                         case PENDING -> rowCellStyle = pendingCellStyle;
                     }
                 }
@@ -142,4 +136,54 @@ public class ExcelExportUtil {
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
+
+    public static ByteArrayInputStream exportBasicUserInfo(List<User> users, String[] columns) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            Sheet sheet = workbook.createSheet("Phone Export");
+
+            // Header styling
+            Row headerRow = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerCellStyle.setFont(headerFont);
+            headerCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            for (int col = 0; col < columns.length; col++) {
+                Cell cell = headerRow.createCell(col);
+                cell.setCellValue(columns[col]);
+                cell.setCellStyle(headerCellStyle);
+            }
+
+            int rowIdx = 1;
+            for (User user : users) {
+                Row row = sheet.createRow(rowIdx++);
+
+                // Full name (first + middle + last)
+                String fullName = String.format("%s %s %s",
+                        user.getFirstName() != null ? user.getFirstName() : "",
+                        user.getMiddleName() != null ? user.getMiddleName() : "",
+                        user.getLastName() != null ? user.getLastName() : ""
+                ).replaceAll(" +", " ").trim();
+
+                // Full Name
+                row.createCell(0).setCellValue(fullName);
+
+                // Phone Number
+                row.createCell(1).setCellValue(user.getPhone() != null ? user.getPhone() : "");
+
+                // Network Operator
+                row.createCell(2).setCellValue(user.getNetworkOperator() != null ? user.getNetworkOperator() : "");
+            }
+
+            for (int i = 0; i < columns.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+        }
+    }
+
 }

@@ -5,7 +5,7 @@ export interface AnnouncementDto {
     title: string;
     content: string;
     status?: AnnouncementStatus;
-    announcementDate: string;  // ISO or formatted date (e.g., "28 June 2025")
+    announcementDate?: string;  // ISO or formatted date (e.g., "28 June 2025")
 }
 
 export interface AnnouncementListDto {

@@ -2,10 +2,7 @@ import SearchInput from "@/components/common/SearchInput/SearchInput";
 import React, {useEffect, useState} from "react";
 import SelectInput from "@/components/common/SelectInput/SelectInput";
 import ActionButton from "@/components/common/ActionButton/ActionButton";
-import CreateAnnouncementForm from "@/components/Announcement/CreateAnnouncementForm/CreateAnnouncementForm";
-import filterStyles from "@/styles/UserListPage.module.css";
-import styles from "@/styles/AnnouncementsPage.module.css";
-import {Status} from "@/pages/membership/founders";
+
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import {AnnouncementListDto, AnnouncementStatus} from "@/types/announcement";
@@ -13,6 +10,11 @@ import useAnnouncementApi from "@/api/hooks/useAnnouncementApi";
 import {extractErrorMessage} from "@/util/extractErrorMessage";
 import AnnouncementCard from "@/components/Announcement/AnnouncementCard/AnnouncementCard";
 import {useRouter} from "next/router";
+import {Status} from "@/pages/campaign/announcements/[id]";
+import AnnouncementForm from "@/components/Announcement/AnnouncementForm/AnnouncementForm";
+import filterStyles from "@/styles/UserListPage.module.css";
+import styles from "@/styles/AnnouncementsPage.module.css";
+import Head from "next/head";
 
 interface Filters {
     keyword: string;
@@ -173,111 +175,119 @@ const Announcements = () => {
     };
 
     return (
-        <div className={filterStyles.container}>
-            <h1 className={filterStyles.title}>Manage Announcements</h1>
-            <p className={filterStyles.subtitle}>
-                Filter announcements by status or search by title and content to find relevant updates.
-            </p>
-            <div className={filterStyles.filters}>
-                <div className={filterStyles.searchBar}>
-                    <SearchInput
-                        value={filters.keyword}
-                        onChange={e => setSearchTerm(e.target.value)}
-                        placeholder="Search by title or content..."
-                    />
-                </div>
+       <>
+           <Head>
+               <title>Manage Announcements • Xaqsoor</title>
+           </Head>
+           <div className={filterStyles.container}>
+               <h1 className={filterStyles.title}>Manage Announcements</h1>
+               <p className={filterStyles.subtitle}>
+                   Filter announcements by status or search by title and content to find relevant updates.
+               </p>
+               <div className={filterStyles.filters}>
+                   <div className={filterStyles.searchBar}>
+                       <SearchInput
+                           value={filters.keyword}
+                           onChange={e => setSearchTerm(e.target.value)}
+                           placeholder="Search by title or content..."
+                       />
+                   </div>
 
-                <div className={filterStyles.filterRow}>
-                    <SelectInput
-                        label="Status"
-                        value={filters.statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                        options={statusOptions}
-                        placeholder="-- Filter by status --"
-                    />
+                   <div className={filterStyles.filterRow}>
+                       <SelectInput
+                           label="Status"
+                           value={filters.statusFilter}
+                           onChange={(e) => setStatusFilter(e.target.value)}
+                           options={statusOptions}
+                           placeholder="-- Filter by status --"
+                       />
 
-                    <ActionButton onClick={handleResetFilters} className={filterStyles.resetButton}>
-                        Reset Filters
-                    </ActionButton>
-                </div>
-            </div>
+                       <ActionButton onClick={handleResetFilters} className={filterStyles.resetButton}>
+                           Reset Filters
+                       </ActionButton>
+                   </div>
+               </div>
 
-            <div className={styles.announcementActions}>
-                <ActionButton onClick={handleCreateAnnouncement} className={styles.createButton}>
-                    Create New Announcement
-                </ActionButton>
+               <div className={styles.announcementActions}>
+                   <ActionButton onClick={handleCreateAnnouncement} className={styles.createButton}>
+                       Create New Announcement
+                   </ActionButton>
 
-                <div className={styles.pageSize}>
-                    <SelectInput
-                        label=""
-                        value={pagination.pageSize.toString()}
-                        onChange={handlePageSizeChange}
-                        options={pageSizeOptions}
-                        placeholder="-- Page size --"
-                    />
-                </div>
-            </div>
+                   <div className={styles.pageSize}>
+                       <SelectInput
+                           label=""
+                           value={pagination.pageSize.toString()}
+                           onChange={handlePageSizeChange}
+                           options={pageSizeOptions}
+                           placeholder="-- Page size --"
+                       />
+                   </div>
+               </div>
 
-            {status.loading ? (
-                <div className={filterStyles.loading}>
-                    <SpinLoading size={50}/>
-                    <p className={filterStyles.loadingText}>Fetching announcements... please hold tight.</p>
-                </div>
-            ) : announcements ? (
-                <>
-                    <div className={filterStyles.resultsInfo}>
-                        Showing {(pagination.pageNumber * pagination.pageSize) + 1} -{" "}
-                        {Math.min((pagination.pageNumber + 1) * pagination.pageSize, announcements.totalItems)} of {announcements.totalItems} announcements
-                    </div>
+               {status.loading ? (
+                   <div className={filterStyles.loading}>
+                       <SpinLoading size={50}/>
+                       <p className={filterStyles.loadingText}>Fetching announcements... please hold tight.</p>
+                   </div>
+               ) : announcements ? (
+                   <>
+                       <div className={filterStyles.resultsInfo}>
+                           Showing {(pagination.pageNumber * pagination.pageSize) + 1} -{" "}
+                           {Math.min((pagination.pageNumber + 1) * pagination.pageSize, announcements.totalItems)} of {announcements.totalItems} announcements
+                       </div>
 
-                    <ul className={styles.announcementsList}>
-                        {announcements.announcements.map((announcement) => (
-                            <AnnouncementCard announcement={announcement} onDetailClick={handleDetailClick} key={announcement.id}/>
-                        ))}
-                    </ul>
+                       <ul className={styles.announcementsList}>
+                           {announcements.announcements.map((announcement) => (
+                               <AnnouncementCard announcement={announcement} onDetailClick={handleDetailClick} key={announcement.id}/>
+                           ))}
+                       </ul>
 
-                    <div className={filterStyles.pagination}>
-                        <ActionButton onClick={onPrevPage} disabled={pagination.pageNumber === 0}
-                                      className={filterStyles.paginationButton}>
-                            Previous
-                        </ActionButton>
+                       <div className={filterStyles.pagination}>
+                           <ActionButton onClick={onPrevPage} disabled={pagination.pageNumber === 0}
+                                         className={filterStyles.paginationButton}>
+                               Previous
+                           </ActionButton>
 
-                        <span className={filterStyles.pageInfo}>
+                           <span className={filterStyles.pageInfo}>
                            Page {pagination.pageNumber + 1} of {Math.ceil(announcements.totalItems / pagination.pageSize)}
                         </span>
 
-                        <ActionButton
-                            onClick={onNextPage}
-                            disabled={announcements.totalItems <= (pagination.pageNumber + 1) * pagination.pageSize}
-                            className={filterStyles.paginationButton}
-                        >
-                            Next
-                        </ActionButton>
-                    </div>
-                </>
-            ) : (
-                <div className={filterStyles.noUsersMessage}>
-                    No announcements match the current filters. Try adjusting your search or filter criteria.
-                </div>
-            )}
+                           <ActionButton
+                               onClick={onNextPage}
+                               disabled={announcements.totalItems <= (pagination.pageNumber + 1) * pagination.pageSize}
+                               className={filterStyles.paginationButton}
+                           >
+                               Next
+                           </ActionButton>
+                       </div>
+                   </>
+               ) : (
+                   <div className={filterStyles.noUsersMessage}>
+                       No announcements match the current filters. Try adjusting your search or filter criteria.
+                   </div>
+               )}
 
-            {status.error && (
-                <AlertModal
-                    title="Error"
-                    message={status.error}
-                    onConfirm={() => setStatus((prev) => ({...prev, error: null}))}
-                    buttonText="Close"
-                    error
-                />
-            )}
+               {status.error && (
+                   <AlertModal
+                       title="Error"
+                       message={status.error}
+                       onConfirm={() => setStatus((prev) => ({...prev, error: null}))}
+                       buttonText="Close"
+                       error
+                   />
+               )}
 
-            {showModal &&
-                <CreateAnnouncementForm
-                    onSubmit={handleCreate}
-                    onCancel={() => setShowModal(false)}
-                />
-            }
-        </div>
+               {showModal &&
+                   <AnnouncementForm
+                       onSubmit={handleCreate}
+                       onCancel={() => setShowModal(false)}
+                       loading={status.loading}
+                       formTitle={"Create New Announcement"}
+                       submitButtonText={"Create Announcement"}
+                   />
+               }
+           </div>
+       </>
     )
 }
 export default Announcements;

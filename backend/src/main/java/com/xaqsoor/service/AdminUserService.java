@@ -5,9 +5,6 @@ public interface AdminUserService {
 
     void softDeleteUser(Long userId);
 
-    // Hard delete: permanently remove user from database
-    void permanentlyDeleteUser(Long userId);
-
     void setUserEnabled(Long userId, boolean enabled);
 
     void setAccountNonLocked(Long userId, boolean nonLocked);

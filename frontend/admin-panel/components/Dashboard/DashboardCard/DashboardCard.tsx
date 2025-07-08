@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/Home.module.css';
+import styles from './DashboardCard.module.css';
 
 interface DashboardCardProps {
     title: string;
@@ -7,10 +7,13 @@ interface DashboardCardProps {
     description?: string;
     icon?: React.ReactNode;
     colorVar?: string;
+    isRawColor?: boolean;
 }
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, description, icon, colorVar }) => {
-    const cardStyle = colorVar ? { backgroundColor: `var(${colorVar})` } : {};
+const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, description, icon, colorVar ,isRawColor}) => {
+    const cardStyle = colorVar
+        ? { backgroundColor: isRawColor ? colorVar : `var(${colorVar})` }
+        : {};
 
     return (
         <div className={styles.dashboardCard} style={cardStyle}>

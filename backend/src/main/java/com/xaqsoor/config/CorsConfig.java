@@ -18,7 +18,8 @@ public class CorsConfig {
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://localhost:3001",
-                "https://app.xaqsoorparty.so"
+                "https://app.xaqsoorparty.so",
+                "https://admin.app.xaqsoorparty.so"
         ));
         config.setAllowedMethods(Arrays.asList(
                 "GET",
