@@ -5,6 +5,7 @@
 frontend/admin-panel/.idea/
 frontend/client-app/.idea/
 backend/.idea/
+backend/src/main/java/com/xaqsoor/config/CorsConfig.java
 
 .idea
 **/.pnp
