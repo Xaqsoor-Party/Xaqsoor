@@ -1,5 +1,7 @@
 package com.xaqsoor.service;
 
+import com.xaqsoor.dto.Dashboard.EmailCampaignDashboardDto;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -16,4 +18,6 @@ public interface UserCommunicationService {
                             String gender,
                             String operator,
                             String membershipLevel);
+
+    EmailCampaignDashboardDto getEmailCampaignDashboardData();
 }

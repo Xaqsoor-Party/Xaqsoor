@@ -1,5 +1,6 @@
 package com.xaqsoor.service.impl;
 
+import com.xaqsoor.dto.Dashboard.EmailCampaignDashboardDto;
 import com.xaqsoor.entity.User;
 import com.xaqsoor.repository.UserRepository;
 import com.xaqsoor.service.UserCommunicationService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +41,6 @@ public class UserCommunicationServiceImpl implements UserCommunicationService {
         return ExcelExportUtil.exportBasicUserInfo(users, columns);
     }
 
-
     @Override
     public long countFilteredUsers(String status, String gender, String operator, String membershipLevel)  {
         String parsedStatus = UserSortUtil.parseStatusFilter(status);
@@ -49,6 +50,28 @@ public class UserCommunicationServiceImpl implements UserCommunicationService {
                 gender,
                 operator,
                 parsedMembership
+        );
+    }
+
+    @Override
+    public EmailCampaignDashboardDto getEmailCampaignDashboardData() {
+        long verifiedEmails = userRepository.countVerifiedEmails();
+        long unverifiedEmails = userRepository.countUnverifiedEmails();
+        long deletedEmails = userRepository.countDeletedEmails();
+
+        List<Object[]> domainResult = userRepository.getEmailDomainCounts();
+        Map<String, Long> domainCounts = new HashMap<>();
+        for (Object[] row : domainResult) {
+            String domain = (String) row[0];
+            Long count = ((Number) row[1]).longValue();
+            domainCounts.put(domain, count);
+        }
+
+        return new EmailCampaignDashboardDto(
+                verifiedEmails,
+                unverifiedEmails,
+                deletedEmails,
+                domainCounts
         );
     }
 
@@ -63,14 +86,4 @@ public class UserCommunicationServiceImpl implements UserCommunicationService {
         );
     }
 
-    private String escapeCsv(String field) {
-        if (field == null || field.isEmpty()) {
-            return "";
-        }
-        if (field.contains(",") || field.contains("\"") || field.contains("\n") || field.contains("\r")) {
-            String escapedField = field.replace("\"", "\"\"");
-            return "\"" + escapedField + "\"";
-        }
-        return field;
-    }
 }
