@@ -117,7 +117,7 @@ const Messages = () => {
                         title="Download CSV"
                         subtitle="Export user phone numbers for external use."
                         icon={<FiDownload />}
-                        onClick={() => router.push("/campaign/export-csv")}
+                        onClick={() => router.push("/campaign/messages/export-csv")}
                         colorClass={styles.downloadCard}
                     />
 
@@ -125,7 +125,7 @@ const Messages = () => {
                         title="Send Message"
                         subtitle="Compose and send SMS messages to members."
                         icon={<FiSend />}
-                        onClick={() => router.push("/campaign/send")}
+                        onClick={() => router.push("/campaign/messages/send")}
                         colorClass={styles.sendCard}
                     />
 
@@ -133,7 +133,7 @@ const Messages = () => {
                         title="WhatsApp"
                         subtitle="Initiate conversations via WhatsApp."
                         icon={<FaWhatsapp color="#FFF" />}
-                        onClick={() => router.push("/campaign/send-whatsapp")}
+                        onClick={() => router.push("/campaign/messages/send-whatsapp")}
                         colorClass={styles.whatsappCard}
                     />
 
@@ -141,7 +141,7 @@ const Messages = () => {
                         title="Telegram"
                         subtitle="Send messages through Telegram."
                         icon={<FaTelegramPlane color="#FFF" />}
-                        onClick={() => router.push("/campaign/send-telegram")}
+                        onClick={() => router.push("/campaign/messages/send-telegram")}
                         colorClass={styles.telegramCard}
                     />
                 </div>

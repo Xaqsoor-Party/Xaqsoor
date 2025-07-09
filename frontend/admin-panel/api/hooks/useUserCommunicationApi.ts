@@ -1,6 +1,8 @@
 import useAxiosPrivate from "@/api/hooks/useAxiosPrivate";
 // @ts-ignore
 import { saveAs } from "file-saver";
+import {ApiResponse} from "@/types/auth";
+import {EmailDashboardDto} from "@/types/dashboard";
 
 const BASE_URL = "/api/v1/communications";
 
@@ -63,10 +65,18 @@ const useUserCommunicationApi = () => {
         return response.data.data.count;
     };
 
+    const getEmailCampaignDashboardData = async (): Promise<ApiResponse<{ emailDashboard: EmailDashboardDto }>> => {
+        const response = await axiosPrivate.get<ApiResponse<{ emailDashboard: EmailDashboardDto }>>(
+            `${BASE_URL}/emails/dashboard`
+        );
+        return response.data;
+    }
+
     return {
         downloadPhoneAndOperatorCsv,
         getPhoneOperatorUserCount,
-        getFilteredPhoneCount
+        getFilteredPhoneCount,
+        getEmailCampaignDashboardData
     };
 };
 

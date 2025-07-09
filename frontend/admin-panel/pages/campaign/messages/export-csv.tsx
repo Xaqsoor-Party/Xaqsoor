@@ -113,7 +113,7 @@ const ExportCsv = () => {
     const breadcrumbData = [
         {label: 'Home', link: '/'},
         {label: 'Messages', link: '/campaign/messages'},
-        {label: 'Export CSV', link: `/campaign/export-csv`},
+        {label: 'Export CSV', link: `/campaign/messages/export-csv`},
     ];
 
     return (

@@ -64,3 +64,10 @@ export interface TimeRangeRequest {
     startDate?: string; // For CUSTOM only
     endDate?: string;   // For CUSTOM only
 }
+
+export interface EmailDashboardDto {
+    verifiedEmails: number;
+    unverifiedEmails: number;
+    deletedEmails: number;
+    domainCounts: Record<string, number>;
+}
