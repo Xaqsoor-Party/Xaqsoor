@@ -8,6 +8,7 @@ import {FaTelegramPlane, FaWhatsapp} from "react-icons/fa";
 import {useRouter} from "next/router";
 import ActionCard from "@/components/Dashboard/ActionCard/ActionCard";
 import styles from "@/styles/Messages.module.css";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 const Messages = () => {
     const {getPhoneOperatorUserCount} = useUserCommunicationApi();
@@ -48,6 +49,11 @@ const Messages = () => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     };
 
+    const breadcrumbData = [
+        {label: 'Home', link: '/'},
+        {label: 'Messages', link: '/campaign/messages'},
+    ];
+
     return (
         <>
             <Head>
@@ -55,7 +61,7 @@ const Messages = () => {
             </Head>
 
             <div className={styles.container}>
-
+                <Breadcrumb breadcrumbs={breadcrumbData}/>
                 <h1 className={styles.pageTitle}>Communications Dashboard</h1>
                 <p className={styles.pageSubtitle}>
                     Overview of user distribution by network operator and quick access to messaging tools.
