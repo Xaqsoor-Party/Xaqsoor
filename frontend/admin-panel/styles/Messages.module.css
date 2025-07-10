@@ -94,6 +94,10 @@
     background: linear-gradient(135deg, #0088cc 0%, #004d7a 100%);
 }
 
+.bulkEmailCard {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: var(--spacing-xl) var(--spacing-md);

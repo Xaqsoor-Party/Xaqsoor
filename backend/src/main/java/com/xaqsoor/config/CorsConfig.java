@@ -16,8 +16,6 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000",
-                "http://localhost:3001",
                 "https://app.xaqsoorparty.so",
                 "https://admin.app.xaqsoorparty.so"
         ));

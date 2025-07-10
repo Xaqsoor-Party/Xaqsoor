@@ -1,4 +1,3 @@
-/* ActionCard.module.css */
 .actionCard {
     border: none;
     border-radius: var(--radius-lg);
@@ -53,21 +52,4 @@
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
     line-height: 1.5;
-}
-
-/* Color Variants */
-.downloadCard {
-    background: var(--color-primary-gradient);
-}
-
-.sendCard {
-    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
-}
-
-.whatsappCard {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-}
-
-.telegramCard {
-    background: linear-gradient(135deg, #0088cc 0%, #004d7a 100%);
 }

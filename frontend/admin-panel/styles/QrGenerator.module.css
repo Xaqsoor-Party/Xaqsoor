@@ -1,0 +1,199 @@
+.container {
+    background-color: var(--color-background-secondary);
+    max-width: var(--breakpoint-tablet);
+    margin: 0 auto;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.title {
+    font-size: var(--font-size-xxl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.formWrapper {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xxl);
+}
+
+.formGroup {
+    margin-bottom: var(--spacing-lg);
+}
+
+.formRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xl);
+}
+
+.formGroup {
+    flex: 1;
+    min-width: 200px;
+}
+
+.colorPickerGroup {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.colorPicker {
+    flex: 1;
+    min-width: 150px;
+}
+
+.colorPicker label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-label);
+    font-weight: 500;
+}
+
+.colorInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.colorInput {
+    width: 40px;
+    height: 40px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.colorInput::-webkit-color-swatch {
+    border: 1px solid var(--color-primary);
+    border-radius: 50%;
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.colorValue {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-family: monospace;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.generateButton {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    flex: 1;
+}
+
+.generateButton:hover {
+    background: var(--color-primary-dark);
+}
+
+.resetButton {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-base);
+}
+
+.resetButton:hover {
+    background: var(--color-background-accent);
+    border-color: var(--color-primary-light);
+}
+
+.qrWrapper {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.qrContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.downloadGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.downloadButton {
+    background: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    max-width: 300px;
+    width: 100%;
+}
+
+.downloadButton:hover {
+    background: var(--color-secondary-dark);
+}
+
+.downloadButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: var(--color-secondary-light);
+}
+
+.qrInfo {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .formRow {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .colorPickerGroup {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+}

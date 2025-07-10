@@ -1,6 +1,7 @@
 package com.xaqsoor.controller;
 
 import com.xaqsoor.domain.Response;
+import com.xaqsoor.dto.Dashboard.EmailCampaignDashboardDto;
 import com.xaqsoor.service.UserCommunicationService;
 import com.xaqsoor.util.RequestUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -80,6 +81,20 @@ public class UserCommunicationController {
                         request,
                         Map.of("count", count),
                         "Filtered user count retrieved successfully",
+                        HttpStatus.OK
+                )
+        );
+    }
+
+    @GetMapping("/emails/dashboard")
+    public ResponseEntity<Response> getEmailCampaignDashboard(HttpServletRequest request) {
+        EmailCampaignDashboardDto dto = userCommunicationService.getEmailCampaignDashboardData();
+
+        return ResponseEntity.ok(
+                RequestUtils.getResponse(
+                        request,
+                        Map.of("emailDashboard", dto),
+                        "Email campaign dashboard data retrieved successfully",
                         HttpStatus.OK
                 )
         );
