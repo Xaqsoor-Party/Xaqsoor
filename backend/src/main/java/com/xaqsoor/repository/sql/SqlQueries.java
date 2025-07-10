@@ -212,4 +212,32 @@ public class SqlQueries {
                   AND (:membershipLevel IS NULL OR u.membership_level = CAST(:membershipLevel AS TEXT))
             """;
 
+    public static final String COUNT_VERIFIED_EMAILS = """
+            SELECT COUNT(*)
+            FROM users
+            WHERE email_verified = true
+              AND is_deleted = false
+            """;
+
+    public static final String COUNT_UNVERIFIED_EMAILS = """
+            SELECT COUNT(*)
+            FROM users
+            WHERE email_verified = false
+              AND is_deleted = false
+            """;
+
+    public static final String COUNT_DELETED_EMAILS = """
+            SELECT COUNT(*)
+            FROM users
+            WHERE is_deleted = true
+              AND email IS NOT NULL
+            """;
+
+    public static final String GET_EMAIL_DOMAIN_COUNTS = """
+            SELECT SUBSTRING(email FROM POSITION('@' IN email) + 1) AS domain, COUNT(*)
+            FROM users
+            WHERE is_deleted = false
+              AND email IS NOT NULL
+            GROUP BY domain
+            """;
 }

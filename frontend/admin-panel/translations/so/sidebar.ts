@@ -23,5 +23,6 @@ export const sidebarLabels: SidebarLabels = {
         idCards: "Kaadhadhka Aqoonsiga Xubnaha",
         foundersList:"aasaasayaasha",
         recycleBin: "Qashin-qubka",
+        qrGenerator: "QR Generator",
     }
 }

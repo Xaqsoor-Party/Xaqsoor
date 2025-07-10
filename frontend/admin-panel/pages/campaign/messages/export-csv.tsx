@@ -9,6 +9,7 @@ import FilterStyles from "@/styles/UserListPage.module.css";
 import SpinLoading from "@/components/common/SpinLoading/SpinLoading";
 import AlertModal from "@/components/common/AlertModal/AlertModal";
 import styles from "@/components/UserExportSection/UserExportSection.module.css";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
 interface Filters {
     status: string;
@@ -109,6 +110,11 @@ const ExportCsv = () => {
     }, [filters]);
 
 
+    const breadcrumbData = [
+        {label: 'Home', link: '/'},
+        {label: 'Messages', link: '/campaign/messages'},
+        {label: 'Export CSV', link: `/campaign/messages/export-csv`},
+    ];
 
     return (
         <div>
@@ -117,6 +123,7 @@ const ExportCsv = () => {
             </Head>
 
             <div className={FilterStyles.container}>
+                <Breadcrumb breadcrumbs={breadcrumbData}/>
                 <h1 className={FilterStyles.title}>Export Phone Numbers</h1>
                 <p className={FilterStyles.subtitle}>Filter user phone data and export to CSV.</p>
                 <div className={FilterStyles.filters}>

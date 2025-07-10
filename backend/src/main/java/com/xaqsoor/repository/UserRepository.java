@@ -122,4 +122,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByIdAndIsDeletedTrue(Long id);
 
     boolean existsByIdAndIsDeletedTrue(Long id);
+
+    @Query(value = SqlQueries.COUNT_VERIFIED_EMAILS, nativeQuery = true)
+    long countVerifiedEmails();
+
+    @Query(value = SqlQueries.COUNT_UNVERIFIED_EMAILS, nativeQuery = true)
+    long countUnverifiedEmails();
+
+    @Query(value = SqlQueries.COUNT_DELETED_EMAILS, nativeQuery = true)
+    long countDeletedEmails();
+
+    @Query(value = SqlQueries.GET_EMAIL_DOMAIN_COUNTS, nativeQuery = true)
+    List<Object[]> getEmailDomainCounts();
 }
