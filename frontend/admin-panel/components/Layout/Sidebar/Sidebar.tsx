@@ -4,7 +4,16 @@ import Link from 'next/link';
 import {FiChevronDown, FiChevronRight, FiHome, FiX,} from 'react-icons/fi';
 
 import styles from './Sidebar.module.css'
-import {FaBullhorn, FaCogs, FaDonate, FaIdCard, FaMapMarkedAlt, FaPhotoVideo, FaRecycle} from "react-icons/fa";
+import {
+    FaBullhorn,
+    FaCogs,
+    FaDonate,
+    FaIdCard,
+    FaMapMarkedAlt,
+    FaPhotoVideo,
+    FaQrcode,
+    FaRecycle
+} from "react-icons/fa";
 
 import {AiOutlineDoubleLeft, AiOutlineDoubleRight} from "react-icons/ai";
 import {useLanguage} from "@/context/LanguageContext";
@@ -136,6 +145,12 @@ const Sidebar: React.FC<SideNavProps> = ({isOpen, onClose, isMobile}) => {
             title: t.donations,
             path: '/donations',
             icon: <FaDonate className={styles.icon} />,
+            roles: ['SUPER_ADMIN', 'ADMIN'],
+        },
+        {
+            title: t.qrGenerator,
+            path: '/qr-generator',
+            icon: <FaQrcode className={styles.icon} />,
             roles: ['SUPER_ADMIN', 'ADMIN'],
         },
         {

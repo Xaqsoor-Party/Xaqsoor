@@ -19,7 +19,8 @@ type Sidebar = {
     donations: string,
     idCards: string,
     foundersList:string,
-    recycleBin:string
+    recycleBin:string,
+    qrGenerator:string,
 }
 
 export type SidebarLabels = {
@@ -49,5 +50,6 @@ export const sidebarLabels: SidebarLabels = {
         idCards: "Member ID Cards",
         foundersList: "Founders",
         recycleBin: "Recycle Bin",
+        qrGenerator: "QR Generator",
     }
 }
