@@ -19,7 +19,11 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
         phone: "",
         email: "",
         password: "",
-        gender: ""
+        gender: "",
+        country: "",
+        state: "",
+        city: "",
+        district: ""
     });
     const [errors, setErrors] = useState({
         firstName: "",
@@ -108,6 +112,11 @@ export const useAuth = ({isRegistering}: UseAuthProps) => {
                 networkProvider: phoneInfo.operator,
                 gender: formData.gender,
                 roleName: "MEMBER",
+
+                country: formData.country,
+                state: formData.state,
+                city: formData.city,
+                district: formData.district
             };
 
             const message = await registerUser(userData);
