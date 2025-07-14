@@ -50,9 +50,10 @@ public class UserUtil {
                 .mfaSecret(EMPTY)
                 .mfaQrCodeImageUri(EMPTY)
                 .street(EMPTY)
-                .city(EMPTY)
-                .state(EMPTY)
-                .country(EMPTY)
+                .district(request.district())
+                .city(request.city())
+                .state(request.state())
+                .country(request.country())
                 .build();
     }
 

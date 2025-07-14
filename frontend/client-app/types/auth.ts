@@ -9,6 +9,10 @@ export interface UserCreateRequest {
     networkProvider: string;
     gender: string;
     roleName?: string;
+    country?: string;
+    state?: string;
+    city?: string;
+    district?: string;
 }
 
 export interface ApiResponse<T> {

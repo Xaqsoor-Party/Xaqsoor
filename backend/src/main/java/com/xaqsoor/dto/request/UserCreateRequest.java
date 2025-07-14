@@ -35,7 +35,19 @@ public record UserCreateRequest(
 
         @NotBlank(message = "Role name is required")
         @Size(max = 30)
-        String roleName
+        String roleName,
+
+        @Size(max = 56, message = "Country name must be at most 56 characters")
+        String country,
+
+        @Size(max = 56, message = "State name must be at most 56 characters")
+        String state,
+
+        @Size(max = 56, message = "City name must be at most 56 characters")
+        String city,
+
+        @Size(max = 56, message = "District name must be at most 56 characters")
+        String district
 ) {
         public UserCreateRequest {
                 if (roleName == null || roleName.isEmpty()) {
