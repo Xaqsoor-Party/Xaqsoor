@@ -26,6 +26,11 @@ export const authPages: AuthPages = {
         signupLinkLogin: "Samee mid",
         signupTextRegister: "Miyaad horey u lahayd akoon?",
         signupTextLogin: "Ma lihid akoon?",
+
+        "country": "Waddan",
+        "state": "Gobol",
+        "city": "Magaalo",
+        "district": "Degmo"
     },
     SetPassword: {
         title: "Dooro Furaha Cusub",

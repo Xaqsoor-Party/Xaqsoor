@@ -112,6 +112,25 @@ const AuthForm: React.FC<AuthFormProps> = ({isRegistering}) => {
                                     required
                                     placeholder={translations.genderPlaceholder}
                                 />
+                                <div className={styles.rowInputs}>
+                                    <Input label={translations.country} name="country" value={formData.country}
+                                           onChange={handleChange}
+                                           type="text" maxLength={56} />
+
+                                    <Input label={translations.state} name="state" value={formData.state}
+                                           onChange={handleChange}
+                                           type="text" maxLength={56} />
+                                </div>
+
+                                <div className={styles.rowInputs}>
+                                    <Input label={translations.city} name="city" value={formData.city}
+                                           onChange={handleChange}
+                                           type="text" maxLength={56} />
+
+                                    <Input label={translations.district} name="district" value={formData.district}
+                                           onChange={handleChange}
+                                           type="text" maxLength={56} />
+                                </div>
                             </>
                         )}
 

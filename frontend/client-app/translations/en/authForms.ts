@@ -20,6 +20,11 @@ type authForms = {
     signupLinkLogin: string;
     signupTextRegister: string;
     signupTextLogin: string;
+
+    country: string;
+    state: string;
+    city: string;
+    district: string
 }
 type setPassword = {
     title: string;
@@ -90,6 +95,11 @@ export const authPages: AuthPages = {
         signupLinkLogin: "Create one",
         signupTextRegister: "Already have an account?",
         signupTextLogin: "Don't have an account?",
+
+        "country": "Country",
+        "state": "State",
+        "city": "City",
+        "district": "District"
     },
     SetPassword: {
         title: "Choose a new Password",
