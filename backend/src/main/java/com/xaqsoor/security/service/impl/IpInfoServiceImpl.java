@@ -1,6 +1,5 @@
 package com.xaqsoor.security.service.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.xaqsoor.security.service.IpInfoService;
@@ -10,11 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 
 @Slf4j
 @Service
@@ -33,38 +27,40 @@ public class IpInfoServiceImpl implements IpInfoService {
             return new IpInfo(ipAddress, "Localhost", "N/A", "N/A", "0.0,0.0", "Local Network", "N/A");
         }
 
-        try {
-            URI uri = new URI("https://ipinfo.io/" + ipAddress + "/json?token=" + ipInfoApiToken);
-            URL url = uri.toURL();
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+        return getFallbackIpInfo(ipAddress);
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                StringBuilder content = new StringBuilder();
-                String inputLine;
-
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-
-                JsonNode jsonNode = objectMapper.readTree(content.toString());
-
-                String ip = jsonNode.has("ip") ? jsonNode.get("ip").asText() : "N/A";
-                String city = jsonNode.has("city") ? jsonNode.get("city").asText() : "N/A";
-                String region = jsonNode.has("region") ? jsonNode.get("region").asText() : "N/A";
-                String country = jsonNode.has("country") ? jsonNode.get("country").asText() : "N/A";
-                String loc = jsonNode.has("loc") ? jsonNode.get("loc").asText() : "0.0,0.0";
-                String org = jsonNode.has("org") ? jsonNode.get("org").asText() : "Unknown";
-                String timezone = jsonNode.has("timezone") ? jsonNode.get("timezone").asText() : "N/A";
-
-                return new IpInfo(ip, city, region, country, loc, org, timezone);
-            }
-        } catch (Exception e) {
-            log.error("Failed to retrieve IP information: {}", e.getMessage());
-            return getFallbackIpInfo();
-        }
+//        try {
+//            URI uri = new URI("https://ipinfo.io/" + ipAddress + "/json?token=" + ipInfoApiToken);
+//            URL url = uri.toURL();
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setRequestMethod("GET");
+//            connection.setConnectTimeout(5000);
+//            connection.setReadTimeout(5000);
+//
+//            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+//                StringBuilder content = new StringBuilder();
+//                String inputLine;
+//
+//                while ((inputLine = in.readLine()) != null) {
+//                    content.append(inputLine);
+//                }
+//
+//                JsonNode jsonNode = objectMapper.readTree(content.toString());
+//
+//                String ip = jsonNode.has("ip") ? jsonNode.get("ip").asText() : "N/A";
+//                String city = jsonNode.has("city") ? jsonNode.get("city").asText() : "N/A";
+//                String region = jsonNode.has("region") ? jsonNode.get("region").asText() : "N/A";
+//                String country = jsonNode.has("country") ? jsonNode.get("country").asText() : "N/A";
+//                String loc = jsonNode.has("loc") ? jsonNode.get("loc").asText() : "0.0,0.0";
+//                String org = jsonNode.has("org") ? jsonNode.get("org").asText() : "Unknown";
+//                String timezone = jsonNode.has("timezone") ? jsonNode.get("timezone").asText() : "N/A";
+//
+//                return new IpInfo(ip, city, region, country, loc, org, timezone);
+//            }
+//        } catch (Exception e) {
+//            log.error("Failed to retrieve IP information: {}", e.getMessage());
+//            return getFallbackIpInfo();
+//        }
     }
 
     private  String getIpFromRequest(HttpServletRequest request) {
@@ -90,7 +86,7 @@ public class IpInfoServiceImpl implements IpInfoService {
         return ipAddress;
     }
 
-    private  IpInfo getFallbackIpInfo() {
-        return new IpInfo("N/A", "Unknown", "N/A", "N/A", "0.0,0.0", "Unknown", "N/A");
+    private  IpInfo getFallbackIpInfo(String ipAddress) {
+        return new IpInfo(ipAddress, "Unknown", "N/A", "N/A", "0.0,0.0", "Unknown", "N/A");
     }
 }

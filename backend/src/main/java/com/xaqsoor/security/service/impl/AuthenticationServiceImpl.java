@@ -180,12 +180,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             saveRefreshToken(user, refreshToken, refreshExpiry, ipAddress.toString(), deviceInfo);
             addAuthCookie(response, refreshToken);
 
-            Map<String, Object> eventData = createEventData(ipAddress, deviceInfo);
-            publisher.publishEvent(new UserEvent(
-                    user,
-                    EventType.LOGIN,
-                    eventData
-            ));
+//            Map<String, Object> eventData = createEventData(ipAddress, deviceInfo);
+//            publisher.publishEvent(new UserEvent(
+//                    user,
+//                    EventType.LOGIN,
+//                    eventData
+//            ));
         }
 
         String message = isRefreshOnly
